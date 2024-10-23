@@ -1,10 +1,61 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Document</title>
-  </head>
-  <body>
-    <!-- Please add all of your script tags here to load
-         all of your scripts (controllers, views ...) -->
+<html lang="en" xmlns:C="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iBooks</title>
+    <link rel="stylesheet" href="css/main.css">
+
+
+</head>
+<body>
+
+    <div class="banner">
+        <img src="logo.png" alt="Logo">
+        <div class="banner-text">
+           <div class="banner-title">iBooks</div>
+           <div class="banner-slogan">Begin Your Search</div>
+        </div>
+    </div>
+
+    <div class="label">
+        <ul>
+            <li class="tab active" data-tab="section1">Book List</li>
+            <li class="tab" data-tab="section2">Add Book</li>
+            <li class="tab" data-tab="section3">Book Detail</li>
+        </ul>
+
+        <!-- Book List -->
+        <div class="content active" id="section1-content">
+            <p>Here you can see the list of books.</p>
+        </div>
+
+        <!-- Add Book -->
+        <div class="content" id="section2-content">
+
+            <form class="form-container">
+                <label for="author">Author</label>
+                <input type="text" id="author" name="author">
+
+                <label for="Title">Title</label>
+                <input type="text" id="Title" name="Title">
+
+                <label for="isbn">ISBN</label>
+                <input type="text" id="isbn" name="isbn">
+
+                <label for="isbn">Description</label>
+                <input type="text" id="description" name="description">
+
+                <button type="submit">+Add Book</button>
+            </form>
+        </div>
+
+        <!-- Book Detail -->
+        <div class="content" id="section3-content">
+            <p>Here you can see the details of a book.</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
   </body>
 </html>
