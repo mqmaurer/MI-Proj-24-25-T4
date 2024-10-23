@@ -1,7 +1,8 @@
-document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                const tabId = tab.getAttribute('data-tab');
-                const tabContent = document.getElementById(tabId + '-content');
+        document.querySelectorAll('.nav-link').forEach(tab => {
+            tab.addEventListener('click', (event) => {
+                event.preventDefault();
+                const tabId = tab.getAttribute('href').substring(1);
+                const tabContent = document.getElementById(tabId);
                 document.querySelectorAll('.tab').forEach(item => {
                     item.classList.remove('active');
                 });
