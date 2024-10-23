@@ -38,22 +38,24 @@
         </div>
 
         <!-- Add Book -->
+        <div id="error-message" class="error-message" style="display:none;"></div>
         <div class="content" id="section2-content">
 
-            <form class="form-container">
+
+            <form class="form-container" onsubmit="return validateForm()">
                 <label for="author">Author</label>
                 <input type="text" id="author" name="author">
 
-                <label for="Title">Title</label>
-                <input type="text" id="Title" name="Title">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title">
 
                 <label for="isbn">ISBN</label>
                 <input type="text" id="isbn" name="isbn">
 
-                <label for="isbn">Description</label>
+                <label for="description">Description</label>
                 <input type="text" id="description" name="description">
 
-                <button type="submit">+Add Book</button>
+                <button type="submit">+Add Button</button>
             </form>
         </div>
 
