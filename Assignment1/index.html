@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:C="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,24 +22,27 @@
     <div class="label">
         <ul class="nav nav-pills nav-justified">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#section1-content">Book List</a>
+                <a class="nav-link active" aria-current="page" data-bs-toggle="pill" href="#section1-content">Book List</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#section2-content">Add Book</a>
+                <a class="nav-link" data-bs-toggle="pill" href="#section2-content">Add Book</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#section3-content">Book Detail</a>
+                <a class="nav-link" data-bs-toggle="pill" href="#section3-content">Book Detail</a>
             </li>
         </ul>
+    </div>
 
+    <div class="tab-content mt-3">
         <!-- Book List -->
-        <div class="content active" id="section1-content">
+        <div class="tab-pane show active" id="section1-content">
             <p>Here you can see the list of books.</p>
         </div>
 
         <!-- Add Book -->
         <div id="error-message" class="error-message" style="display:none;"></div>
-        <div class="content" id="section2-content">
+
+        <div class="tab-pane" id="section2-content">
 
 
             <form class="form-container" onsubmit="return validateForm()">
@@ -60,7 +63,7 @@
         </div>
 
         <!-- Book Detail -->
-        <div class="content" id="section3-content">
+        <div class="tab-pane" id="section3-content">
             <p>Here you can see the details of a book.</p>
         </div>
     </div>

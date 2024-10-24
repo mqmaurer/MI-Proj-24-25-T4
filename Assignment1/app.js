@@ -6,11 +6,11 @@
                 document.querySelectorAll('.nav-link').forEach(item => {
                     item.classList.remove('active');
                 });
-                document.querySelectorAll('.content').forEach(content => {
-                    content.classList.remove('active');
+                document.querySelectorAll('.tab-pane').forEach(content => {
+                    content.classList.remove('show','active');
                 });
                 tab.classList.add('active');
-                tabContent.classList.add('active');
+                tabContent.classList.add('show','active');
             });
         });
 
@@ -50,6 +50,9 @@
                 showErrorMessage('Please fill in all fields');
                 return false;
             }
+
+            var bookListTab = new bootstrap.Tab(document.querySelector('[href="#section1-content"]'));
+            bookListTab.show();
 
             return true;
         }
