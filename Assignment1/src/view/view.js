@@ -4,7 +4,27 @@ class BookView {
     }
 
     displayAddBookForm() {
-        this.app.innerHTML = ``;  // Formular für Buch hinzufügen
+        this.app.innerHTML = ` <div id="error-message" class="error-message" style="display:none;"></div>
+
+        <div class="tab-pane" id="section2-content">
+
+
+            <form class="form-container" onsubmit="return validateForm()">
+                <label for="author">Author</label>
+                <input type="text" id="author" name="author">
+
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title">
+
+                <label for="isbn">ISBN</label>
+                <input type="text" id="isbn" name="isbn">
+
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description">
+
+                <button type="submit">+Add Button</button>
+            </form>
+        </div>`;  // Formular für Buch hinzufügen
     }
 
     displayBookList(books) {
@@ -12,9 +32,13 @@ class BookView {
             this.app.innerHTML = `<h2>Bücherliste</h2><p>Keine Bücher vorhanden.</p>`;
             return;
         }
+        
   
         this.app.innerHTML = `
             <h2>Booklist</h2>
+             <div class="tab-pane show active" id="section1-content">
+            
+     
             <table class="table table-hover" is="list">
                 <thead>
                     <tr>
@@ -36,7 +60,9 @@ class BookView {
                         </tr>
                     `).join('')}
                 </tbody>
-            </table>
+            </table>  
+            
+            </div>
         `;
     }
 
@@ -60,7 +86,9 @@ class BookView {
     }
 
         displayBookDetails(book) {
-            this.app.innerHTML = ``; //HTMl für Buch hinzufügen
+            this.app.innerHTML = `<div class="tab-pane" id="section3-content">
+            <p>Here you can see the details of a book.</p>
+        </div>`; //HTMl für BuchDetails
 
         }
 
