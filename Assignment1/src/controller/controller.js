@@ -5,6 +5,7 @@ class BookController {
         this.view.displayBookList(this.model.getBooks());
         this.navigation();
         this.setupRoutes();
+        this.validateForm();
         
        
     }
