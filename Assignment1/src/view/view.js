@@ -4,12 +4,13 @@ class BookView {
     }
 
     displayAddBookForm() {
-        this.app.innerHTML = ` <div id="error-message" class="error-message" style="display:none;"></div>
+        this.app.innerHTML = ` 
+        <div id="error-message" class="error-message" style="display:none;"></div>
 
         <div class="tab-pane" id="section2-content">
 
 
-            <form class="form-container" onsubmit="return validateForm()">
+            <form class="addBookForm" onsubmit="return validateForm()">
                 <label for="author">Author</label>
                 <input type="text" id="author" name="author">
 
@@ -24,7 +25,7 @@ class BookView {
 
                 <button type="submit">+Add Button</button>
             </form>
-        </div>`;  // Formular für Buch hinzufügen
+        </div>`;  
     }
 
     displayBookList(books) {
@@ -67,14 +68,14 @@ class BookView {
     }
 
     bindAddBook(handler) {
-        document.getElementById('Name vom Form').addEventListener('submit', (e) => {
+        document.getElementById('addBookForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const title = document.getElementById('title').value;
             const author = document.getElementById('author').value;
             const isbn = document.getElementById('isbn').value;
             const description = document.getElementById('description').value;
             handler(title, author, isbn, description);
-            
+            this.addBook
         });
 
         this.app.addEventListener('click', (e) => {
@@ -88,7 +89,7 @@ class BookView {
         displayBookDetails(book) {
             this.app.innerHTML = `<div class="tab-pane" id="section3-content">
             <p>Here you can see the details of a book.</p>
-        </div>`; //HTMl für BuchDetails
+        </div>`; 
 
         }
 
