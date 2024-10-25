@@ -4,9 +4,17 @@ class BookController {
         this.view = view;
         this.view.displayBookList(this.model.getBooks());
         this.navigation();
+        this.setupRoutes();
+        
        
     }
 
+    setupRoutes() {
+        window.addEventListener('hashchange', () => this.navigation());
+        // Trigger navigation on initial load
+        this.navigation(); 
+    }
+    
     handleAddBook(title, author, isbn, description) {
         if (this.view.validateForm()) {
         this.model.addBook(title, author, isbn, description);
@@ -61,20 +69,13 @@ class BookController {
             return true;
         }
 
-       navigation(){ document.querySelectorAll('.nav-link').forEach(tab => {
-            tab.addEventListener('click', (event) => {
-                event.preventDefault();
-                const tabId = tab.getAttribute('href').substring(1);
-                const tabContent = document.getElementById(tabId);
-                document.querySelectorAll('.nav-link').forEach(item => {
-                    item.classList.remove('active');
-                    this.view.displayAddBookForm();
-                });
-                document.querySelectorAll('.tab-pane').forEach(content => {
-                    content.classList.remove('show','active');
-                });
-                tab.classList.add('active');
-                tabContent.classList.add('show','active');
-            });
-        });
+       navigation(){
+        const hash = window.location.hash || '#add';
+         if (hash === '#add') {
+            this.view.displayAddBookForm();
+            }
+            else if (hash === '#list') {
+                this.view.displayBookList(this.model.getBooks());
+            }
+        
     }}
