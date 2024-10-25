@@ -1,0 +1,121 @@
+
+        body {
+            font-family: Arial;
+        }
+        .banner {
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+        }
+        .banner img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        .banner-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .banner-title {
+            font-size: 80px;
+            font-weight: normal;
+            color: #000000;
+            margin-bottom: -20px;
+        }
+        .banner-slogan {
+            font-size: 18px;
+            color: #333;
+            margin-top: 0px;
+        }
+
+        .nav-pills {
+            margin-top: 20px;
+        }
+
+
+        .nav-pills .nav-link {
+            border: 2px solid black;
+            border-radius: 0!important;
+            background-color: white;
+            color: black;
+            margin-right: 2px;
+            padding: 5px 15px;
+            font-size: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: white;
+            color: black;
+            border: 2px solid black;
+            border-bottom: 2px solid black;
+            margin-right: 2px;
+        }
+
+
+        .content {
+            border: none;
+            padding: 20px;
+            margin-top: -2px;
+            background-color: white;
+            display: none;
+        }
+
+
+        .content.active {
+            display: block;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            margin-top: 60px;
+            color: gray;
+        }
+
+        .form-container input {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .form-container button {
+            padding: 10px;
+            background-color: #61b756;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .form-container button:hover {
+            background-color: #61b756;
+        }
+
+        .error-message {
+            background-color: rgb(208, 79, 75);
+            color: white;
+            padding: 4px;
+            border: rgb(208, 79, 75);
+            border-radius: 3px;
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .error-message.show {
+            opacity: 1;
+        }
