@@ -7,10 +7,7 @@ class BookView {
         this.app.innerHTML = ` 
         <div id="error-message" class="error-message" style="display:none;"></div>
 
-        <div class="tab-pane" id="section2-content">
-
-
-            <form class="addBookForm" onsubmit="return validateForm()">
+            <form id="addBookForm" >
                 <label for="author">Author</label>
                 <input type="text" id="author" name="author">
 
@@ -25,7 +22,7 @@ class BookView {
 
                 <button type="submit">+Add Button</button>
             </form>
-        </div>`;  
+      `;  
     }
 
     displayBookList(books) {
@@ -56,8 +53,8 @@ class BookView {
                             <td>${book.title}</td>
                             <td>${book.author}</td>
                             <td>${book.isbn}</td>
-                            <td><button data-index="${index}" class="details-button" id="detailsButton"> icon 1</button></td>
-                            <td><button data-index="${index}" class="delete-button" id="deleteButton"> icon 2</button></td>
+                            <td><button data-index="${index}" class="details-button" id="detailsButton"> <i class="fa-solid fa-circle-info"></i></button></td>
+                            <td><button data-index="${index}" class="delete-button" id="deleteButton"> <i class="fa-solid fa-trash-can"></i></button></td>
                         </tr>
                     `).join('')}
                 </tbody>
@@ -69,17 +66,19 @@ class BookView {
 
     bindAddBook(handler) {
         document.getElementById('addBookForm').addEventListener('submit', (e) => {
+            console.log('addBook');
             e.preventDefault();
             const title = document.getElementById('title').value;
             const author = document.getElementById('author').value;
             const isbn = document.getElementById('isbn').value;
             const description = document.getElementById('description').value;
             handler(title, author, isbn, description);
-            this.addBook
+           
         });
 
         this.app.addEventListener('click', (e) => {
           if (e.target.classList.contains('delete-button')) {
+            console.log('deleteBook');
             const index = e.target.dataset.index;
             this.handleDeleteBook(index);
         }
@@ -96,6 +95,12 @@ class BookView {
         setOnDeleteBook(handler) {
             this.onDeleteBook = handler;
           }
+
+          handleDeleteBook(index) {
+            if (typeof this.onDeleteBook === 'function') {
+                this.onDeleteBook(index);
+            }
+        }
 }
 
 
