@@ -86,10 +86,19 @@ class BookView {
     }
 
         displayBookDetails(book) {
-            this.app.innerHTML = `<div class="tab-pane" id="section3-content">
-            <p>Here you can see the details of a book.</p>
+            this.app.innerHTML = `<div class="tab-content mt-3">
+                <div class="BookDetail">
+                        <div class="card-body book-header">
+                            <i class="fa-solid fa-circle-info info-icon"></i>
+                            <p class="card-text">Author: ${book.author}</p>
+                            <p class="card-title">Title: ${book.title}</p>
+                            <p class="card-text">ISBN: ${book.isbn}</p>
+                        </div>
+                        <div class="card-body book-info">
+                            <p>${book.description}</p>
+                        </div>
+                </div>
         </div>`; 
-
         }
 
         setOnDeleteBook(handler) {
