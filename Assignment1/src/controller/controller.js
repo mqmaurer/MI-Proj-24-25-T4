@@ -39,6 +39,10 @@ class BookController {
             window.location.hash = '#list'; // Buch aus dem Modell löschen
            
     }
+    handleBookDetails(index) {
+        const book = this.model.getBooks()[index];
+        this.view.displayBookDetails(book);
+    }
     showErrorMessage(message) {
         const errorMessage = document.getElementById('error-message');
         if (errorMessage) {
