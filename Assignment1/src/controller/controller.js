@@ -17,6 +17,7 @@ class BookController {
 
     navigation(){
         const hash = window.location.hash || '#add';
+        const index = this.getDetailIndexFromHash(hash);
          if (hash === '#add') {
             this.view.displayAddBookForm();
             this.view.bindAddBook(this.handleAddBook.bind(this));
@@ -24,8 +25,15 @@ class BookController {
             else if (hash === '#list') {
                 this.view.displayBookList(this.model.getBooks());
             }
-        
+            else if (hash.startsWith('#details')) {
+                this.handleBookDetails(index);
+            }
     }
+    getDetailIndexFromHash(hash) {
+        const match = hash.match(/#details\-(\d+)/);
+        return match ? parseInt(match[1], 10) : null;
+    }
+
     
     handleAddBook(title, author, isbn, description) {
         console.log('addBook');
