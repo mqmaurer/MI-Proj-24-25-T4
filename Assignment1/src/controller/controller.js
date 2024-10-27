@@ -77,7 +77,7 @@ class BookController {
                 return false;
             }
             // Regex für gültiges ISBN-Format
-            const isbnRegex = /^(?:\d{1,5}-){2}\d{1,7}-[\dX]$/;
+            const isbnRegex = /^(?=.*\d)(?=.{13}$)(\d{1,7}-\d{1,7}-\d{1,7}-[0-9X])$/;
             if (!isbnRegex.test(isbn)){
                 this.showErrorMessage('Invalid ISBN format. Example: 0-9752298-0-X');
                 console.log('Fehlermeldung 2'); // Fehlermeldung anzeigen
