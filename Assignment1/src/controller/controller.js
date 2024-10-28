@@ -61,6 +61,8 @@ class BookController {
         if (this.validateForm()) {
             this.model.addBook(title, author, isbn, description);
             this.showMessage('success', 'Successfully added the book with ISBN "' + isbn + '"');
+
+            window.location.hash = '#list';
         }
     }
     handleDeleteBook(index) {
