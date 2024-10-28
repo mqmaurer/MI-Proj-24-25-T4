@@ -97,10 +97,10 @@ class BookController {
     }
 
     validateForm() {
-        const author = document.getElementById('author').value;
-        const title = document.getElementById('title').value;
-        const isbn = document.getElementById('isbn').value;
-        const description = document.getElementById('description').value;
+        const author = document.getElementById('author').value.trim();
+        const title = document.getElementById('title').value.trim();
+        const isbn = document.getElementById('isbn').value.trim();
+        const description = document.getElementById('description').value.trim();
         if (author === '' || title === '' || isbn === '' || description === '') {
             this.showMessage('error', 'Please fill in all fields');
             return false;
