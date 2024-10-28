@@ -7,6 +7,7 @@ class BookView {
         this.app.innerHTML = ` 
         <div id="success-message" class="success-message" style="display:none;"></div>
         <div id="error-message" class="error-message" style="display:none;"></div>
+        <div class="form-container">
 
             <form id="addBookForm" >
                 <label for="author">Author</label>
