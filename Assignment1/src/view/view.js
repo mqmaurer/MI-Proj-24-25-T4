@@ -22,7 +22,7 @@ class BookView {
 
                 <button type="submit">+Add Button</button>
             </form>
-      `;  
+      `;
     }
 
     displayBookList(books) {
@@ -30,8 +30,8 @@ class BookView {
             this.app.innerHTML = `<h2>Bücherliste</h2><p>Keine Bücher vorhanden.</p>`;
             return;
         }
-        
-  
+
+
         this.app.innerHTML = `
             <h2>Booklist</h2>
              <div class="tab-pane show active" id="section1-content">
@@ -64,6 +64,23 @@ class BookView {
         `;
     }
 
+    displayZeroDetails() {
+        this.app.innerHTML = `<h2>Nothing found here!</h2>
+        <p>Please make sure to select a book at <a href=#list>Book List</a>.
+        Details will then be shown here!</p>`;
+    }
+
+    displayErrorPage() {
+        this.app.innerHTML = `
+        <h2>404</h2>
+        <h4>UH OH! You're lost.</h4>
+        <p>The page you are looking for does not exist.
+          How you got here is a mystery. But you can click the button below
+          to return to the Book List.
+        </p>
+        <a href=#list><button>Book List</button></a>`;
+    }
+
     bindAddBook(handler) {
         document.getElementById('addBookForm').addEventListener('submit', (e) => {
             console.log('addBook');
@@ -73,20 +90,19 @@ class BookView {
             const isbn = document.getElementById('isbn').value;
             const description = document.getElementById('description').value;
             handler(title, author, isbn, description);
-           
+
         });
 
         this.app.addEventListener('click', (e) => {
-          if (e.target.classList.contains('delete-button')) {
-            console.log('deleteBook');
-            const index = e.target.dataset.index;
-            this.handleDeleteBook(index);
-        }
-      });
+            if (e.target.classList.contains('delete-button')) {
+                const index = e.target.dataset.index;
+                this.handleDeleteBook(index);
+            }
+        });
     }
 
-        displayBookDetails(book) {
-            this.app.innerHTML = `<div class="tab-content mt-3">
+    displayBookDetails(book) {
+        this.app.innerHTML = `<div class="tab-content mt-3">
                 <div class="BookDetail">
                         <div class="card-body book-header">
                             <i class="fa-solid fa-circle-info info-icon"></i>
@@ -98,18 +114,16 @@ class BookView {
                             <p>${book.description}</p>
                         </div>
                 </div>
-        </div>`; 
-        }
+        </div>`;
+    }
 
-        setOnDeleteBook(handler) {
-            this.onDeleteBook = handler;
-          }
+    setOnDeleteBook(handler) {
+        this.onDeleteBook = handler;
+    }
 
-          handleDeleteBook(index) {
-            if (typeof this.onDeleteBook === 'function') {
-                this.onDeleteBook(index);
-            }
+    handleDeleteBook(index) {
+        if (typeof this.onDeleteBook === 'function') {
+            this.onDeleteBook(index);
         }
+    }
 }
-
-

@@ -1,70 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iBooks</title>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/bootstrap.light.min.css">
-   
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iBooks</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/bootstrap.light.min.css">
 </head>
+
 <body>
   <script src="https://kit.fontawesome.com/09490db356.js" crossorigin="anonymous"></script>
-    <div class="banner">
-        <img src="logo.png" alt="Logo">
-        <div class="banner-text">
-           <h1>iBooks</h1>
-           <p class="lead">Begin Your Search</p>
-        </div>
+  <div class="banner">
+    <img src="logo.png" alt="Logo">
+    <div class="banner-text">
+      <h1>iBooks</h1>
+      <p class="lead">Begin Your Search</p>
     </div>
+  </div>
 
-    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
-        <div class="container-fluid">
-         
-          <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav w-100 justify-content-around">
-                <li class="nav-item">
-                    <a class="nav-link active"  href="#list">Book List</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"  href="#add">Add Book</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"  href="#details">Book Detail</a>
-                </li>
-            </ul>
-           
-          </div>
-        </div>
-      </nav>
-    
+  <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <div class="container-fluid">
 
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav w-100 justify-content-around">
+          <li class="nav-item">
+            <a class="nav-link" id="list" href="#list">Book List</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="add" href="#add">Add Book</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="zeroDetails" href="#zeroDetails">Book Detail</a>
+          </li>
+        </ul>
 
-    <div class="tab-content mt-3">
-       
-
-      
-       
-<div id="app"></div>  
-       
-
+      </div>
     </div>
-
-   
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-          
- 
+  </nav>
 
 
-      
-     
-  
-         <script src="src/model/model.js"></script>
-         <script src="src/view/view.js"></script>
-           <script src="src/controller/controller.js"></script>
-          <script src="app.js"></script>
-    <script src="https://kit.fontawesome.com/09490db356.js" crossorigin="anonymous"></script>
-  </body>
+
+  <div class="tab-content mt-3">
+    <div id="app"></div>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="src/model/model.js"></script>
+  <script src="src/view/view.js"></script>
+  <script src="src/controller/controller.js"></script>
+  <script src="app.js"></script>
+  <script src="https://kit.fontawesome.com/09490db356.js" crossorigin="anonymous"></script>
+</body>
+
 </html>
