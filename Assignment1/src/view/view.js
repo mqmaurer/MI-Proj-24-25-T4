@@ -5,7 +5,7 @@ class BookView {
     
     displayAddBookForm() {
         this.app.innerHTML = ` 
-        <div id="success-message" class="success-message" style="display:none;"></div>
+        
         <div id="error-message" class="error-message" style="display:none;"></div>
         <div class="form-container">
         <form id="addBookForm">
@@ -51,6 +51,7 @@ class BookView {
 
 
         this.app.innerHTML = `
+        <div id="success-message" class="success-message" style="display:none;"></div>
             <h2>Booklist</h2>
              <div class="tab-pane show active" id="section1-content">
             
@@ -117,7 +118,6 @@ class BookView {
             const isbn = document.getElementById('isbn').value;
             const description = document.getElementById('description').value;
             handler(title, author, isbn, description);
-
         });
     }
 

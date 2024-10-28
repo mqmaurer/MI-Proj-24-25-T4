@@ -4,7 +4,7 @@ class BookController {
         this.view = view;
         this.navigation();
         this.setupRoutes();
-
+        this.showSuccessMessage = false; 
         this.view.setOnDeleteBook(this.handleDeleteBook.bind(this));
 
     }
@@ -26,6 +26,10 @@ class BookController {
         else if (hash === '#list') {
             this.view.displayBookList(this.model.getBooks());
             this.higlightLocationAtNavbar('#list');
+            if (this.showSuccessMessage) {
+            this.showMessage('success', 'Book added successfully');
+            this.showSuccessMessage = false;
+            }
         }
         else if (hash.startsWith('#details')) {
             this.handleBookDetails(index);
@@ -57,18 +61,15 @@ class BookController {
     }
 
     handleAddBook(title, author, isbn, description) {
-        console.log('addBook');
         if (this.validateForm()) {
             this.model.addBook(title, author, isbn, description);
-            this.showMessage('success', 'Successfully added the book with ISBN "' + isbn + '"');
-
-            window.location.hash = '#list';
+            this.showSuccessMessage = true;
+            window.location.hash = '#list'; 
         }
     }
     handleDeleteBook(index) {
         this.model.deleteBook(index);
-        window.location.hash = '#list'; // Buch aus dem Modell löschen
-
+        window.location.hash = '#list'; 
     }
     handleBookDetails(index) {
         const book = this.model.getBooks()[index];
