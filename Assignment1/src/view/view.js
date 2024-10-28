@@ -2,7 +2,7 @@ class BookView {
     constructor() {
         this.app = document.getElementById('app');
     }
-
+    
     displayAddBookForm() {
         this.app.innerHTML = ` 
         <div id="success-message" class="success-message" style="display:none;"></div>
@@ -66,7 +66,10 @@ class BookView {
                     </tr>
                 </thead>
                 <tbody id="bookList">
-                    ${books.map((book, index) => `
+                    ${books
+                        .slice()
+                        .reverse()
+                        .map((book, index) => `
                         <tr  class="table-light">
                             <td>${book.title}</td>
                             <td>${book.author}</td>
