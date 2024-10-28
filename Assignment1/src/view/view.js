@@ -80,6 +80,13 @@ class BookView {
             
             </div>
         `;
+
+        this.app.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const index = e.target.closest('button').dataset.index;
+                this.handleDeleteBook(index);
+            });
+        });
     }
 
     displayZeroDetails() {
@@ -109,13 +116,6 @@ class BookView {
             handler(title, author, isbn, description);
 
         });
-
-        this.app.addEventListener('click', (e) => {
-            if (e.target.classList.contains('delete-button')) {
-                const index = e.target.dataset.index;
-                this.handleDeleteBook(index);
-            }
-        });
     }
 
     displayBookDetails(book) {
@@ -134,6 +134,7 @@ class BookView {
         </div>`;
     }
 
+    
     setOnDeleteBook(handler) {
         this.onDeleteBook = handler;
     }
