@@ -69,7 +69,7 @@ class BookController {
     }
     handleDeleteBook(index) {
         this.model.deleteBook(index);
-        window.location.hash = '#list'; 
+        this.view.displayBookList(this.model.getBooks()); 
     }
     handleBookDetails(index) {
         const book = this.model.getBooks()[index];

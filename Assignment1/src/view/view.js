@@ -68,8 +68,6 @@ class BookView {
                 </thead>
                 <tbody id="bookList">
                     ${books
-                        .slice()
-                        .reverse()
                         .map((book, index) => `
                         <tr  class="table-light">
                             <td>${book.title}</td>

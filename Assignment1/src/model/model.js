@@ -13,12 +13,13 @@ class BookModel {
     }
 
     addBook(title, author, isbn, description) {
-        this.books.push({ title, author, isbn, description });
+        const timestamp = Date.now(); 
+        this.books.push({ title, author, isbn, description, timestamp });
         this.saveBooksToLocalStorage(); 
     }
 
     getBooks() {
-        return this.books;
+        return this.books.sort((a, b) => b.timestamp - a.timestamp);
     }
 
     deleteBook(index) {
