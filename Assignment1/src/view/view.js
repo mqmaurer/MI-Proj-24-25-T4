@@ -8,22 +8,38 @@ class BookView {
         <div id="success-message" class="success-message" style="display:none;"></div>
         <div id="error-message" class="error-message" style="display:none;"></div>
         <div class="form-container">
-
-            <form id="addBookForm" >
-                <label for="author">Author</label>
-                <input type="text" id="author" name="author">
-
-                <label for="title">Title</label>
-                <input type="text" id="title" name="title">
-
-                <label for="isbn">ISBN</label>
-                <input type="text" id="isbn" name="isbn">
-
-                <label for="description">Description</label>
-                <input type="text" id="description" name="description">
-
-                <button type="submit">+Add Button</button>
-            </form>
+        <form id="addBookForm">
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="author" class="form-label">Author</label>
+                    <input type="text" id="author" name="author" class="form-control">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" id="title" name="title" class="form-control">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="isbn" class="form-label">ISBN</label>
+                    <input type="text" id="isbn" name="isbn" class="form-control">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="description" class="form-label">Description</label>
+                    <input type="text" id="description" name="description" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">+Add Book</button>
+                </div>
+            </div>
+        </form>
+    </div>
       `;
     }
 
