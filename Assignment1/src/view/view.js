@@ -5,6 +5,7 @@ class BookView {
 
     displayAddBookForm() {
         this.app.innerHTML = ` 
+        <div id="success-message" class="success-message" style="display:none;"></div>
         <div id="error-message" class="error-message" style="display:none;"></div>
 
             <form id="addBookForm" >
@@ -83,7 +84,6 @@ class BookView {
 
     bindAddBook(handler) {
         document.getElementById('addBookForm').addEventListener('submit', (e) => {
-            console.log('addBook');
             e.preventDefault();
             const title = document.getElementById('title').value;
             const author = document.getElementById('author').value;

@@ -60,7 +60,7 @@ class BookController {
         console.log('addBook');
         if (this.validateForm()) {
             this.model.addBook(title, author, isbn, description);
-            window.location.hash = '#list';
+            this.showMessage('success', 'Successfully added the book with ISBN "' + isbn + '"');
         }
     }
     handleDeleteBook(index) {
@@ -72,16 +72,23 @@ class BookController {
         const book = this.model.getBooks()[index];
         this.view.displayBookDetails(book);
     }
-    showErrorMessage(message) {
-        const errorMessage = document.getElementById('error-message');
-        if (errorMessage) {
-            errorMessage.innerText = message;
-            errorMessage.style.display = 'block';
-            errorMessage.classList.add('show');
+    showMessage(type, message) {
+        let finalMessage;
+        if (type === 'error') {
+            finalMessage = document.getElementById('error-message');
+        }
+        else if (type === 'success') {
+            finalMessage = document.getElementById('success-message');
+        }
+
+        if (finalMessage) {
+            finalMessage.innerText = message;
+            finalMessage.style.display = 'block';
+            finalMessage.classList.add('show');
 
             setTimeout(() => {
-                errorMessage.classList.remove('show');
-                errorMessage.style.display = 'none';
+                finalMessage.classList.remove('show');
+                finalMessage.style.display = 'none';
             }, 3000);
         }
     }
@@ -91,22 +98,21 @@ class BookController {
         const title = document.getElementById('title').value;
         const isbn = document.getElementById('isbn').value;
         const description = document.getElementById('description').value;
-        console.log(author); // Fehlermeldung anzeigen
         if (author === '' || title === '' || isbn === '' || description === '') {
-            this.showErrorMessage('Please fill in all fields');
+            this.showMessage('error', 'Please fill in all fields');
             return false;
         }
         // Regex für gültiges ISBN-Format
         const isbnRegex = /^(?=.*\d)(?=.{13}$)(\d{1,7}-\d{1,7}-\d{1,7}-[0-9X])$/;
         if (!isbnRegex.test(isbn)) {
-            this.showErrorMessage('Invalid ISBN format. Example: 0-9752298-0-X');
+            this.showMessage('error', 'Invalid ISBN format. Example: 0-9752298-0-X');
             return false;
         }
 
         const books = this.model.getBooks(); // Aktuelle Bücherliste abrufen
         const isDuplicate = books.some(book => book.isbn === isbn);
         if (isDuplicate) {
-            this.showErrorMessage('This ISBN already exists in the book list.');
+            this.showMessage('error', 'This ISBN already exists in the book list.');
             return false; // ISBN ist nicht einzigartig
         }
         return true;
