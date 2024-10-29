@@ -126,10 +126,10 @@ class BookView {
     this.app.innerHTML = `<div class="tab-content mt-3">
     
     <div class="card border-primary mb-3" style="max-width: 40rem; margin: 0 auto;">
-            <div class="card-body book-header">
+            <div class="card-header">
                 <i class="fa-solid fa-circle-info info-icon"></i>
                 <p class="card-text">Author: ${book.author}</p>
-                <p class="card-title">Title: ${book.title}</p>
+                <p class="card-text">Title: ${book.title}</p>
                 <p class="card-text">ISBN: ${book.isbn}</p>
             </div>
             <div class="card-body book-info">
