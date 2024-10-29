@@ -6,28 +6,29 @@ class BookView {
   displayAddBookForm() {
     this.app.innerHTML = ` 
         
-        <div id="error-message" class="error-message" style="display:none;"></div>
-        <div class="form-container">
+         <div id="error-message" class="alert alert-dismissible alert-danger mb-3" style="display:none; max-width: 50rem; margin: 0 auto;"></div>
+        <div class="card border-primary mb-3" style="max-width: 60rem; margin: 0 auto;">
+
         <form id="addBookForm">
-            <div class="row mb-3">
+            <div class="row m-3">
                 <div class="col">
                     <label for="author" class="form-label">Author</label>
                     <input type="text" id="author" name="author" class="form-control">
                 </div>
             </div>
-            <div class="row mb-3">
+            <div class="row m-3">
                 <div class="col">
                     <label for="title" class="form-label">Title</label>
                     <input type="text" id="title" name="title" class="form-control">
                 </div>
             </div>
-            <div class="row mb-3">
+            <div class="row m-3">
                 <div class="col">
                     <label for="isbn" class="form-label">ISBN</label>
                     <input type="text" id="isbn" name="isbn" class="form-control">
                 </div>
             </div>
-            <div class="row mb-3">
+            <div class="row m-3">
                 <div class="col">
 
                 <label for="description" class="form-label">Description</label>
@@ -35,7 +36,7 @@ class BookView {
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="text-center m-3">
                     <button type="submit" class="btn btn-primary">+Add Book</button>
                 </div>
             </div>
@@ -51,12 +52,12 @@ class BookView {
     }
 
     this.app.innerHTML = `
-        <div id="success-message" class="success-message" style="display:none;"></div>
+        <div id="success-message" class="alert alert-dismissible alert-success mb-3" style="display:none; max-width: 50rem;margin: 0 auto;"></div>
             <h2>Booklist</h2>
-             <div class="tab-pane show active" id="section1-content">
+           
             
      
-            <table class="table table-hover" is="list">
+            <table class="table table-hover" is="list" style="max-width: 95vw; margin: 0 auto;">
                 <thead>
                     <tr>
                         <th>Titel</th>
@@ -82,8 +83,7 @@ class BookView {
                       .join("")}
                 </tbody>
             </table>  
-            
-            </div>
+          
         `;
 
     this.app.querySelectorAll(".delete-button").forEach((button) => {
@@ -124,20 +124,20 @@ class BookView {
 
   displayBookDetails(book) {
     this.app.innerHTML = `<div class="tab-content mt-3">
-                <div class="BookDetail">
-                        <div class="card-body book-header">
-                            <i class="fa-solid fa-circle-info info-icon"></i>
-                            <p class="card-text">Author: ${book.author}</p>
-                            <p class="card-title">Title: ${book.title}</p>
-                            <p class="card-text">ISBN: ${book.isbn}</p>
-                        </div>
-                        <div class="card-body book-info">
-                            <p>${book.description}</p>
-                        </div>
-                </div>
-        </div>`;
-  }
-
+    
+    <div class="card border-primary mb-3" style="max-width: 40rem; margin: 0 auto;">
+            <div class="card-body book-header">
+                <i class="fa-solid fa-circle-info info-icon"></i>
+                <p class="card-text">Author: ${book.author}</p>
+                <p class="card-title">Title: ${book.title}</p>
+                <p class="card-text">ISBN: ${book.isbn}</p>
+            </div>
+            <div class="card-body book-info">
+                <p>${book.description}</p>
+            </div>
+    </div>
+</div>`;
+}
   setOnDeleteBook(handler) {
     this.onDeleteBook = handler;
   }
