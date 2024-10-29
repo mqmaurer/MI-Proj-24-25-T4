@@ -97,10 +97,26 @@ class BookController {
       finalMessage.style.display = "block";
       finalMessage.classList.add("show");
 
-      setTimeout(() => {
-        finalMessage.classList.remove("show");
-        finalMessage.style.display = "none";
-      }, 3000);
+      anime({
+        targets: finalMessage,
+        opacity: [0, 1],
+        duration: 1000,
+        easing: "easeInOutSine",
+        complete: () => {
+
+          setTimeout(() => {
+            anime({
+              targets: finalMessage,
+              opacity: [1, 0],
+              duration: 1000,
+              easing: "easeInOutSine",
+              complete: () => {
+                finalMessage.style.display = "none";
+              }
+            });
+          }, 3000);
+        }
+      });
     }
   }
 
