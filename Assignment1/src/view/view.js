@@ -29,8 +29,9 @@ class BookView {
             </div>
             <div class="row mb-3">
                 <div class="col">
-                    <label for="description" class="form-label">Description</label>
-                    <input type="text" id="description" name="description" class="form-control">
+
+                <label for="description" class="form-label">Description</label>
+                <textarea id="description" name="description" class="form-control"></textarea>
                 </div>
             </div>
             <div class="row">
