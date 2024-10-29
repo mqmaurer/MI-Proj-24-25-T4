@@ -62,9 +62,24 @@ class BookController {
     }
   }
   handleDeleteBook(index) {
+    const bookDetail = document.getElementById(`bookDetail-${index}`);
+    if (bookDetail) {
+      anime({
+            targets: bookDetail,
+            translateX: 500,
+            opacity: 0,
+            duration: 800,
+            easing: "easeInOutSine",
+            complete: () => {
+              this.model.deleteBook(index);
+                this.view.displayBookList(this.model.getBooks());
+            }
+        });
+    } else {
     this.model.deleteBook(index);
     this.view.displayBookList(this.model.getBooks());
   }
+}
   handleBookDetails(index) {
     const book = this.model.getBooks()[index];
     this.view.displayBookDetails(book);
