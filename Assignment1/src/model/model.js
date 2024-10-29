@@ -1,29 +1,29 @@
 class BookModel {
-    constructor() {
-        this.books = this.loadBooksFromLocalStorage() || [];
-    }
+  constructor() {
+    this.books = this.loadBooksFromLocalStorage() || [];
+  }
 
-    loadBooksFromLocalStorage() {
-        const booksJson = localStorage.getItem('books');
-        return booksJson ? JSON.parse(booksJson) : [];
-    }
+  loadBooksFromLocalStorage() {
+    const booksJson = localStorage.getItem("books");
+    return booksJson ? JSON.parse(booksJson) : [];
+  }
 
-    saveBooksToLocalStorage() {
-        localStorage.setItem('books', JSON.stringify(this.books));
-    }
+  saveBooksToLocalStorage() {
+    localStorage.setItem("books", JSON.stringify(this.books));
+  }
 
-    addBook(title, author, isbn, description) {
-        const timestamp = Date.now(); 
-        this.books.push({ title, author, isbn, description, timestamp });
-        this.saveBooksToLocalStorage(); 
-    }
+  addBook(title, author, isbn, description) {
+    const timestamp = Date.now();
+    this.books.push({ title, author, isbn, description, timestamp });
+    this.saveBooksToLocalStorage();
+  }
 
-    getBooks() {
-        return this.books.sort((a, b) => b.timestamp - a.timestamp);
-    }
+  getBooks() {
+    return this.books.sort((a, b) => b.timestamp - a.timestamp);
+  }
 
-    deleteBook(index) {
-        this.books.splice(index, 1); 
-        this.saveBooksToLocalStorage(); 
-    }
+  deleteBook(index) {
+    this.books.splice(index, 1);
+    this.saveBooksToLocalStorage();
+  }
 }
