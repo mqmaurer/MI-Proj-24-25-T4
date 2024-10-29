@@ -47,7 +47,7 @@ class BookView {
 
   displayBookList(books) {
     if (books.length === 0) {
-      this.app.innerHTML = `<h2>Bücherliste</h2><p>Keine Bücher vorhanden.</p>`;
+      this.app.innerHTML = `<h2>Book List</h2><p>No Books available yet.</p>`;
       return;
     }
 
@@ -71,7 +71,7 @@ class BookView {
                     ${books
                       .map(
                         (book, index) => `
-                        <tr  class="table-light">
+                        <tr id="bookDetail-${index}" class="table-light">
                             <td>${book.title}</td>
                             <td>${book.author}</td>
                             <td>${book.isbn}</td>
