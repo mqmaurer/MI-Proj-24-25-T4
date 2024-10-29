@@ -39,7 +39,6 @@ body {
     margin-top: 20px;
 }
 
-
 .content {
     border: none;
     padding: 20px;
@@ -47,7 +46,6 @@ body {
     background-color: white;
     display: none;
 }
-
 
 .content.active {
     display: block;
@@ -115,7 +113,6 @@ body {
     opacity: 1;
 }
 
-
 .success-message {
     background-color: rgb(29, 206, 13);
     color: white;
@@ -134,18 +131,18 @@ body {
     opacity: 1;
 }
 
+.info-icon {
+    font-size: 40px;
+    color: #555;
+    margin-top: 15px;
+}
+
 .book-header {
     background-color: #ededed;
     text-align: center;
     padding: 20px 20px 10px;
     border-radius: 6px;
     height: 160px;
-}
-
-.info-icon {
-    font-size: 40px;
-    color: #555;
-    margin-top: 15px;
 }
 
 .book-header .card-text,
@@ -167,8 +164,8 @@ body {
 
 .book-info {
     margin-top: 10px;
-    padding: 10px;             /* Optional: Innenabstand, um den Text vom Rand zu trennen */
-    word-wrap: break-word;     /* Sorgt dafür, dass lange Wörter umgebrochen werden */
-    overflow-wrap: break-word; /* Erlaubt das Umbrechen von Wörtern, die den Container sprengen könnten */
-    max-width: 100%; 
+    padding: 10px;             
+    word-wrap: break-word;     
+    overflow-wrap: break-word; 
+    max-width: 100%;  
 }
