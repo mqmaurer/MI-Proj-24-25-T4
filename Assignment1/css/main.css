@@ -66,13 +66,19 @@ body {
     box-sizing: border-box;
 }
 
-.form-container input {
-    margin: 10px 0;
-    padding: 10px;
+.form-container input,
+.form-container textarea
+ {
+
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: calc(100% - 20px);
+    width: 100%;
+}
+
+.form-container input {
+    margin: 10px 0;
+    padding: 10px;
 }
 
 .form-container textarea {
