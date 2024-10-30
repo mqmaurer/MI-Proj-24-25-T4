@@ -102,7 +102,7 @@ class BookController {
         complete: () => {
           this.model.deleteBook(index);
           this.view.displayBookList(this.model.getBooks());
-        }
+        },
       });
     } else {
       this.model.deleteBook(index);
@@ -139,10 +139,10 @@ class BookController {
               easing: "easeInOutSine",
               complete: () => {
                 finalMessage.style.display = "none";
-              }
+              },
             });
           }, 3000);
-        }
+        },
       });
     }
   }
@@ -156,18 +156,18 @@ class BookController {
       this.showMessage("error", "Please fill in all fields");
       return false;
     }
-    // Regex für gültiges ISBN-Format
+    // validation of ISBN
     const isbnRegex = /^(?=.*\d)(?=.{13}$)(\d{1,7}-\d{1,7}-\d{1,7}-[0-9X])$/;
     if (!isbnRegex.test(isbn)) {
       this.showMessage("error", "Invalid ISBN format. Example: 0-9752298-0-X");
       return false;
     }
-
-    const books = this.model.getBooks(); // Aktuelle Bücherliste abrufen
+    // check for existing ISBNs
+    const books = this.model.getBooks();
     const isDuplicate = books.some((book) => book.isbn === isbn);
     if (isDuplicate) {
       this.showMessage("error", "This ISBN already exists in the book list.");
-      return false; // ISBN ist nicht einzigartig
+      return false;
     }
     return true;
   }
