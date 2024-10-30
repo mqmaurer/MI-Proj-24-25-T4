@@ -2,6 +2,7 @@ class BookController {
   constructor(model, view) {
     this.model = model;
     this.view = view;
+    this.manageTheme();
     this.navigation();
     this.setupRoutes();
     this.showSuccessMessage = false;
@@ -54,6 +55,31 @@ class BookController {
     } else if (hash === "#details") {
       document.querySelector("#zeroDetails").classList.add("active");
     }
+  }
+
+  manageTheme() {
+    const lightTheme = "css/bootstrap.light.min.css";
+    const darkTheme = "css/bootstrap.dark.min.css";
+    const themeToggleButton = document.querySelector("#theme-toggle");
+    const themeStylesheet = document.querySelector("#theme-stylesheet");
+    // Initial load of theme button
+    if (themeStylesheet.getAttribute("href") === lightTheme) {
+      document.querySelector(".fa-moon").classList.remove("hidden");
+    } else {
+      document.querySelector(".fa-sun").classList.remove("hidden");
+    }
+
+    themeToggleButton.addEventListener("click", () => {
+      if (themeStylesheet.getAttribute("href") === lightTheme) {
+        themeStylesheet.setAttribute("href", darkTheme);
+        document.querySelector(".fa-moon").classList.add("hidden");
+        document.querySelector(".fa-sun").classList.remove("hidden");
+      } else {
+        themeStylesheet.setAttribute("href", lightTheme);
+        document.querySelector(".fa-sun").classList.add("hidden");
+        document.querySelector(".fa-moon").classList.remove("hidden");
+      }
+    });
   }
 
   // Functions for handling all book releated actions, including notifications and animations
