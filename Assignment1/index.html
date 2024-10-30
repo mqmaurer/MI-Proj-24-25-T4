@@ -1,67 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iBooks</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <link
+      id="theme-stylesheet"
+      rel="stylesheet"
+      href="css/bootstrap.light.min.css"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>iBooks</title>
-  <link rel="stylesheet" href="css/main.css">
-  <link id="theme-stylesheet" rel="stylesheet" href="css/bootstrap.light.min.css">
-</head>
+  <body>
+    <script
+      src="https://kit.fontawesome.com/09490db356.js"
+      crossorigin="anonymous"
+    ></script>
 
-<body>
-  <script src="https://kit.fontawesome.com/09490db356.js" crossorigin="anonymous"></script>
-
-  <!-- Banner -->
-  <div class="banner container-fluid" id="anchor">
-    <div class="row">
-      <div class="col-5">
-        <img src="logo.webp" alt="Logo">
-      </div>
-      <div class="col-6">
-        <div class="banner-text">
-          <h1>iBooks</h1>
-          <p class="lead">Never lose a good book again</p>
+    <!-- Banner -->
+    <div class="banner container-fluid" id="anchor">
+      <div class="row">
+        <div class="col-5">
+          <img src="logo.webp" alt="Logo" />
+        </div>
+        <div class="col-6">
+          <div class="banner-text">
+            <h1>iBooks</h1>
+            <p class="lead">Never lose a good book again</p>
+          </div>
         </div>
       </div>
+      <div class="col text-end">
+        <button id="theme-toggle" class="btn btn-primary">
+          <div class="fas fa-sun hidden"></div>
+          <div class="fas fa-moon hidden"></div>
+        </button>
+      </div>
     </div>
-    <div class="col text-end">
-      <button id="theme-toggle" class="btn btn-primary">
-        <div class="fas fa-sun hidden"></div>
-        <div class="fas fa-moon hidden"></div>
-      </button>
+
+    <!-- Navigation-Tabs -->
+    <div role="tablist">
+      <ul class="nav nav-tabs w-100 justify-content-around">
+        <li class="nav-item">
+          <a class="nav-link" id="list" href="#list">Book List</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="add" href="#add">Add Book</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="zeroDetails" href="#zeroDetails"
+            >Book Detail</a
+          >
+        </li>
+      </ul>
     </div>
-  </div>
 
-  <!-- Navigation-Tabs -->
-  <div role="tablist">
-    <ul class="nav nav-tabs w-100 justify-content-around">
-      <li class="nav-item">
-        <a class="nav-link" id="list" href="#list">Book List</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="add" href="#add">Add Book</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="zeroDetails" href="#zeroDetails">Book Detail</a>
-      </li>
-    </ul>
-  </div>
+    <!-- Tab-Content -->
+    <div
+      class="tab-content d-flex justify-content-center mt-3"
+      style="width: 100%"
+    >
+      <div id="app" class="text-center w-100"></div>
+    </div>
 
-  <!-- Tab-Content -->
-  <div class="tab-content d-flex justify-content-center mt-3" style="width: 100%">
-    <div id="app" class="text-center w-100"></div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
-  <script src="src/model/model.js"></script>
-  <script src="src/view/view.js"></script>
-  <script src="src/controller/controller.js"></script>
-  <script src="app.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-
-</body>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="src/model/model.js"></script>
+    <script src="src/view/view.js"></script>
+    <script src="src/controller/controller.js"></script>
+    <script src="app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  </body>
 </html>
