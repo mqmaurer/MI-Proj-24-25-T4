@@ -1,1 +1,7 @@
-verwendeter Browser zum Testen: Firefox 132.0 (64Bit)
+used Browser for testing: Firefox 132.0 (64Bit)
+
+Design decisions:
+the Book Detail Page can always be accessed, but if no book is selected, you have to go to the book list and select one for the details to be displayed. We did this like this bcause we thought it would be the best solution. Alternatives would have been to not make the tab accessible but we thought with only 3 tabs it would e nicer if you can click on every tab
+
+Sources:
+the source for the image in the banner: https://pixabay.com/illustrations/books-shelves-bookshelves-bookcase-6344402/
