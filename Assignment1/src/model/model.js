@@ -1,4 +1,6 @@
 class BookModel {
+  // functions for adding, getting and deleting books and loading and saving books to local storage
+
   constructor() {
     this.books = this.loadBooksFromLocalStorage() || [];
   }
