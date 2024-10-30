@@ -66,8 +66,8 @@ class BookView {
         </thead>
         <tbody id="bookList">
           ${books
-            .map(
-              (book, index) => `
+        .map(
+          (book, index) => `
             <tr id="bookDetail-${index}" class="table-light">
               <td>${book.title}</td>
               <td>${book.author}</td>
@@ -75,8 +75,8 @@ class BookView {
               <td><button data-index="${index}" class="details-button" id="detailsButton" onclick="location.hash='details-${index}'"> <i class="fa-solid fa-circle-info"></i></button></td>
               <td><button data-index="${index}" class="delete-button" id="deleteButton"> <i class="fa-solid fa-trash-can"></i></button></td>
             </tr>`
-            )
-            .join("")}
+        )
+        .join("")}
         </tbody>
       </table>`;
 
@@ -114,6 +114,7 @@ class BookView {
     </div>`;
   }
 
+  // 404 error page
   displayErrorPage() {
     this.app.innerHTML = `
         <h2>404</h2>
@@ -124,7 +125,7 @@ class BookView {
         </p>`;
   }
 
-  // functions to handle book addition
+  // function to handle book addition
   bindAddBook(handler) {
     document.querySelector("#addBookForm").addEventListener("submit", (e) => {
       e.preventDefault();
