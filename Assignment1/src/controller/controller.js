@@ -43,6 +43,7 @@ class BookController {
     const match = hash.match(/#details\-(\d+)/);
     return match ? parseInt(match[1], 10) : null;
   }
+  // Set up an anchor for view at top of the page
   manageView() {
     document.querySelector("#anchor").scrollIntoView(false);
   }
@@ -57,6 +58,7 @@ class BookController {
     }
   }
 
+  // Controll light/dark theme switch & belonging button
   manageTheme() {
     const lightTheme = "css/bootstrap.light.min.css";
     const darkTheme = "css/bootstrap.dark.min.css";
@@ -90,7 +92,7 @@ class BookController {
       window.location.hash = "#list";
     }
   }
-  // function to handle the deletion of a book and the animation to remove it from the list
+  // Handle the deletion of a book and the animation to remove it from the list
   handleDeleteBook(index) {
     const bookDetail = document.querySelector(`#bookDetail-${index}`);
     if (bookDetail) {
@@ -114,7 +116,7 @@ class BookController {
     const book = this.model.getBooks()[index];
     this.view.displayBookDetails(book);
   }
-  // function to show a message to the user and to animate the message
+  // Message builder for error and success messages appearing while adding books
   showMessage(type, message) {
     let finalMessage;
     if (type === "error") {
@@ -148,7 +150,7 @@ class BookController {
       });
     }
   }
-//  function to handle the validation of the form
+  // Validate entries of book form. Trigger error messages at wrong entries
   validateForm() {
     const author = document.querySelector("#author").value.trim();
     const title = document.querySelector("#title").value.trim();
