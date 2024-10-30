@@ -11,34 +11,41 @@
 
 <body>
   <script src="https://kit.fontawesome.com/09490db356.js" crossorigin="anonymous"></script>
-  <div class="banner">
-    <img src="logo.webp" alt="Logo">
-    <div class="banner-text">
-      <h1>iBooks</h1>
-      <p class="lead">Never lose a good book again</p>
+
+  <div class="banner container-fluid">
+    <div class="row">
+      <div class="col-4">
+        <img src="logo.webp" alt="Logo">
+      </div>
+      <div class="col-6">
+        <div class="banner-text">
+          <h1>iBooks</h1>
+          <p class="lead">Never lose a good book again</p>
+        </div>
+      </div>
+    </div>
+    <div class="col text-end">
+      <button type="button" id="theme-toggle" class="btn btn-primary">Theme</button>
     </div>
   </div>
 
-  
-      <ul class="nav nav-tabs w-100 justify-content-around" role="tablist"> 
-        <li class="nav-item">
-            <a class="nav-link" id="list" href="#list">Book List</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="add" href="#add">Add Book</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="zeroDetails" href="#zeroDetails">Book Detail</a>
-          </li>
-        </ul>
-      </div>
-    
-      <div class="tab-content d-flex justify-content-center mt-3" style="width: 100%" >
-        <div id="app" class="text-center w-100"></div>
-      </div>
-     <div class="container">
-          <button id="theme-toggle" class="btn btn-primary">Theme</button>
-      </div>
+  <div role="tablist">
+    <ul class="nav nav-tabs w-100 justify-content-around">
+      <li class="nav-item">
+        <a class="nav-link" id="list" href="#list">Book List</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="add" href="#add">Add Book</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="zeroDetails" href="#zeroDetails">Book Detail</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="tab-content d-flex justify-content-center mt-3" style="width: 100%">
+    <div id="app" class="text-center w-100"></div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -50,4 +57,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
 </body>
+
 </html>
