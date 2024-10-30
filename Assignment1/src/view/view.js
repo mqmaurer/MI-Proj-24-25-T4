@@ -85,8 +85,8 @@ class BookView {
     });
   }
 
-  // If the 'details tab' is clicked on at the navbar, a message will be shown to first choose a book at 'Book List'
   displayZeroDetails() {
+    // If the 'details tab' is clicked on at the navbar, a message will be shown to first choose a book at 'Book List'
     this.app.innerHTML = `
       <h2>Nothing found here!</h2>
       <p>Please make sure to select a book at <a href=#list>Book List</a>.<br>
