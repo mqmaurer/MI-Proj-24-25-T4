@@ -90,6 +90,7 @@ class BookController {
       window.location.hash = "#list";
     }
   }
+  // function to handle the deletion of a book and the animation to remove it from the list
   handleDeleteBook(index) {
     const bookDetail = document.querySelector(`#bookDetail-${index}`);
     if (bookDetail) {
@@ -113,6 +114,7 @@ class BookController {
     const book = this.model.getBooks()[index];
     this.view.displayBookDetails(book);
   }
+  // function to show a message to the user and to animate the message
   showMessage(type, message) {
     let finalMessage;
     if (type === "error") {
@@ -146,7 +148,7 @@ class BookController {
       });
     }
   }
-
+//  function to handle the validation of the form
   validateForm() {
     const author = document.querySelector("#author").value.trim();
     const title = document.querySelector("#title").value.trim();

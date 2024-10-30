@@ -2,7 +2,7 @@ class BookView {
   constructor() {
     this.app = document.querySelector("#app");
   }
-
+  // This function will display the form to add a new book.
   displayAddBookForm() {
     this.app.innerHTML = ` 
       <div id="error-message" class="alert alert-dismissible alert-danger mb-3" style="display:none; max-width: 50rem; margin: 0 auto;"></div>
@@ -121,6 +121,7 @@ class BookView {
         </p>`;
   }
 
+  // functions to handle book addition
   bindAddBook(handler) {
     document.querySelector("#addBookForm").addEventListener("submit", (e) => {
       e.preventDefault();
@@ -132,6 +133,7 @@ class BookView {
     });
   }
 
+  // functions to handle book deletion
   setOnDeleteBook(handler) {
     this.onDeleteBook = handler;
   }
