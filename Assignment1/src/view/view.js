@@ -92,6 +92,8 @@ class BookView {
       <p>Please make sure to select a book at <a href=#list>Book List</a>.<br>
         Details will then be shown here!</p>`;
   }
+
+  // This function will display detailed information for the book chosen by the user.
   displayBookDetails(book) {
     this.app.innerHTML = `
     <div class="tab-content mt-3">
