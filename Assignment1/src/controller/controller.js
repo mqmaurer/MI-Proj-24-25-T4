@@ -8,7 +8,7 @@ class BookController {
     this.view.setOnDeleteBook(this.handleDeleteBook.bind(this));
   }
 
-  // Functions for managing hash-routing & highlighting current position at Navbar
+  // Functions for managing hash-routing, view & highlighting current position at Navbar
   setupRoutes() {
     window.addEventListener("hashchange", () => this.navigation());
     // Trigger navigation on initial load
@@ -34,12 +34,16 @@ class BookController {
     } else {
       this.view.displayErrorPage();
     }
+    this.manageView();
     this.higlightLocationAtNavbar(hash);
   }
   getDetailIndexFromHash(hash) {
     // Create Index for each saved book
     const match = hash.match(/#details\-(\d+)/);
     return match ? parseInt(match[1], 10) : null;
+  }
+  manageView() {
+    document.querySelector("#anchor").scrollIntoView(false);
   }
   higlightLocationAtNavbar(hash) {
     if (document.querySelector(".nav-link.active") !== null) {
@@ -91,6 +95,7 @@ class BookController {
       finalMessage = document.querySelector("#success-message");
     }
     if (finalMessage) {
+      this.manageView();
       finalMessage.innerText = message;
       finalMessage.style.display = "block";
       finalMessage.classList.add("show");
