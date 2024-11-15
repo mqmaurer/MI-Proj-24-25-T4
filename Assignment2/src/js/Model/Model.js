@@ -1,20 +1,16 @@
 // src/models/Model.js
 import fs from 'fs';
 import path from 'path';
-
-
-const fs = require("fs").promises;
-const path = require("path");
-const cheerio = require("cheerio");
-const terser = require("terser");
-
+import * as cheerio from "cheerio"
+import * as  terser from 'terser';
 
     // Funktion, um die Ressourcen in einer HTML-Datei zu überprüfen
  export  async function determineHTMLLinks (filePath) {
         try {
             const htmlContent = await fs.promises.readFile(filePath, 'utf-8');
+            const uncommentedHtmlContent = htmlContent.replace(/<!--[\s\S]*?-->/g, "");
             const resourcePaths = [
-                ...htmlContent.matchAll(/<script\s+src="(.+?)"/g),
+                ...uncommentedHtmlContent.matchAll(/<script\s+src="(.+?)"/g),
                 //...htmlContent.matchAll(/<link\s+href="(.+?)"/g),
             ].map(match => match[1]); // Extrahiere die Pfade aus den Matches
             return resourcePaths;
@@ -24,21 +20,24 @@ const terser = require("terser");
         }
     }
 
-   export async function checkDependencies (resourcePaths, filePath) {
+   export async function checkFilesDependencies (resourcePaths, filePath) {
+    const paths = [];
         for (const resourcePath of resourcePaths) {
             const absolutePath = path.join(path.dirname(filePath), resourcePath);
             try {
                 await fs.promises.access(absolutePath);
                 console.log(`Die Ressource "${resourcePath}" existiert.`);
+                paths.push(absolutePath);
                 
             } catch (err) {
                 console.error(`Fehler: Die Ressource "${resourcePath}" existiert nicht.`);
             }
         }
+        return paths;
     }
 
     // Funktion, um den "dist" Ordner zu löschen
-   export async function removeDistFolder () {
+   export async function removeDistFolders () {
         try {
             await fs.promises.rmdir('dist', { recursive: true });
             console.log('Der "dist" Ordner wurde erfolgreich entfernt.');
@@ -66,31 +65,33 @@ const terser = require("terser");
 //sollen alle im ordner minifiziert werden oder alle in index.html?
 
 //index html durchgehen und alle .js dateien rausfinden
-async function findJSFiles() {
-  // fs.readFile (asynchron) und cheerio, um  Datei zu laden und alle src-Attribute der <script>-Tags zu extrahieren.
-  //Gibt eine Liste mit den Pfaden zu den gefundenen .js-Dateien zurück (z. B. ['js/script1.js', 'js/test/script3.js']).
-  const htmlPath = path.join(__dirname, "../src/index.html");
-  const htmlContent = await fs.readFile(htmlPath, "utf-8");
+// async function findJSFiles(filesContent) {
+//   // fs.readFile (asynchron) und cheerio, um  Datei zu laden und alle src-Attribute der <script>-Tags zu extrahieren.
+//   //Gibt eine Liste mit den Pfaden zu den gefundenen .js-Dateien zurück (z. B. ['js/script1.js', 'js/test/script3.js']).
+  
+//   const htmlContent = filesContent; 
 
-  // Entferne alle Kommentare aus dem HTML-Inhalt
-  const uncommentedHtmlContent = htmlContent.replace(/<!--[\s\S]*?-->/g, "");
+//   // Entferne alle Kommentare aus dem HTML-Inhalt
+//   const uncommentedHtmlContent = filesContent.replace(/<!--[\s\S]*?-->/g, "");
 
-  // Parst das bereinigte HTML ohne Kommentare
-  const $ = cheerio.load(uncommentedHtmlContent);
+//   // Parst das bereinigte HTML ohne Kommentare
+//   const $ = cheerio.load(uncommentedHtmlContent);
 
-  const jsFiles = [];
-  $("script[src]").each((_, el) => {
-    jsFiles.push($(el).attr("src"));
-  });
+//   const jsFiles = [];
+//   $("script[src]").each((_, el) => {
+//     jsFiles.push($(el).attr("src"));
+//   });
 
-  return jsFiles;
-}
+//   return jsFiles;
+// }
 
+
+// Übergabe von CheckDependencies --- TODO! 
 //dist ordner mit gleicher ordnerstruktur wie js anlegen
-async function createDistFolder(jsFiles) {
+export async function createDistFolder(jsFiles) {
   //mit mkdir
   const distPath = path.join(__dirname, "../dist");
-  await fs.mkdir(distPath, { recursive: true });
+  await fs.mkdir(distPath, { recursive: true  });
 
   // Erstelle Ordnerstruktur für alle JS-Dateien
   const directories = new Set();
@@ -104,8 +105,9 @@ async function createDistFolder(jsFiles) {
   }
 }
 
+//Übergabe von ReadFiles, in zwei Funktionen aufzuteilen für Presenter = minifyJS(), minifiedJSToDist()  --- TODO!
 //im js ordner suchen und datei minifizieren + mini dateien im dist ordner speichern
-async function minifyAndSaveJS(jsFiles) {
+export async function minifyAndSaveJS(jsFiles) {
   //Prüfe mit fs.access, ob die Datei existiert.
   //minifiziere sie mit terser und speichere den minifizierten Code
   for (const jsFile of jsFiles) {
@@ -126,7 +128,7 @@ async function minifyAndSaveJS(jsFiles) {
 }
 
 //Kopiert die index.html-Datei in den dist-Ordner und passt die Referenzen der JavaScript-Dateien an die minifizierten Versionen an.
-async function copyAndModifyHtml(jsFiles) {
+export async function copyAndModifyHtml(jsFiles) {
   //Lese die index.html, ersetze alle .js-Dateireferenzen durch die Pfade im dist-Ordner (z. B. src="js/script1.js" zu src="dist/js/script1.min.js").
   //Speichere die modifizierte index.html im dist-Ordner.
   const htmlPath = path.join(__dirname, "../src/index.html");

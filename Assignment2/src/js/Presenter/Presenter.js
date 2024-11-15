@@ -1,7 +1,6 @@
 import Listr from 'listr';
 import { ChooseAction } from "../View/View.js"
-
-
+import {determineHTMLLinks, checkFilesDependencies, readFiles, removeDistFolders, minifyAndSaveJS, createDistFolder, copyAndModifyHtml} from "../Model/Model.js"
 // Based on user's choice, different tasks and their progresses would be shown.
 export async function runTasks() {
   const action = await ChooseAction();
@@ -12,7 +11,6 @@ export async function runTasks() {
       checkDependencies();
     } catch (err) {
       console.error('An error occurred:', err);
-      exit();
     }
   }
   // If user chooses to validate and minify, following tasks would show.
@@ -28,54 +26,46 @@ export async function runTasks() {
       await indexToDist();
     } catch (err) {
       console.error('An error occurred:', err);
-      exit();
+  
     }
   }
 }
-
-async function determineLinksHTML() {
+ const paths = async function determineLinksHTML() {
   const tasks = new Listr([
     {
       title: 'Determine Links from the HTML File',
       task: async () => {
-        await new Promise(resolve => setTimeout(resolve, 1000)); //Remove this for function body
+       return determineHTMLLinks("./src/index.html");
       },
     },
   ])
-  await tasks.run().catch(err => {
+  await tasks.run()
+  .catch(err => {
     console.error('An error occurred:', err);
     return err;
-  });
+  }).then(result => { return result;});
 }
 
-async function checkDependencies() {
+const checkedPaths = async function checkDependencies(paths) {
   const tasks = new Listr([
     {
       title: 'Check Dependencies',
       task: async () => {
-        await new Promise(resolve => setTimeout(resolve, 1000)); //Remove this for function body
-
-        const hasError = true;
-        const userHomeDir = os.homedir();
-        const directory = path.join(userHomeDir, 'myproject', 'doesNotExist.js');
-
-        if (hasError) {
-          throw new Error('Error happened - ENONENT: no such file or directory, access ' + directory);
-        }
+       return checkFilesDependencies(paths,".\index.html");
       },
     },
   ])
   await tasks.run().catch(err => {
-    console.error('An error occurred:', err);
+    console.error('An error occurred:', err).then(result => { return result;});
   });
 }
 
-async function readLinkedFiles() {
+const pathAndContent = async function readLinkedFiles(checkedPaths) {
   const tasks = new Listr([
     {
       title: 'Read in linked files',
       task: async () => {
-        await new Promise(resolve => setTimeout(resolve, 1000));//Remove this for function body
+       return readFiles(checkedPaths);
       },
     },
   ])
@@ -89,7 +79,7 @@ async function removeDistFolder() {
     {
       title: 'Remove the dist folder',
       task: async () => {
-        await new Promise(resolve => setTimeout(resolve, 1000));//Remove this for function body
+        return removeDistFolders();
       },
     },
   ])
@@ -98,26 +88,26 @@ async function removeDistFolder() {
   });
 }
 
-async function minifyJS() {
+const minifiedJS = async function minifyJS(pathAndContent) {
   const tasks = new Listr([
     {
       title: 'Minify JS Code',
       task: async () => {
-        await new Promise(resolve => setTimeout(resolve, 1000));//Remove this for function body
+       return minifyAndSaveJS(pathAndContent);
       },
     },
   ])
   await tasks.run().catch(err => {
     console.error('An error occurred:', err);
-  });
+  }).then(result => { return result;});
 }
 
-async function createNewFileStructure() {
+async function createNewFileStructure(checkPaths) {
   const tasks = new Listr([
     {
       title: 'Create the file structure for the following copy task',
       task: async () => {
-        await new Promise(resolve => setTimeout(resolve, 1000));//Remove this for function body
+        return createDistFolder(checkedPaths);
       },
     },
   ])
@@ -126,12 +116,12 @@ async function createNewFileStructure() {
   });
 }
 
-async function minifiedJSToDist() {
+async function minifiedJSToDist(pathAndContent) {
   const tasks = new Listr([
     {
       title: 'Copy the minified javascript files to the dist folder',
       task: async () => {
-        await new Promise(resolve => setTimeout(resolve, 1000));//Remove this for function body
+       return minifyAndSaveJS(pathAndContent);
       },
     },
   ])
@@ -140,14 +130,14 @@ async function minifiedJSToDist() {
   });
 }
 
-async function indexToDist() {
+async function indexToDist(paths) {
   const tasks = new Listr([
     {
       title: 'Copy index.html file into the dist folder',
       task: async () => {
-        await new Promise(resolve => setTimeout(resolve, 1000));//Remove this for function body
-      },
+       return copyAndModifyHtml(paths);
     },
+  },
   ])
   await tasks.run().catch(err => {
     console.error('An error occurred:', err);
