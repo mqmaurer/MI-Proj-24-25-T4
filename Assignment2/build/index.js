@@ -6,6 +6,7 @@ const terser = require("terser");
 console.log("Your Code should start here ... :)");
 //TODO Fehlerbehandlung!
 //ist ordnerstruktur immer so?
+//sollen alle im ordner minifiziert werden oder alle in index.html?
 
 //index html durchgehen und alle .js dateien rausfinden
 async function findJSFiles() {
@@ -69,6 +70,8 @@ async function minifyAndSaveJS(jsFiles) {
 
 //Kopiert die index.html-Datei in den dist-Ordner und passt die Referenzen der JavaScript-Dateien an die minifizierten Versionen an.
 async function copyAndModifyHtml(jsFiles) {
+  //Lese die index.html, ersetze alle .js-Dateireferenzen durch die Pfade im dist-Ordner (z. B. src="js/script1.js" zu src="dist/js/script1.min.js").
+  //Speichere die modifizierte index.html im dist-Ordner.
   const htmlPath = path.join(__dirname, "../src/index.html");
   const htmlContent = await fs.readFile(htmlPath, "utf-8");
   const $ = cheerio.load(htmlContent);
@@ -77,6 +80,4 @@ async function copyAndModifyHtml(jsFiles) {
   });
   const distHtmlPath = path.join(__dirname, "../dist/index.html");
   await fs.writeFile(distHtmlPath, $.html());
-  //Lese die index.html, ersetze alle .js-Dateireferenzen durch die Pfade im dist-Ordner (z. B. src="js/script1.js" zu src="dist/js/script1.min.js").
-  //Speichere die modifizierte index.html im dist-Ordner.
 }
