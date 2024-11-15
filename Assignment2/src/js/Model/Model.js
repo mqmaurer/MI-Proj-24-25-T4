@@ -11,8 +11,9 @@ import * as  terser from 'terser';
             const uncommentedHtmlContent = htmlContent.replace(/<!--[\s\S]*?-->/g, "");
             const resourcePaths = [
                 ...uncommentedHtmlContent.matchAll(/<script\s+src="(.+?)"/g),
-                //...htmlContent.matchAll(/<link\s+href="(.+?)"/g),
+                ...htmlContent.matchAll(/<link\s+href="(.+?)"/g),
             ].map(match => match[1]); // Extrahiere die Pfade aus den Matches
+            console.log(resourcePaths)
             return resourcePaths;
         } catch (error) {
             console.error('Fehler beim Lesen der HTML-Datei:', error.message);
@@ -39,7 +40,7 @@ import * as  terser from 'terser';
     // Funktion, um den "dist" Ordner zu löschen
    export async function removeDistFolders () {
         try {
-            await fs.promises.rmdir('dist', { recursive: true });
+            await fs.promises.rm('dist', { recursive: true });
             console.log('Der "dist" Ordner wurde erfolgreich entfernt.');
         } catch (error) {
             console.error('Fehler beim Löschen des "dist" Ordners:', error.message);
