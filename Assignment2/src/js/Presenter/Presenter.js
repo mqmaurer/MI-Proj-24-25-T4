@@ -1,5 +1,5 @@
 import Listr from 'listr';
-import { ChooseAction } from "../View/View.js"
+import { ChooseAction } from "../View/View.js";
 
 // Based on user's choice, different tasks and their progresses would be shown.
 export async function runTasks() {
@@ -7,11 +7,10 @@ export async function runTasks() {
   // If user chooses only to validate dependencies, following tasks would show.
   if (action === 'validate') {
     try {
-      determineLinksHTML();
-      checkDependencies();
+      await determineLinksHTML();
+      await checkDependencies();
     } catch (err) {
-      console.error('An error occurred:', err);
-      exit();
+      console.error(err);
     }
   }
   // If user chooses to validate and minify, following tasks would show.
@@ -26,8 +25,7 @@ export async function runTasks() {
       await minifiedJSToDist();
       await indexToDist();
     } catch (err) {
-      console.error('An error occurred:', err);
-      exit();
+      console.error(err);
     }
   }
 }
@@ -42,8 +40,7 @@ async function determineLinksHTML() {
     },
   ])
   await tasks.run().catch(err => {
-    console.error('An error occurred:', err);
-    return err;
+    throw new Error('An error occurred:', err);
   });
 }
 
@@ -52,20 +49,15 @@ async function checkDependencies() {
     {
       title: 'Check Dependencies',
       task: async () => {
-        await new Promise(resolve => setTimeout(resolve, 1000)); //Remove this for function body
 
-        const hasError = true;
-        const userHomeDir = os.homedir();
-        const directory = path.join(userHomeDir, 'myproject', 'doesNotExist.js');
+        const blah = os.homedir();
+        console.log(blah);
 
-        if (hasError) {
-          throw new Error('Error happened - ENONENT: no such file or directory, access ' + directory);
-        }
-      },
+      }
     },
   ])
   await tasks.run().catch(err => {
-    console.error('An error occurred:', err);
+    throw new Error('An error occurred:', err);
   });
 }
 
@@ -79,7 +71,7 @@ async function readLinkedFiles() {
     },
   ])
   await tasks.run().catch(err => {
-    console.error('An error occurred:', err);
+    throw new Error('An error occurred:', err);
   });
 }
 
@@ -93,7 +85,7 @@ async function removeDistFolder() {
     },
   ])
   await tasks.run().catch(err => {
-    console.error('An error occurred:', err);
+    throw new Error('An error occurred:', err);
   });
 }
 
@@ -107,7 +99,7 @@ async function minifyJS() {
     },
   ])
   await tasks.run().catch(err => {
-    console.error('An error occurred:', err);
+    throw new Error('An error occurred:', err);
   });
 }
 
@@ -121,7 +113,7 @@ async function createNewFileStructure() {
     },
   ])
   await tasks.run().catch(err => {
-    console.error('An error occurred:', err);
+    throw new Error('An error occurred:', err);
   });
 }
 
@@ -135,7 +127,7 @@ async function minifiedJSToDist() {
     },
   ])
   await tasks.run().catch(err => {
-    console.error('An error occurred:', err);
+    throw new Error('An error occurred:', err);
   });
 }
 
@@ -149,6 +141,6 @@ async function indexToDist() {
     },
   ])
   await tasks.run().catch(err => {
-    console.error('An error occurred:', err);
+    throw new Error('An error occurred:', err);
   });
 }
