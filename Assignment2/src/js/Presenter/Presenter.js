@@ -1,6 +1,7 @@
 import Listr from 'listr';
 import { ChooseAction } from "../View/View.js"
-import {determineHTMLLinks, checkFilesDependencies, readFiles, removeDistFolders, minifyAndSaveJS, createDistFolder, copyAndModifyHtml} from "../Model/Model.js"
+import { determineHTMLLinks, checkFilesDependencies, readFiles, removeDistFolders, minifyAndSaveJS, createDistFolder, copyAndModifyHtml } from "../Model/Model.js"
+
 // Based on user's choice, different tasks and their progresses would be shown.
 export async function runTasks() {
   const action = await ChooseAction();
@@ -10,7 +11,7 @@ export async function runTasks() {
       const paths =  await determineLinksHTML();
       await checkDependencies(paths);
     } catch (err) {
-      console.error('An error occurred:', err);
+      console.error(err);
     }
   }
   // If user chooses to validate and minify, following tasks would show.
@@ -25,11 +26,11 @@ export async function runTasks() {
       await minifiedJSToDist(minifiedJS);
       await indexToDist();
     } catch (err) {
-      console.error('An error occurred:', err);
-  
+      console.error(err);
     }
   }
 }
+
  async function determineLinksHTML() {
   const tasks = new Listr([
     {
@@ -60,8 +61,9 @@ async function checkDependencies(paths) {
 
   try {
     const context = {}; // Kontext für Listr erstellen
-    await tasks.run(context);
-    return context.dependencies; // Rückgabe der geprüften Abhängigkeiten
+    await tasks.run(context);catch(err => {
+    throw new Error('An error occurred:', err)
+  }).then return context.dependencies; // Rückgabe der geprüften Abhängigkeiten
   } catch (err) {
     console.error('An error occurred:', err);
     return []; // Rückgabe eines leeren Arrays im Fehlerfall
@@ -79,8 +81,9 @@ async function readLinkedFiles(checkedPaths) {
   ])
   try {
     const context = {}; // Kontext für Listr erstellen
-    await tasks.run(context);
-    return context.content; // Rückgabe der geprüften Abhängigkeiten
+    await tasks.run(context).catch(err => {
+    throw new Error('An error occurred:', err);
+  }).then return context.content; // Rückgabe der geprüften Abhängigkeiten
   } catch (err) {
     console.error('An error occurred:', err);
     return []; // Rückgabe eines leeren Arrays im Fehlerfall
@@ -97,7 +100,7 @@ async function removeDistFolder() {
     },
   ])
   await tasks.run().catch(err => {
-    console.error('An error occurred:', err);
+    throw new Error('An error occurred:', err);
   });
 }
 
@@ -113,8 +116,9 @@ async function removeDistFolder() {
 
   try {
     const context = {}; 
-    await tasks.run(context);
-    return context.minifedScript; 
+    await tasks.run(context).catch(err => {
+    throw new Error('An error occurred:', err);
+  }).then return context.minifedScript; 
   } catch (err) {
     console.error('An error occurred:', err);
     return []; // Rückgabe eines leeren Arrays im Fehlerfall
@@ -131,7 +135,7 @@ async function createNewFileStructure(checkPaths) {
     },
   ])
   await tasks.run().catch(err => {
-    console.error('An error occurred:', err);
+    throw new Error('An error occurred:', err);
   });
 }
 
@@ -146,7 +150,7 @@ async function minifiedJSToDist(pathAndContent) {
     },
   ])
   await tasks.run().catch(err => {
-    console.error('An error occurred:', err);
+    throw new Error('An error occurred:', err);
   });
 }
 
@@ -157,9 +161,8 @@ async function indexToDist(paths) {
       task: async () => {
        await copyAndModifyHtml(paths);
     },
-  },
   ])
   await tasks.run().catch(err => {
-    console.error('An error occurred:', err);
+    throw new Error('An error occurred:', err);
   });
 }
