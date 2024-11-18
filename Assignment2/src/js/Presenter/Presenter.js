@@ -5,7 +5,8 @@ import {
   checkFilesDependencies,
   readFiles,
   removeDistFolders,
-  minifyAndSaveJS,
+  minify,
+  saveMinified,
   createDistFolder,
   copyAndModifyHtml,
 } from "../Model/Model.js";
@@ -30,9 +31,9 @@ export async function runTasks() {
       const linkedFiles = await readLinkedFiles(checkedPaths);
       await removeDistFolder();
       const minifiedJS = await minifyJS(linkedFiles);
-      await createNewFileStructure(checkedPaths);
-      await minifiedJSToDist(minifiedJS);
-      await indexToDist();
+      const distPaths = await createNewFileStructure(checkedPaths);
+      await minifiedJSToDist(minifiedJS, distPaths);
+      await indexToDist(paths);
     } catch (err) {
       console.error(err);
     }
@@ -124,7 +125,7 @@ async function minifyJS(pathAndContent) {
     {
       title: "Minify JS Code",
       task: async (ctx) => {
-        ctx.minifedScript = await minifyAndSaveJS(pathAndContent);
+        ctx.minifedScript = await minify(pathAndContent);
       },
     },
   ]);
@@ -141,27 +142,33 @@ async function minifyJS(pathAndContent) {
   }
 }
 
-async function createNewFileStructure(checkPaths) {
+async function createNewFileStructure(paths) {
   const tasks = new Listr([
     {
       title: "Create the file structure for the following copy task",
-      task: async () => {
-        await createDistFolder(checkedPaths);
+      task: async (ctx) => {
+        ctx.srcAndDist = await createDistFolder(paths);
       },
     },
   ]);
-  await tasks.run().catch((err) => {
-    throw new Error("An error occurred:", err);
-  });
+  try {
+    const context = {};
+    await tasks.run(context).catch((err) => {
+      throw new Error("An error occurred:", err);
+    });
+    return context.srcAndDist;
+  } catch (err) {
+    console.error("An error occurred:", err);
+    return []; // Rückgabe eines leeren Arrays im Fehlerfall
+  }
 }
 
-//to be changed
-async function minifiedJSToDist(pathAndContent) {
+async function minifiedJSToDist(contents, paths) {
   const tasks = new Listr([
     {
       title: "Copy the minified javascript files to the dist folder",
       task: async () => {
-        await minifyAndSaveJS(pathAndContent);
+        await saveMinified(contents, paths);
       },
     },
   ]);
@@ -170,12 +177,12 @@ async function minifiedJSToDist(pathAndContent) {
   });
 }
 
-async function indexToDist(paths) {
+async function indexToDist() {
   const tasks = new Listr([
     {
       title: "Copy index.html file into the dist folder",
       task: async () => {
-        await copyAndModifyHtml(paths);
+        await copyAndModifyHtml();
       },
     },
   ]);

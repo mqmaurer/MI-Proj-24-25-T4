@@ -1,145 +1,148 @@
 // src/models/Model.js
-import fs from 'fs';
-import path from 'path';
-import * as cheerio from "cheerio"
-import * as  terser from 'terser';
+import fs from "fs";
+import path from "path";
+import * as cheerio from "cheerio";
+import * as terser from "terser";
 
-    // Funktion, um die Ressourcen in einer HTML-Datei zu überprüfen
- export  async function determineHTMLLinks (filePath) {
-        try {
-            const htmlContent = await fs.promises.readFile(filePath, 'utf-8');
-            const uncommentedHtmlContent = htmlContent.replace(/<!--[\s\S]*?-->/g, "");
-            const resourcePaths = [
-                ...uncommentedHtmlContent.matchAll(/<script\s+src="(.+?)"/g),
-                ...htmlContent.matchAll(/<link\s+href="(.+?)"/g),
-            ].map(match => match[1]); // Extrahiere die Pfade aus den Matches
-            console.log(resourcePaths)
-            return resourcePaths;
-        } catch (error) {
-            console.error('Fehler beim Lesen der HTML-Datei:', error.message);
-            return [];
-        }
-    }
-
-   export async function checkFilesDependencies (resourcePaths, filePath) {
-    const paths = [];
-        for (const resourcePath of resourcePaths) {
-            const absolutePath = path.join(path.dirname(filePath), resourcePath);
-            try {
-                await fs.promises.access(absolutePath);
-                console.log(`Die Ressource "${resourcePath}" existiert.`);
-                paths.push(absolutePath);
-                
-            } catch (err) {
-                console.error(`Fehler: Die Ressource "${resourcePath}" existiert nicht.`);
-            }
-        }
-        return paths;
-    }
-
-    // Funktion, um den "dist" Ordner zu löschen
-   export async function removeDistFolders () {
-        try {
-            await fs.promises.rm('dist', { recursive: true });
-            console.log('Der "dist" Ordner wurde erfolgreich entfernt.');
-        } catch (error) {
-            console.error('Fehler beim Löschen des "dist" Ordners:', error.message);
-        }
-    }
-
-    // Funktion, um Dateien zu einzulesen -- muss noch gechekt werden ob stream nicht besser
-  export async function readFiles (filePaths) {
-        try {
-            const fileContents = [];
-            for (const filePath of filePaths) {
-                const content = await fs.promises.readFile(filePath, 'utf-8');
-                fileContents.push({ filePath, content });
-            }
-            return fileContents;
-        } catch (error) {
-            console.error('Fehler beim Lesen der Dateien:', error.message);
-        }
-    }
-
-    //TODO Fehlerbehandlung!
-//ist ordnerstruktur immer so?
-//sollen alle im ordner minifiziert werden oder alle in index.html?
-
-//index html durchgehen und alle .js dateien rausfinden
-// async function findJSFiles(filesContent) {
-//   // fs.readFile (asynchron) und cheerio, um  Datei zu laden und alle src-Attribute der <script>-Tags zu extrahieren.
-//   //Gibt eine Liste mit den Pfaden zu den gefundenen .js-Dateien zurück (z. B. ['js/script1.js', 'js/test/script3.js']).
-  
-//   const htmlContent = filesContent; 
-
-//   // Entferne alle Kommentare aus dem HTML-Inhalt
-//   const uncommentedHtmlContent = filesContent.replace(/<!--[\s\S]*?-->/g, "");
-
-//   // Parst das bereinigte HTML ohne Kommentare
-//   const $ = cheerio.load(uncommentedHtmlContent);
-
-//   const jsFiles = [];
-//   $("script[src]").each((_, el) => {
-//     jsFiles.push($(el).attr("src"));
-//   });
-
-//   return jsFiles;
-// }
-
-
-// Übergabe von CheckDependencies --- TODO! 
-//dist ordner mit gleicher ordnerstruktur wie js anlegen
-export async function createDistFolder(jsFiles) {
-  //mit mkdir
-  const distPath = path.join(__dirname, "../dist");
-  await fs.mkdir(distPath, { recursive: true  });
-
-  // Erstelle Ordnerstruktur für alle JS-Dateien
-  const directories = new Set();
-  jsFiles.forEach((jsFile) => {
-    const dir = path.join(distPath, path.dirname(jsFile));
-    directories.add(dir);
-  });
-
-  for (const dir of directories) {
-    await fs.mkdir(dir, { recursive: true });
+// Funktion, um die Ressourcen in einer HTML-Datei zu überprüfen
+export async function determineHTMLLinks(filePath) {
+  try {
+    const htmlContent = await fs.promises.readFile(filePath, "utf-8");
+    const uncommentedHtmlContent = htmlContent.replace(/<!--[\s\S]*?-->/g, "");
+    const resourcePaths = [
+      ...uncommentedHtmlContent.matchAll(/<script\s+src="(.+?)"/g),
+      ...htmlContent.matchAll(/<link\s+href="(.+?)"/g),
+    ].map((match) => match[1]); // Extrahiere die Pfade aus den Matches
+    console.log(resourcePaths);
+    return resourcePaths;
+  } catch (error) {
+    console.error("Fehler beim Lesen der HTML-Datei:", error.message);
+    return [];
   }
 }
 
-//Übergabe von ReadFiles, in zwei Funktionen aufzuteilen für Presenter = minifyJS(), minifiedJSToDist()  --- TODO!
-//im js ordner suchen und datei minifizieren + mini dateien im dist ordner speichern
-export async function minifyAndSaveJS(jsFiles) {
-  //Prüfe mit fs.access, ob die Datei existiert.
-  //minifiziere sie mit terser und speichere den minifizierten Code
-  for (const jsFile of jsFiles) {
-    const srcFilePath = path.join(__dirname, "../src", jsFile);
-    const distFilePath = path.join(__dirname, "../dist", jsFile);
-
+export async function checkFilesDependencies(resourcePaths, filePath) {
+  const paths = [];
+  for (const resourcePath of resourcePaths) {
+    const absolutePath = path.join(path.dirname(filePath), resourcePath);
     try {
-      const fileContent = await fs.readFile(srcFilePath, "utf-8");
-      const minified = await terser.minify(fileContent);
+      await fs.promises.access(absolutePath);
+      console.log(`Die Ressource "${resourcePath}" existiert.`);
+      paths.push(absolutePath);
+    } catch (err) {
+      console.error(`Fehler: Die Ressource "${resourcePath}" existiert nicht.`);
+    }
+  }
+  console.log(paths);
+  return paths;
+}
+
+// Funktion, um den "dist" Ordner zu löschen
+export async function removeDistFolders() {
+  try {
+    await fs.promises.rm("dist", { recursive: true });
+    console.log('Der "dist" Ordner wurde erfolgreich entfernt.');
+  } catch (error) {
+    console.error('Fehler beim Löschen des "dist" Ordners:', error.message);
+  }
+}
+
+// Funktion, um Dateien zu einzulesen -- muss noch gechekt werden ob stream nicht besser
+export async function readFiles(filePaths) {
+  try {
+    const fileContents = [];
+    for (const filePath of filePaths) {
+      const content = await fs.promises.readFile(filePath, "utf-8");
+      fileContents.push({ filePath, content });
+    }
+    return fileContents;
+  } catch (error) {
+    console.error("Fehler beim Lesen der Dateien:", error.message);
+  }
+}
+
+export async function minify(fileData) {
+  const minifiedResults = []; // Array für die Ergebnisse der Minifizierung
+  for (const { filePath, content } of fileData) {
+    try {
+      // Minifiziere den Inhalt
+      const minified = await terser.minify(content);
+
       if (minified.code) {
-        await fs.writeFile(distFilePath, minified.code);
-        console.log(`Minified and saved: ${distFilePath}`);
+        // Speichere den minifizierten Code im Ergebnis-Array
+        minifiedResults.push({
+          originalFilePath: filePath,
+          minifiedContent: minified.code,
+        });
       }
     } catch (error) {
-      console.error(`Error processing ${jsFile}: ${error.message}`);
+      console.error("Fehler beim Minifizieren der Dateien", error.message);
+    }
+  }
+  return minifiedResults; // Rückgabe der minifizierten Ergebnisse
+}
+
+// Funktion zum Erstellen der Zielverzeichnisse und Zurückgeben der Pfade
+export async function createDistFolder(paths) {
+  const mapping = [];
+
+  for (const srcPath of paths) {
+    const relativePath = path.relative(path.resolve("src"), srcPath);
+    const distPath = path.join(path.resolve("dist"), relativePath);
+
+    try {
+      // Verzeichnis erstellen
+      const dirPath = path.dirname(distPath);
+      await fs.promises.mkdir(dirPath, { recursive: true });
+      console.log(`Verzeichnis erstellt: ${dirPath}`);
+      await fs.promises.writeFile(distPath, "", "utf8");
+      console.log(`Leere Datei erstellt: ${distPath}`);
+
+      mapping.push({ src: srcPath, dist: distPath });
+    } catch (error) {
+      console.error(
+        "Fehler beim Erstellen des Verzeichnisses oder der Datei:",
+        error
+      );
+    }
+  }
+
+  return mapping; // Gibt Mapping zurück
+}
+
+// Funktion zum Speichern der minifizierten Dateien
+export async function saveMinified(minified, mapping) {
+  for (const file of minified) {
+    // 1. Suche den passenden dist-Pfad aus dem Mapping
+    const mapEntry = mapping.find((m) => m.src === file.originalFilePath);
+    if (!mapEntry) {
+      console.error(`Kein Mapping gefunden für: ${file.originalFilePath}`);
+      continue;
+    }
+
+    const distPath = mapEntry.dist;
+
+    try {
+      await fs.promises.writeFile(distPath, file.minifiedContent, "utf8");
+      console.log(`Minifizierte Datei gespeichert: ${distPath}`);
+    } catch (error) {
+      console.error(`Fehler beim Speichern der Datei ${distPath}:`, error);
     }
   }
 }
 
-//Kopiert die index.html-Datei in den dist-Ordner und passt die Referenzen der JavaScript-Dateien an die minifizierten Versionen an.
-export async function copyAndModifyHtml(jsFiles) {
-  //Lese die index.html, ersetze alle .js-Dateireferenzen durch die Pfade im dist-Ordner (z. B. src="js/script1.js" zu src="dist/js/script1.min.js").
-  //Speichere die modifizierte index.html im dist-Ordner.
-  const htmlPath = path.join(__dirname, "../src/index.html");
-  const htmlContent = await fs.readFile(htmlPath, "utf-8");
-  const $ = cheerio.load(htmlContent);
-  jsFiles.forEach((jsFile) => {
-    $(`script[src="${jsFile}"]`).attr("src", jsFile);
-  });
-  const distHtmlPath = path.join(__dirname, "../dist/index.html");
-  await fs.writeFile(distHtmlPath, $.html());
+//Kopiert die index.html-Datei in den dist-Ordner
+export async function copyAndModifyHtml() {
+  try {
+    const indexHtmlPath = path.join(path.resolve("src"), "index.html");
+    const htmlContent = await fs.promises.readFile(indexHtmlPath, "utf-8");
+    const $ = cheerio.load(htmlContent);
+    const distIndexHtmlPath = path.join(path.resolve("dist"), "index.html");
+    await fs.promises.writeFile(distIndexHtmlPath, $.html(), "utf-8");
+    console.log(
+      `Die angepasste index.html wurde im dist-Ordner gespeichert: ${distIndexHtmlPath}`
+    );
+  } catch (error) {
+    console.error("Fehler beim Aktualisieren der index.html:", error.message);
+  }
 }
-
-
