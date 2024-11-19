@@ -1,4 +1,3 @@
-// src/models/Model.js
 import fs from "fs";
 import path from "path";
 import * as cheerio from "cheerio";
@@ -16,8 +15,7 @@ export async function determineHTMLLinks(filePath) {
     console.log(resourcePaths);
     return resourcePaths;
   } catch (error) {
-    console.error("Fehler beim Lesen der HTML-Datei:", error.message);
-    return [];
+    throw new Error("Fehler beim Lesen der HTML-Datei:", error.message);
   }
 }
 
@@ -30,7 +28,7 @@ export async function checkFilesDependencies(resourcePaths, filePath) {
       console.log(`Die Ressource "${resourcePath}" existiert.`);
       paths.push(absolutePath);
     } catch (err) {
-      console.error(`Fehler: Die Ressource "${resourcePath}" existiert nicht.`);
+      throw new Error(`Fehler: Die Ressource "${resourcePath}" existiert nicht.`);
     }
   }
   console.log(paths);
@@ -43,7 +41,7 @@ export async function removeDistFolders() {
     await fs.promises.rm("dist", { recursive: true });
     console.log('Der "dist" Ordner wurde erfolgreich entfernt.');
   } catch (error) {
-    console.error('Fehler beim Löschen des "dist" Ordners:', error.message);
+    throw new Error('Fehler beim Löschen des "dist" Ordners:', error.message);
   }
 }
 
@@ -57,7 +55,7 @@ export async function readFiles(filePaths) {
     }
     return fileContents;
   } catch (error) {
-    console.error("Fehler beim Lesen der Dateien:", error.message);
+    throw new Error("Fehler beim Lesen der Dateien:", error.message);
   }
 }
 
@@ -76,7 +74,7 @@ export async function minify(fileData) {
         });
       }
     } catch (error) {
-      console.error("Fehler beim Minifizieren der Dateien", error.message);
+      throw new Error("Fehler beim Minifizieren der Dateien", error.message);
     }
   }
   return minifiedResults; // Rückgabe der minifizierten Ergebnisse
@@ -100,7 +98,7 @@ export async function createDistFolder(paths) {
 
       mapping.push({ src: srcPath, dist: distPath });
     } catch (error) {
-      console.error(
+      throw new Error(
         "Fehler beim Erstellen des Verzeichnisses oder der Datei:",
         error
       );
@@ -126,7 +124,7 @@ export async function saveMinified(minified, mapping) {
       await fs.promises.writeFile(distPath, file.minifiedContent, "utf8");
       console.log(`Minifizierte Datei gespeichert: ${distPath}`);
     } catch (error) {
-      console.error(`Fehler beim Speichern der Datei ${distPath}:`, error);
+      throw new Error(`Fehler beim Speichern der Datei ${distPath}:`, error);
     }
   }
 }
@@ -143,6 +141,6 @@ export async function copyAndModifyHtml() {
       `Die angepasste index.html wurde im dist-Ordner gespeichert: ${distIndexHtmlPath}`
     );
   } catch (error) {
-    console.error("Fehler beim Aktualisieren der index.html:", error.message);
+    throw new Error("Fehler beim Aktualisieren der index.html:", error.message);
   }
 }

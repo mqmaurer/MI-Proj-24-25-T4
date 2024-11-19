@@ -49,15 +49,15 @@ async function determineLinksHTML() {
       },
     },
   ]);
-  try {
-    const context = {}; // Kontext für Listr erstellen
-    await tasks.run(context).catch((err) => {
+  /* try {
+    const context = {}; // Kontext für Listr erstellen */
+  await tasks.run(/* context */)/* .catch((err) => {
       console.error("An error occurred:", err);
     });
     return context.paths; // Links aus dem Kontext zurückgeben
   } catch (err) {
     console.error("An error occurred:", err);
-  }
+  } */
 }
 
 async function checkDependencies(paths) {
@@ -72,17 +72,16 @@ async function checkDependencies(paths) {
       },
     },
   ]);
-
-  try {
-    const context = {}; // Kontext für Listr erstellen
-    await tasks.run(context).catch((err) => {
+  /* try {
+    const context = {}; // Kontext für Listr erstellen */
+  await tasks.run(/* context */)/* .catch((err) => {
       throw new Error("An error occurred:", err);
     });
     return context.dependencies; // Rückgabe der geprüften Abhängigkeiten
   } catch (err) {
     console.error("An error occurred:", err);
     return []; // Rückgabe eines leeren Arrays im Fehlerfall
-  }
+  } */
 }
 
 async function readLinkedFiles(checkedPaths) {
@@ -94,16 +93,16 @@ async function readLinkedFiles(checkedPaths) {
       },
     },
   ]);
-  try {
-    const context = {}; // Kontext für Listr erstellen
-    await tasks.run(context).catch((err) => {
+  /* try {
+    const context = {}; // Kontext für Listr erstellen */
+  await tasks.run(/* context */)/* .catch((err) => {
       throw new Error("An error occurred:", err);
     });
     return context.content; // Rückgabe der geprüften Abhängigkeiten
   } catch (err) {
     console.error("An error occurred:", err);
     return []; // Rückgabe eines leeren Arrays im Fehlerfall
-  }
+  } */
 }
 
 async function removeDistFolder() {
@@ -115,9 +114,9 @@ async function removeDistFolder() {
       },
     },
   ]);
-  await tasks.run().catch((err) => {
+  await tasks.run()/* .catch((err) => {
     throw new Error("An error occurred:", err);
-  });
+  }); */
 }
 
 async function minifyJS(pathAndContent) {
@@ -129,17 +128,16 @@ async function minifyJS(pathAndContent) {
       },
     },
   ]);
-
-  try {
-    const context = {};
-    await tasks.run(context).catch((err) => {
+  /* try {
+    const context = {}; */
+  await tasks.run(/* context */)/* .catch((err) => {
       throw new Error("An error occurred:", err);
     });
     return context.minifedScript;
   } catch (err) {
     console.error("An error occurred:", err);
     return []; // Rückgabe eines leeren Arrays im Fehlerfall
-  }
+  } */
 }
 
 async function createNewFileStructure(paths) {
@@ -151,16 +149,16 @@ async function createNewFileStructure(paths) {
       },
     },
   ]);
-  try {
-    const context = {};
-    await tasks.run(context).catch((err) => {
+  /* try {
+    const context = {}; */
+  await tasks.run(/* context */)/* .catch((err) => {
       throw new Error("An error occurred:", err);
     });
     return context.srcAndDist;
   } catch (err) {
     console.error("An error occurred:", err);
     return []; // Rückgabe eines leeren Arrays im Fehlerfall
-  }
+  } */
 }
 
 async function minifiedJSToDist(contents, paths) {
@@ -172,9 +170,9 @@ async function minifiedJSToDist(contents, paths) {
       },
     },
   ]);
-  await tasks.run().catch((err) => {
+  await tasks.run()/* .catch((err) => {
     throw new Error("An error occurred:", err);
-  });
+  }); */
 }
 
 async function indexToDist() {
@@ -186,7 +184,7 @@ async function indexToDist() {
       },
     },
   ]);
-  await tasks.run().catch((err) => {
+  await tasks.run()/* .catch((err) => {
     throw new Error("An error occurred:", err);
-  });
+  }); */
 }
