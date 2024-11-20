@@ -3,49 +3,48 @@ import path from "path";
 import * as cheerio from "cheerio";
 import * as terser from "terser";
 
-// Funktion, um die Ressourcen in einer HTML-Datei zu überprüfen
+// Function to check resources in an HTML file
 export async function determineHTMLLinks(filePath) {
   try {
     const htmlContent = await fs.promises.readFile(filePath, "utf-8");
-    const uncommentedHtmlContent = htmlContent.replace(/<!--[\s\S]*?-->/g, "");
+    const uncommentedHtmlContent = htmlContent.replace(/<!--[\s\S]*?-->/g, ""); // Remove comments from file to avoid false positives
     const resourcePaths = [
-      ...uncommentedHtmlContent.matchAll(/<script\s+src="(.+?)"/g),
-      ...htmlContent.matchAll(/<link\s+href="(.+?)"/g),
-    ].map((match) => match[1]); // Extrahiere die Pfade aus den Matches
-    console.log(resourcePaths);
+      ...uncommentedHtmlContent.matchAll(/<script\s+src="(.+?)"/g), // Find all script tags
+    ].map((match) => match[1]); 
     return resourcePaths;
   } catch (error) {
-    throw new Error("Fehler beim Lesen der HTML-Datei:", error.message);
+    throw new Error("Error while determine the links:", error.message);
   }
 }
-
+//Function to check if the resources exist
 export async function checkFilesDependencies(resourcePaths, filePath) {
   const paths = [];
   for (const resourcePath of resourcePaths) {
     const absolutePath = path.join(path.dirname(filePath), resourcePath);
     try {
       await fs.promises.access(absolutePath);
-      console.log(`Die Ressource "${resourcePath}" existiert.`);
       paths.push(absolutePath);
     } catch (err) {
-      throw new Error(`Fehler: Die Ressource "${resourcePath}" existiert nicht.`);
+      throw new Error(`Error: The resource "${resourcePath}" does not exist.`);
     }
   }
-  console.log(paths);
   return paths;
 }
 
-// Funktion, um den "dist" Ordner zu löschen
+// Function to delete the "dist" folder
 export async function removeDistFolders() {
   try {
-    await fs.promises.rm("dist", { recursive: true });
-    console.log('Der "dist" Ordner wurde erfolgreich entfernt.');
+    await fs.promises.access("dist"); // Check if the "dist" folder exists
+    await fs.promises.rm("dist", { recursive: true }); // Delete the "dist" folder
   } catch (error) {
-    throw new Error('Fehler beim Löschen des "dist" Ordners:', error.message);
+    if (error.code === "ENOENT") { // If the "dist" folder does not exist nothing happens, because it is what we want
+    } else {
+      throw new Error(`Error while removing the "dist" folder: ${error.message}`);
+    }
   }
 }
 
-// Funktion, um Dateien zu einzulesen -- muss noch gechekt werden ob stream nicht besser
+//Function to read files 
 export async function readFiles(filePaths) {
   try {
     const fileContents = [];
@@ -55,32 +54,33 @@ export async function readFiles(filePaths) {
     }
     return fileContents;
   } catch (error) {
-    throw new Error("Fehler beim Lesen der Dateien:", error.message);
+    throw new Error("Error while reading the files:", error.message);
   }
 }
 
+//Function to minify the files
 export async function minify(fileData) {
-  const minifiedResults = []; // Array für die Ergebnisse der Minifizierung
+  const minifiedResults = []; // Array for the minification results
   for (const { filePath, content } of fileData) {
     try {
-      // Minifiziere den Inhalt
+      // Minify the content
       const minified = await terser.minify(content);
 
       if (minified.code) {
-        // Speichere den minifizierten Code im Ergebnis-Array
+        // Save the minified code in the result array
         minifiedResults.push({
           originalFilePath: filePath,
           minifiedContent: minified.code,
         });
       }
     } catch (error) {
-      throw new Error("Fehler beim Minifizieren der Dateien", error.message);
+      throw new Error("Error while minifying the files", error.message);
     }
   }
-  return minifiedResults; // Rückgabe der minifizierten Ergebnisse
+  return minifiedResults; // Return the minified results
 }
 
-// Funktion zum Erstellen der Zielverzeichnisse und Zurückgeben der Pfade
+// Function to create target directories and return the paths
 export async function createDistFolder(paths) {
   const mapping = [];
 
@@ -89,7 +89,7 @@ export async function createDistFolder(paths) {
     const distPath = path.join(path.resolve("dist"), relativePath);
 
     try {
-      // Verzeichnis erstellen
+      // Create the directory and the file
       const dirPath = path.dirname(distPath);
       await fs.promises.mkdir(dirPath, { recursive: true });
       console.log(`Verzeichnis erstellt: ${dirPath}`);
@@ -99,22 +99,22 @@ export async function createDistFolder(paths) {
       mapping.push({ src: srcPath, dist: distPath });
     } catch (error) {
       throw new Error(
-        "Fehler beim Erstellen des Verzeichnisses oder der Datei:",
+        "Error while creating the directory or file:",
         error
       );
     }
   }
 
-  return mapping; // Gibt Mapping zurück
+  return mapping; // Return the mapping
 }
 
-// Funktion zum Speichern der minifizierten Dateien
+// Function to save the minified files
 export async function saveMinified(minified, mapping) {
   for (const file of minified) {
-    // 1. Suche den passenden dist-Pfad aus dem Mapping
+    // 1. Find the corresponding dist path from the mapping
     const mapEntry = mapping.find((m) => m.src === file.originalFilePath);
     if (!mapEntry) {
-      console.error(`Kein Mapping gefunden für: ${file.originalFilePath}`);
+      console.error(`No mapping found for: ${file.originalFilePath}`);
       continue;
     }
 
@@ -122,14 +122,14 @@ export async function saveMinified(minified, mapping) {
 
     try {
       await fs.promises.writeFile(distPath, file.minifiedContent, "utf8");
-      console.log(`Minifizierte Datei gespeichert: ${distPath}`);
+      console.log(`Minified file saved: ${distPath}`);
     } catch (error) {
-      throw new Error(`Fehler beim Speichern der Datei ${distPath}:`, error);
+      throw new Error(`Error while saving the file ${distPath}:`, error);
     }
   }
 }
 
-//Kopiert die index.html-Datei in den dist-Ordner
+//Copies the index.html file to the dist folder
 export async function copyAndModifyHtml() {
   try {
     const indexHtmlPath = path.join(path.resolve("src"), "index.html");
@@ -138,9 +138,9 @@ export async function copyAndModifyHtml() {
     const distIndexHtmlPath = path.join(path.resolve("dist"), "index.html");
     await fs.promises.writeFile(distIndexHtmlPath, $.html(), "utf-8");
     console.log(
-      `Die angepasste index.html wurde im dist-Ordner gespeichert: ${distIndexHtmlPath}`
+      `The modified index.html has been saved in the dist folder: ${distIndexHtmlPath}`
     );
   } catch (error) {
-    throw new Error("Fehler beim Aktualisieren der index.html:", error.message);
+    throw new Error("Error while updating the index.html:", error.message);
   }
 }
