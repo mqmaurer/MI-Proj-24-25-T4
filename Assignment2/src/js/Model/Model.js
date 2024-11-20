@@ -35,7 +35,7 @@ export async function checkFilesDependencies(resourcePaths, filePath) {
 export async function removeDistFolders() {
   try {
     await fs.promises.access("dist"); // Check if the "dist" folder exists
-    await fs.promises.rm("dist", { recursive: true }); // Delete the "dist" folder
+    await fs.promises.rm("dist", { recursive: true, force: true }); // Delete the "dist" folder
   } catch (error) {
     if (error.code === "ENOENT") {
       // If the "dist" folder does not exist nothing happens, because it is what we want
