@@ -25,7 +25,7 @@ export async function ChooseAction() {
 	const answer = await inquirer.prompt({
 		type: 'list',
 		name: 'action',
-		message: 'Should I just validate all JS dependencies \n or should I validate all JS dependencies and minify the JS Code?',
+		message: 'Should I just validate all JS dependencies in the html file\n or should I validate all JS dependencies and minify the JS Code?',
 		choices: [
 			{ name: 'just validate dependencies', value: 'validate' },
 			{ name: 'validate and minify', value: 'minify' },

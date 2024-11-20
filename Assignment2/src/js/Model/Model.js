@@ -16,6 +16,7 @@ export async function determineHTMLLinks(filePath) {
     throw new Error("Error while determine the links:", error.message);
   }
 }
+
 //Function to check if the resources exist
 export async function checkFilesDependencies(resourcePaths, filePath) {
   const paths = [];

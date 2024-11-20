@@ -11,10 +11,10 @@ import {
   copyAndModifyHtml,
 } from "../Model/Model.js";
 
-// Based on user's choice, different tasks and their progresses would be shown.
+// Based on user's choice, different tasks will be executed
 export async function runTasks() {
   const action = await ChooseAction();
-  // If user chooses only to validate dependencies, following tasks would show.
+  // Only validation-based functions
   if (action === "validate") {
     try {
       const paths = await determineLinksHTML();
@@ -23,7 +23,7 @@ export async function runTasks() {
       console.error(err);
     }
   }
-  // If user chooses to validate and minify, following tasks would show.
+  // All tasks of the CLI will be executed
   if (action === "minify") {
     try {
       const paths = await determineLinksHTML();
@@ -33,32 +33,27 @@ export async function runTasks() {
       const minifiedJS = await minifyJS(linkedFiles);
       const distPaths = await createNewFileStructure(checkedPaths);
       await minifiedJSToDist(minifiedJS, distPaths);
-      await indexToDist(paths);
+      await indexToDist();
     } catch (err) {
       console.error(err);
     }
   }
 }
 
+/* The following functions initiate a Listr-element for each function. 
+This makes sure that only executed functions will be shown and if an error occurs, the CLI will stop further functions. */
 async function determineLinksHTML() {
   const tasks = new Listr([
     {
       title: "Determine Links from the HTML File",
       task: async (ctx) => {
-        ctx.paths = await determineHTMLLinks("./src/index.html"); //instead of hardcoding we can assign to a variable, but for our case it is not necessary
+        ctx.paths = await determineHTMLLinks("./src/index.html");
       },
     },
   ]);
-    // try {
-  const context = {}; // Kontext für Listr erstellen */
-   await tasks.run(context)
-    // .catch((err) => {
-    //    console.error("An error occurred:", err);
-    //  });
-     return context.paths; // Links aus dem Kontext zurückgeben
-  //  } catch (err) {
-  //   console.error("An error occurred:", err);
-  //  } 
+  const context = {};
+  await tasks.run(context);
+  return context.paths;
 }
 
 async function checkDependencies(paths) {
@@ -73,17 +68,9 @@ async function checkDependencies(paths) {
       },
     },
   ]);
-  //  try {
-    const context = {}; // Kontext für Listr erstellen */
-  await tasks.run( context )
-  /* .catch((err) => {
-      throw new Error("An error occurred:", err);
-    });
-   */ return context.dependencies; // Rückgabe der geprüften Abhängigkeiten
-  /*} catch (err) {
-    console.error("An error occurred:", err);
-    return []; // Rückgabe eines leeren Arrays im Fehlerfall
-  } */
+  const context = {};
+  await tasks.run(context);
+  return context.dependencies;
 }
 
 async function readLinkedFiles(checkedPaths) {
@@ -95,16 +82,9 @@ async function readLinkedFiles(checkedPaths) {
       },
     },
   ]);
-  /* try {*/
-    const context = {}; // Kontext für Listr erstellen */
-  await tasks.run(context )/* .catch((err) => {
-      throw new Error("An error occurred:", err);
-    });
-    */return context.content; // Rückgabe der geprüften Abhängigkeiten
-  // } catch (err) {
-  //   console.error("An error occurred:", err);
-  //   return []; // Rückgabe eines leeren Arrays im Fehlerfall
-  // } */
+  const context = {};
+  await tasks.run(context);
+  return context.content;
 }
 
 async function removeDistFolder() {
@@ -116,9 +96,7 @@ async function removeDistFolder() {
       },
     },
   ]);
-  await tasks.run()/* .catch((err) => {
-    throw new Error("An error occurred:", err);
-  }); */
+  await tasks.run()
 }
 
 async function minifyJS(pathAndContent) {
@@ -130,16 +108,9 @@ async function minifyJS(pathAndContent) {
       },
     },
   ]);
-  /* try { */
-    const context = {}; 
-  await tasks.run( context)/* .catch((err) => {
-      throw new Error("An error occurred:", err);
-    });
-    */return context.minifedScript; /*
-  } catch (err) {
-    console.error("An error occurred:", err);
-    return []; // Rückgabe eines leeren Arrays im Fehlerfall
-  } */
+  const context = {};
+  await tasks.run(context);
+  return context.minifedScript;
 }
 
 async function createNewFileStructure(paths) {
@@ -151,16 +122,9 @@ async function createNewFileStructure(paths) {
       },
     },
   ]);
-  /* try {*/
-    const context = {}; 
-  await tasks.run( context )/* .catch((err) => {
-      throw new Error("An error occurred:", err);
-    });
-    */return context.srcAndDist; /*
-  } catch (err) {
-    console.error("An error occurred:", err);
-    return []; // Rückgabe eines leeren Arrays im Fehlerfall
-  } */
+  const context = {};
+  await tasks.run(context)
+  return context.srcAndDist;
 }
 
 async function minifiedJSToDist(contents, paths) {
@@ -172,9 +136,7 @@ async function minifiedJSToDist(contents, paths) {
       },
     },
   ]);
-  await tasks.run()/* .catch((err) => {
-    throw new Error("An error occurred:", err);
-  }); */
+  await tasks.run();
 }
 
 async function indexToDist() {
@@ -186,7 +148,5 @@ async function indexToDist() {
       },
     },
   ]);
-  await tasks.run()/* .catch((err) => {
-    throw new Error("An error occurred:", err);
-  }); */
+  await tasks.run();
 }
