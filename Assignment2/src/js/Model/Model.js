@@ -10,7 +10,7 @@ export async function determineHTMLLinks(filePath) {
     const uncommentedHtmlContent = htmlContent.replace(/<!--[\s\S]*?-->/g, ""); // Remove comments from file to avoid false positives
     const resourcePaths = [
       ...uncommentedHtmlContent.matchAll(/<script\s+src="(.+?)"/g), // Find all script tags
-    ].map((match) => match[1]); 
+    ].map((match) => match[1]);
     return resourcePaths;
   } catch (error) {
     throw new Error("Error while determine the links:", error.message);
@@ -37,14 +37,17 @@ export async function removeDistFolders() {
     await fs.promises.access("dist"); // Check if the "dist" folder exists
     await fs.promises.rm("dist", { recursive: true }); // Delete the "dist" folder
   } catch (error) {
-    if (error.code === "ENOENT") { // If the "dist" folder does not exist nothing happens, because it is what we want
+    if (error.code === "ENOENT") {
+      // If the "dist" folder does not exist nothing happens, because it is what we want
     } else {
-      throw new Error(`Error while removing the "dist" folder: ${error.message}`);
+      throw new Error(
+        `Error while removing the "dist" folder: ${error.message}`
+      );
     }
   }
 }
 
-//Function to read files 
+//Function to read files
 export async function readFiles(filePaths) {
   try {
     const fileContents = [];
@@ -82,7 +85,7 @@ export async function minify(fileData) {
 
 // Function to create target directories and return the paths
 export async function createDistFolder(paths) {
-  const mapping = [];
+  const mapping = []; //array for src-pathes and their corresponding dist-pathes
 
   for (const srcPath of paths) {
     const relativePath = path.relative(path.resolve("src"), srcPath);
@@ -92,16 +95,10 @@ export async function createDistFolder(paths) {
       // Create the directory and the file
       const dirPath = path.dirname(distPath);
       await fs.promises.mkdir(dirPath, { recursive: true });
-      console.log(`Verzeichnis erstellt: ${dirPath}`);
       await fs.promises.writeFile(distPath, "", "utf8");
-      console.log(`Leere Datei erstellt: ${distPath}`);
-
       mapping.push({ src: srcPath, dist: distPath });
     } catch (error) {
-      throw new Error(
-        "Error while creating the directory or file:",
-        error
-      );
+      throw new Error("Error while creating the directory or file:", error);
     }
   }
 
@@ -117,12 +114,9 @@ export async function saveMinified(minified, mapping) {
       console.error(`No mapping found for: ${file.originalFilePath}`);
       continue;
     }
-
     const distPath = mapEntry.dist;
-
     try {
       await fs.promises.writeFile(distPath, file.minifiedContent, "utf8");
-      console.log(`Minified file saved: ${distPath}`);
     } catch (error) {
       throw new Error(`Error while saving the file ${distPath}:`, error);
     }
@@ -137,9 +131,6 @@ export async function copyAndModifyHtml() {
     const $ = cheerio.load(htmlContent);
     const distIndexHtmlPath = path.join(path.resolve("dist"), "index.html");
     await fs.promises.writeFile(distIndexHtmlPath, $.html(), "utf-8");
-    console.log(
-      `The modified index.html has been saved in the dist folder: ${distIndexHtmlPath}`
-    );
   } catch (error) {
     throw new Error("Error while updating the index.html:", error.message);
   }
