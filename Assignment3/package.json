@@ -15,6 +15,9 @@
     "assignment3": "file:"
   },
   "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "eslint-config-eslint": "^11.0.0",
+    "eslint-plugin-import": "^2.31.0",
     "husky": "^9.1.7"
   }
 }
