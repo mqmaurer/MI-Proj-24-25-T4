@@ -1,4 +1,6 @@
-function BooksList() {
+import { Animator } from "../userInterface/Animator.js";
+
+export function BooksList() {
   const $viewSpace = document.querySelector("#viewSpace");
 
   const animator = Animator();

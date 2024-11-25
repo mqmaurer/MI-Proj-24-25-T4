@@ -1,4 +1,4 @@
-function Book(title, author, isbn, description) {
+export function Book(title, author, isbn, description) {
   if (title === "" || author === "" || isbn === "" || description === "") {
     throw new Error("Please fill in all fields");
   }

@@ -1,4 +1,4 @@
-function ThemeSwitcher() {
+export function ThemeSwitcher() {
   let theme = "default";
 
   document

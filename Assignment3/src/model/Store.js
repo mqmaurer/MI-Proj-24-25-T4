@@ -1,4 +1,4 @@
-function Store() {
+export function Store() {
   function getBooks() {
     let books;
 

@@ -1,4 +1,11 @@
-function Controller() {
+import { BookManager } from "../model/BookManager.js";
+import { ThemeSwitcher } from "../userInterface/ThemeSwitcher.js";
+import { BooksList } from "../view/BooksList.js";
+import { AddBook } from "../view/AddBook.js";
+import { BookDetail } from "../view/BookDetail.js";
+import { Router } from "./Router.js";
+
+export function Controller() {
   const bookManager = BookManager();
 
   // start ThemeSwitcher
