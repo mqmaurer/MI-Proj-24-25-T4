@@ -4,12 +4,20 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --config eslint.config.mjs src",
+    "prepare": "husky"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "assignment3": "file:"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "eslint-config-eslint": "^11.0.0",
+    "eslint-plugin-import": "^2.31.0",
+    "husky": "^9.1.7"
   }
 }
