@@ -1,4 +1,4 @@
-function Animator() {
+export function Animator() {
   function moveToRight(element, callback) {
     anime({
       targets: element,

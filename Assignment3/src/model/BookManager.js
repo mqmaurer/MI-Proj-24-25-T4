@@ -1,4 +1,7 @@
-function BookManager() {
+import { Store } from "./Store.js";
+import { Book } from "./Book.js";
+
+export function BookManager() {
   const store = Store();
 
   function getBooks() {

@@ -1,4 +1,4 @@
-function NavUpdater() {
+export function NavUpdater() {
   const $navigation = document.querySelector("#navigation");
 
   function updateActiveInNav(hash) {

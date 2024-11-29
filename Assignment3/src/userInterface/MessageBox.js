@@ -1,4 +1,4 @@
-function MessageBox(messageBoxId, animator) {
+export function MessageBox(messageBoxId, animator) {
   const $messageBox = document.querySelector(messageBoxId);
   const animaterRef = animator;
 

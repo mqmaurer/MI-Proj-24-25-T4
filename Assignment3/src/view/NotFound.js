@@ -1,4 +1,4 @@
-function NotFound() {
+export function NotFound() {
   const $viewSpace = document.querySelector("#viewSpace");
 
   function renderView() {

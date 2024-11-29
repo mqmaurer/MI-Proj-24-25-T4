@@ -1,4 +1,7 @@
-function Router() {
+import { NotFound } from "../view/NotFound.js";
+import { NavUpdater } from "../userInterface/NavUpdater.js";
+
+export function Router() {
   const routes = [];
 
   const notFoundView = NotFound();

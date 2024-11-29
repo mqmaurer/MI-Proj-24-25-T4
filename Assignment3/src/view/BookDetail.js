@@ -1,4 +1,4 @@
-function BookDetail() {
+export function BookDetail() {
   const $viewSpace = document.querySelector("#viewSpace");
 
   function renderView(book) {

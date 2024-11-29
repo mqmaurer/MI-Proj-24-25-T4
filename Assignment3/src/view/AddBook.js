@@ -1,4 +1,7 @@
-function AddBook() {
+import { Animator } from "../userInterface/Animator.js";
+import { MessageBox } from "../userInterface/MessageBox.js";
+
+export function AddBook() {
   const $viewSpace = document.querySelector("#viewSpace");
 
   const animator = Animator();
