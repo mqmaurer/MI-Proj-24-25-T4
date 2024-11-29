@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --config eslint.config.mjs src",
-    "prepare": "husky"
+    "prepare": "husky",
+    "start": "webpack serve --mode development",
+    "build:dev": "webpack --mode development",
+    "build:prod": "webpack --mode production"
   },
   "author": "",
   "license": "ISC",
@@ -14,15 +17,26 @@
   "dependencies": {
     "assignment3": "file:",
     "core-js": "^3.39.0",
-    "regenerator-runtime": "^0.14.1"
+    "regenerator-runtime": "^0.14.1",
+    "terser-webpack-plugin": "^5.3.10"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.9",
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@eslint/js": "^9.15.0",
+    "babel-loader": "^9.2.1",
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^7.1.2",
     "eslint-config-eslint": "^11.0.0",
     "eslint-plugin-import": "^2.31.0",
-    "husky": "^9.1.7"
+    "eslint-webpack-plugin": "^4.2.0",
+    "html-loader": "^5.1.0",
+    "html-webpack-plugin": "^5.6.3",
+    "husky": "^9.1.7",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0"
   }
 }
