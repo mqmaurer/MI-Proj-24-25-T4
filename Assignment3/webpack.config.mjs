@@ -1,7 +1,7 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
-import ESLintPlugin from 'eslint-webpack-plugin';
+ import ESLintPlugin from 'eslint-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin'; // Für Minifizierung
 
 const __dirname = path.resolve();
@@ -17,7 +17,7 @@ export default (env, argv) => {
     // Ausgabe
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: isProduction ? '[name].[contenthash].js' : 'bundle.js', // Hash für Produktion
+      filename: isProduction ? '[name].[contenthash].js' : 'bundle.js', // Hash für Produktion, verhindert Verwechslung von alten Dateien aus dem Cache
       clean: true, // löscht dist vor jedem Build
     },
 
@@ -31,15 +31,19 @@ export default (env, argv) => {
           test: /\.css$/, 
           use: ['style-loader', 'css-loader'],
         },
-        // {
-        //   test: /\.js$/, 
-        //   exclude: /node_modules/,
-        //   use: {
-        //     loader: 'babel-loader',
-        //   },
-        // },
+        {
+          test: /\.js$/, 
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+          },
+        },
       ],
     },
+
+    stats: {
+        children: true,
+    },      
 
     // Plugins
     plugins: [
@@ -51,6 +55,10 @@ export default (env, argv) => {
           { from: 'src/assets', to: 'assets' }, // Kopiert alle Dateien aus src nach dist
         ],
       }),
+       new ESLintPlugin({
+        extensions: ['js'],
+        failOnError: isProduction, // Lässt den Build im Fehlerfall scheitern, wenn es sich um Produktion handelt
+       overrideConfigFile: './eslint.config.mjs', }),
     ],
 
     // Entwicklungs-Tools
