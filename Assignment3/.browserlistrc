@@ -1,0 +1,4 @@
+"browserslist": [
+  "> 0.5%",        // Unterstützt Browser mit einem Marktanteil > 0,5 %
+  "IE 11"         // Fügt explizit IE11 hinzu
+]

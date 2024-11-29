@@ -12,9 +12,14 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "assignment3": "file:"
+    "assignment3": "file:",
+    "core-js": "^3.39.0",
+    "regenerator-runtime": "^0.14.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
     "@eslint/js": "^9.15.0",
     "eslint-config-eslint": "^11.0.0",
     "eslint-plugin-import": "^2.31.0",
