@@ -7,21 +7,51 @@ export function BooksList() {
 
   function renderView(books) {
     const view = `
-      <div class="container mt-4">
+      <div class="container mt-2">
+        <form>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="inputSearchText"></label>
+              <input type="text" class="form-control" id="inputSearchText" placeholder="Search Text">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="searchOption"></label>
+              <select id="searchOption" class="form-control">
+                <option selected>Title</option>
+                <option>Author</option>
+                <option>ISBN</option>
+              </select>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="sortOption"></label>
+              <select id="sortOption" class="form-control">
+                <option selected>No sorting</option>
+                <option>Title Ascending</option>
+                <option>Title Descending</option>
+                <option>Author Ascending</option>
+                <option>Author Descending</option>
+              </select>
+            </div>
+            <div class="col-md-2 mt-2 align-self-center">
+              <button type="submit" class="btn btn-success pl-3 pr-3"><i class="fa fa-check"></i></button>
+              <button type="button" class="btn btn-danger pl-3 pr-3 ml-2">✖</button>
+            </div>
+          </div>
+        </form>
         <table class="table table-striped mt-5">
-        <thead>
-          <tr>
-            <th>Titel</th>
-            <th>Author</th>
-            <th>ISBN</th>
-            <th>Detail</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody id="book-list"></tbody>
-      </table>
-      <div class="container mt-4">
-        `;
+          <thead>
+           <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>ISBN</th>
+              <th>Detail</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody id="book-list"></tbody>
+        </table>
+      </div>
+      `;
 
     $viewSpace.innerHTML = view;
     addBooksToTable(books);
