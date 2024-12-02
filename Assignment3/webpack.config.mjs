@@ -59,8 +59,6 @@ export default (env, argv) => {
         configType: 'flat',
         extensions: ['js'],
         failOnError: isProduction, // Lässt den Build im Fehlerfall scheitern, wenn es sich um Produktion handelt
-        emitWarning: true,
-        emitError: true,
         overrideConfigFile: './eslint.config.mjs',
        }),
     ],
@@ -77,12 +75,6 @@ export default (env, argv) => {
           open: true, // Öffnet automatisch den Browser
           hot: true, // Aktiviert Hot Module Replacement (HMR)
           liveReload: true, // Aktiviert Live Reloading
-          client: {
-            overlay: {
-                errors: true,
-                warnings: true,
-                },
-            },
         },
 
     // Optimierungen für Produktion
