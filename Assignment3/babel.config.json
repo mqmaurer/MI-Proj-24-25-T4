@@ -3,6 +3,7 @@
     [
       "@babel/preset-env",
       {
+        "targets": "> 0.5%, IE 11",
         "useBuiltIns": "usage",
         "corejs": "3.6.5",
         "modules": false
