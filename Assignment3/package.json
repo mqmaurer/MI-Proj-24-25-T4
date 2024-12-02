@@ -15,6 +15,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "animejs": "^3.2.2",
     "assignment3": "file:",
     "core-js": "^3.39.0",
     "globals": "^15.12.0",

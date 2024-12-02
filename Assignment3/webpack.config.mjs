@@ -56,6 +56,7 @@ export default (env, argv) => {
         ],
       }),
        new ESLintPlugin({
+        configType: 'flat',
         extensions: ['js'],
         configType: 'flat',
         files: ["src/**/*.js"], // Lintet alle JavaScript-Dateien im src-Ordner
