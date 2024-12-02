@@ -1,6 +1,7 @@
 import { Animator } from "../userInterface/Animator.js";
 
-export function BooksList() {
+
+export function BooksList(SearchAndSortCallback) {
   const $viewSpace = document.querySelector("#viewSpace");
 
   const animator = Animator();
@@ -60,12 +61,13 @@ export function BooksList() {
   function bindSearchButtonClick() {
     const $searchButton = document.querySelector("#searchButton");
     const inputText = document.querySelector("#inputSearchText");
-    const sanitizedInput = safeInput(inputText);
-    const searchOption = document.querySelector("#searchOption");
-    const sortOption = document.querySelector("#sortOption");
-
+    const sanitizedInput = safeInput(inputText.value); // Bereinige die Eingabe
+    const searchOption = document.querySelector("#searchOption").value; // Wähle Suchoption aus
+    const sortOption = document.querySelector("#sortOption").value; // Wähle Sortieroption aus
+  
     $searchButton.addEventListener("click", () => {
-      /* pass sanitizedInput, searchOption, sortOption to controller */
+      // Die Eingabedaten an den Controller weitergeben
+      SearchAndSortCallback(sanitizedInput, searchOption, sortOption);
     });
   }
 

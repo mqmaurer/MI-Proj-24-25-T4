@@ -5,13 +5,14 @@ import { AddBook } from "../view/AddBook.js";
 import { BookDetail } from "../view/BookDetail.js";
 import { Router } from "./Router.js";
 
+
 export function Controller() {
   const bookManager = BookManager();
 
   // start ThemeSwitcher
   ThemeSwitcher();
 
-  const booksListView = BooksList();
+  const booksListView = BooksList(searchAndSort);
   const addBookView = AddBook();
   const bookDetailView = BookDetail();
 
@@ -34,22 +35,7 @@ export function Controller() {
   function executeBookListRoute() {
     const books = bookManager.getBooks();
     booksListView.renderView(books);
-    booksListView.bindSearchButtonClick(/* function searchAndSort(textInput, searchOption, sortOption) {
-    Search mechanic in cooperation with model
-      switch (searchOption) {
-      case 'Title':
-        only search title
-        break;
-      case 'Author':
-        only search author
-        break;
-      case 'ISBN':
-        only search ISBN
-        break;
-    }
-    order by sortOption
-    show filtered table at BooksList
-  } */);
+    booksListView.bindSearchButtonClick(searchAndSort); // Use the function here
     booksListView.bindResetButtonClick(books);
     booksListView.bindDetailButtonClick(function (event) {
       location.hash = "#/details/" + event.target.dataset.isbn;
@@ -59,6 +45,29 @@ export function Controller() {
     });
   }
 
+  function searchAndSort(textInput, searchOption, sortOption) {
+    let books = bookManager.getBooks();
+    // Filter based on selected options
+    if (searchOption === 'Title') {
+      books = books.filter(book => book.title.toLowerCase().includes(textInput.toLowerCase()));
+    } else if (searchOption === 'Author') {
+      books = books.filter(book => book.author.toLowerCase().includes(textInput.toLowerCase()));
+    } else if (searchOption === 'ISBN') {
+      books = books.filter(book => book.isbn.toLowerCase().includes(textInput.toLowerCase()));
+    }
+
+    // Sort the books
+    if (sortOption === 'Title') {
+      books = books.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortOption === 'Author') {
+      books = books.sort((a, b) => a.author.localeCompare(b.author));
+    } else if (sortOption === 'ISBN') {
+      books = books.sort((a, b) => a.isbn.localeCompare(b.isbn));
+    }
+
+    // Pass filtered and sorted books to the view
+    booksListView.renderView(books);
+  }
   function executeAddBookRoute() {
     addBookView.renderView();
     addBookView.bindAddBookButtonClick(function () {
