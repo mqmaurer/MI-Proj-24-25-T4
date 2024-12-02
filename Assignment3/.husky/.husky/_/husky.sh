@@ -1,16 +1,22 @@
 #!/bin/sh
-# husky.sh - Helper file to set up hooks in Husky
-# Taken from https://github.com/typicode/husky/blob/master/_/husky.sh
 
-# Ensure this script is run from the root of the repository
-if [ ! -f package.json ]; then
-  echo "Error: this script must be run from the root of the repository."
+# Überprüfen, ob das Projekt im richtigen Verzeichnis ausgeführt wird
+if [ ! -f "package.json" ]; then
+  echo "Fehler: Dieses Skript muss im Stammverzeichnis des Repositories ausgeführt werden."
   exit 1
 fi
 
-# Allow us to call other scripts via "npm run"
-export PATH="./node_modules/.bin:$PATH"
+# Erstelle eine Windows-kompatible Version, falls Bash nicht verfügbar ist
+if [ -n "$CI" ]; then
+  # Wir befinden uns möglicherweise in einer CI-Umgebung, daher sollten wir keine weiteren Skripte ausführen.
+  exit 0
+fi
 
-# Uncomment to enable Git hooks for this repo
-# git config core.hooksPath .husky
-
+# Überprüfe, ob Git Bash oder WSL verwendet wird
+if [ -z "$BASH" ] && [ -z "$WSLENV" ]; then
+  echo "Windows-Umgebung erkannt, führe npm lint aus..."
+  npm run lint
+else
+  echo "Unix-ähnliche Umgebung erkannt, führe npm lint aus..."
+  npm run lint
+fi
