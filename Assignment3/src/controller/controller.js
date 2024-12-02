@@ -34,7 +34,22 @@ export function Controller() {
   function executeBookListRoute() {
     const books = bookManager.getBooks();
     booksListView.renderView(books);
-    booksListView.bindSearchButtonClick();
+    booksListView.bindSearchButtonClick(/* function searchAndSort(textInput, searchOption, sortOption) {
+    Search mechanic in cooperation with model
+      switch (searchOption) {
+      case 'Title':
+        only search title
+        break;
+      case 'Author':
+        only search author
+        break;
+      case 'ISBN':
+        only search ISBN
+        break;
+    }
+    order by sortOption
+    show filtered table at BooksList
+  } */);
     booksListView.bindResetButtonClick(books);
     booksListView.bindDetailButtonClick(function (event) {
       location.hash = "#/details/" + event.target.dataset.isbn;
@@ -83,17 +98,4 @@ export function Controller() {
 
     booksListView.removeBook(isbn);
   }
-
-  /* function searchAndSort(textInput, searchOption, sortOption) {
-    switch (searchOption) {
-      case 'Title':
-        break;
-      case 'Author':
-        break;
-      case 'ISBN':
-        break;
-    }
-
-
-  } */
 }

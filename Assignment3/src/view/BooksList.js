@@ -1,9 +1,7 @@
-import { Controller } from "../controller/controller.js";
 import { Animator } from "../userInterface/Animator.js";
 
 export function BooksList() {
   const $viewSpace = document.querySelector("#viewSpace");
-  const controlls = Controller();
 
   const animator = Animator();
 
@@ -67,7 +65,7 @@ export function BooksList() {
     const sortOption = document.querySelector("#sortOption");
 
     $searchButton.addEventListener("click", () => {
-      controlls.searchAndSort(sanitizedInput, searchOption, sortOption);
+      /* pass sanitizedInput, searchOption, sortOption to controller */
     });
   }
 
@@ -81,7 +79,7 @@ export function BooksList() {
 
     $resetButton.addEventListener("click", () => {
       // Reset of tableview
-      renderView(books); //has to be tested
+      renderView(books); //has to be tested, otherwise new func for deleting all rows + addBooksToTable(books) here
     });
   }
 
