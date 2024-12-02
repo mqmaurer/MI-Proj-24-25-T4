@@ -34,6 +34,8 @@ export function Controller() {
   function executeBookListRoute() {
     const books = bookManager.getBooks();
     booksListView.renderView(books);
+    booksListView.bindSearchButtonClick();
+    booksListView.bindResetButtonClick(books);
     booksListView.bindDetailButtonClick(function (event) {
       location.hash = "#/details/" + event.target.dataset.isbn;
     });
@@ -81,4 +83,17 @@ export function Controller() {
 
     booksListView.removeBook(isbn);
   }
+
+  /* function searchAndSort(textInput, searchOption, sortOption) {
+    switch (searchOption) {
+      case 'Title':
+        break;
+      case 'Author':
+        break;
+      case 'ISBN':
+        break;
+    }
+
+
+  } */
 }

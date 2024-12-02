@@ -1,7 +1,9 @@
+import { Controller } from "../controller/controller.js";
 import { Animator } from "../userInterface/Animator.js";
 
 export function BooksList() {
   const $viewSpace = document.querySelector("#viewSpace");
+  const controlls = Controller();
 
   const animator = Animator();
 
@@ -33,8 +35,8 @@ export function BooksList() {
               </select>
             </div>
             <div class="col-md-2 mt-2 align-self-center">
-              <button type="submit" class="btn btn-success pl-3 pr-3"><i class="fa fa-check"></i></button>
-              <button type="button" class="btn btn-danger pl-3 pr-3 ml-2">✖</button>
+              <button type="submit" id="searchButton" class="btn btn-success pl-3 pr-3"><i class="fa fa-check"></i></button>
+              <button type="reset" id="resetButton" class="btn btn-danger pl-3 pr-3 ml-2">✖</button>
             </div>
           </div>
         </form>
@@ -57,9 +59,35 @@ export function BooksList() {
     addBooksToTable(books);
   }
 
+  function bindSearchButtonClick() {
+    const $searchButton = document.querySelector("#searchButton");
+    const inputText = document.querySelector("#inputSearchText");
+    const sanitizedInput = safeInput(inputText);
+    const searchOption = document.querySelector("#searchOption");
+    const sortOption = document.querySelector("#sortOption");
+
+    $searchButton.addEventListener("click", () => {
+      controlls.searchAndSort(sanitizedInput, searchOption, sortOption);
+    });
+  }
+
+  function safeInput(input) {
+    // Remove special characters from given input
+    return input.replace(/[/\\#,+()$~%.^'"*<>{}]/g, "");
+  }
+
+  function bindResetButtonClick(books) {
+    const $resetButton = document.querySelector("#resetButton");
+
+    $resetButton.addEventListener("click", () => {
+      // Reset of tableview
+      renderView(books); //has to be tested
+    });
+  }
+
   function addBooksToTable(books) {
     books.forEach(function (book) {
-      addBookAsTableRow(book, true);
+      addBookAsTableRow(book);
     });
   }
 
@@ -108,8 +136,8 @@ export function BooksList() {
   function bindDetailButtonClick(callback) {
     const $detailButtons = document.querySelectorAll(".detail-button");
 
-    for (let index = 0; index < $detailButtons.length; index++) {
-      const $detailButton = $detailButtons[index];
+    for (const element of $detailButtons) {
+      const $detailButton = element;
       $detailButton.addEventListener("click", function (event) {
         callback(event);
       });
@@ -119,8 +147,8 @@ export function BooksList() {
   function bindRemoveButtonClick(callback) {
     const $removeButtons = document.querySelectorAll(".remove-button");
 
-    for (let index = 0; index < $removeButtons.length; index++) {
-      const $removeButton = $removeButtons[index];
+    for (const element of $removeButtons) {
+      const $removeButton = element;
       $removeButton.addEventListener("click", function (event) {
         callback(event);
       });
@@ -138,6 +166,8 @@ export function BooksList() {
   }
 
   return {
+    bindSearchButtonClick: bindSearchButtonClick,
+    bindResetButtonClick: bindResetButtonClick,
     removeBook: removeBook,
     bindRemoveButtonClick: bindRemoveButtonClick,
     bindDetailButtonClick: bindDetailButtonClick,
