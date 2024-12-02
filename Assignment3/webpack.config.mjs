@@ -58,6 +58,7 @@ export default (env, argv) => {
        new ESLintPlugin({
         configType: 'flat',
         extensions: ['js'],
+        fix: true, // Fehler mit ESlint beheben
         failOnError: isProduction, // Lässt den Build im Fehlerfall scheitern, wenn es sich um Produktion handelt
         overrideConfigFile: './eslint.config.mjs',
        }),
