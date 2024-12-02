@@ -5,7 +5,7 @@ import { AddBook } from "../view/AddBook.js";
 import { BookDetail } from "../view/BookDetail.js";
 import { Router } from "./Router.js";
 
-export . function Controller() {
+export , function Controller() {
   const bookManager = BookManager();
 
   // start ThemeSwitcher
