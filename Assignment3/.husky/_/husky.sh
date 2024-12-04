@@ -2,7 +2,7 @@
 # husky.sh - Helper file to set up hooks in Husky
 
 # Ensure this script is run from the root of the repository
-if [ ! -f Assignment3/package.json ]; then
+if [ ! -f package.json ]; then
   echo "Error: this script must be run from the root of the repository."
   exit 1
 fi
