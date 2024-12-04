@@ -5,7 +5,6 @@ import { AddBook } from "../view/AddBook.js";
 import { BookDetail } from "../view/BookDetail.js";
 import { Router } from "./Router.js";
 
-
 export function Controller() {
   const bookManager = BookManager();
 
@@ -47,27 +46,36 @@ export function Controller() {
 
   function searchAndSort(textInput, searchOption, sortOption) {
     let books = bookManager.getBooks();
+    let sortedBooks;
+
     // Filter based on selected options
-    if (searchOption === 'Title') {
+    if (searchOption === 'title') {
       books = books.filter(book => book.title.toLowerCase().includes(textInput.toLowerCase()));
-    } else if (searchOption === 'Author') {
+    } else if (searchOption === 'author') {
       books = books.filter(book => book.author.toLowerCase().includes(textInput.toLowerCase()));
-    } else if (searchOption === 'ISBN') {
+    } else if (searchOption === 'isbn') {
       books = books.filter(book => book.isbn.toLowerCase().includes(textInput.toLowerCase()));
     }
 
     // Sort the books
-    if (sortOption === 'Title') {
-      books = books.sort((a, b) => a.title.localeCompare(b.title));
-    } else if (sortOption === 'Author') {
-      books = books.sort((a, b) => a.author.localeCompare(b.author));
-    } else if (sortOption === 'ISBN') {
-      books = books.sort((a, b) => a.isbn.localeCompare(b.isbn));
+    if (sortOption === 'titleAsc') {
+      sortedBooks = books.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortOption === 'titleDesc') {
+      sortedBooks = books.sort((a, b) => b.title.localeCompare(a.title));
+    } else if (sortOption === 'authorAsc') {
+      sortedBooks = books.sort((a, b) => a.author.localeCompare(b.author));
+    } else if (sortOption === 'authorDesc') {
+      sortedBooks = books.sort((a, b) => b.author.localeCompare(a.author));
+    } else if (sortOption === 'noSort') {
+      sortedBooks = books;
     }
 
+    // Remove Table
+    booksListView.removeTable();
     // Pass filtered and sorted books to the view
-    booksListView.renderView(books);
+    booksListView.renderView(sortedBooks);
   }
+
   function executeAddBookRoute() {
     addBookView.renderView();
     addBookView.bindAddBookButtonClick(function () {

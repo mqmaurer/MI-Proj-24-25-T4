@@ -5,3 +5,7 @@
 .jumbotron {
   margin-bottom: 0;
 }
+
+#accessibilityLabel {
+  display: none;
+}

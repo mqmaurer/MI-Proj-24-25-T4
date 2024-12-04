@@ -1,6 +1,5 @@
 import { Animator } from "../userInterface/Animator.js";
 
-
 export function BooksList(SearchAndSortCallback) {
   const $viewSpace = document.querySelector("#viewSpace");
 
@@ -9,33 +8,33 @@ export function BooksList(SearchAndSortCallback) {
   function renderView(books) {
     const view = `
       <div class="container mt-2">
-        <form>
+        <form class="mt-4">
           <div class="form-row">
             <div class="form-group col-md-4">
-              <label for="inputSearchText"></label>
+              <label for="inputSearchText" id="accessibilityLabel">Search Text</label>
               <input type="text" class="form-control" id="inputSearchText" placeholder="Search Text">
             </div>
             <div class="form-group col-md-3">
-              <label for="searchOption"></label>
+              <label for="searchOption" id="accessibilityLabel">Search Option</label>
               <select id="searchOption" class="form-control">
-                <option selected>Title</option>
-                <option>Author</option>
-                <option>ISBN</option>
+                <option selected value="title">Title</option>
+                <option value="author">Author</option>
+                <option value="isbn">ISBN</option>
               </select>
             </div>
             <div class="form-group col-md-3">
-              <label for="sortOption"></label>
+              <label for="sortOption" id="accessibilityLabel">Sort Option</label>
               <select id="sortOption" class="form-control">
-                <option selected>No sorting</option>
-                <option>Title Ascending</option>
-                <option>Title Descending</option>
-                <option>Author Ascending</option>
-                <option>Author Descending</option>
+                <option selected value="noSort">No sorting</option>
+                <option value="titleAsc">Title Ascending</option>
+                <option value="titleDesc">Title Descending</option>
+                <option value="authorAsc">Author Ascending</option>
+                <option value="authorDesc">Author Descending</option>
               </select>
             </div>
-            <div class="col-md-2 mt-2 align-self-center">
+            <div class="col-md-2">
               <button type="submit" id="searchButton" class="btn btn-success pl-3 pr-3"><i class="fa fa-check"></i></button>
-              <button type="reset" id="resetButton" class="btn btn-danger pl-3 pr-3 ml-2">✖</button>
+              <button type="reset" id="resetButton" class="btn btn-danger pl-3 pr-3 ml-1">✖</button>
             </div>
           </div>
         </form>
@@ -61,17 +60,18 @@ export function BooksList(SearchAndSortCallback) {
   function bindSearchButtonClick() {
     const $searchButton = document.querySelector("#searchButton");
     const inputText = document.querySelector("#inputSearchText");
-    const sanitizedInput = safeInput(inputText.value); // Bereinige die Eingabe
-    const searchOption = document.querySelector("#searchOption").value; // Wähle Suchoption aus
-    const sortOption = document.querySelector("#sortOption").value; // Wähle Sortieroption aus
-  
+    // Sanitize Input
+    const sanitizedInput = sanitizeInput(inputText.value);
+    const searchOption = document.querySelector("#searchOption").value;
+    const sortOption = document.querySelector("#sortOption").value;
+
     $searchButton.addEventListener("click", () => {
-      // Die Eingabedaten an den Controller weitergeben
+      // Pass data of form to controller
       SearchAndSortCallback(sanitizedInput, searchOption, sortOption);
     });
   }
 
-  function safeInput(input) {
+  function sanitizeInput(input) {
     // Remove special characters from given input
     return input.replace(/[/\\#,+()$~%.^'"*<>{}]/g, "");
   }
@@ -81,7 +81,7 @@ export function BooksList(SearchAndSortCallback) {
 
     $resetButton.addEventListener("click", () => {
       // Reset of tableview
-      renderView(books); //has to be tested, otherwise new func for deleting all rows + addBooksToTable(books) here
+      renderView(books);
     });
   }
 
@@ -165,10 +165,16 @@ export function BooksList(SearchAndSortCallback) {
     animator.moveToRight($bookToRemove, remove);
   }
 
+  function removeTable() {
+    /* const tableToRemove = document.querySelector("#book-list");
+ */
+  }
+
   return {
     bindSearchButtonClick: bindSearchButtonClick,
     bindResetButtonClick: bindResetButtonClick,
     removeBook: removeBook,
+    removeTable: removeTable,
     bindRemoveButtonClick: bindRemoveButtonClick,
     bindDetailButtonClick: bindDetailButtonClick,
     renderView: renderView,
