@@ -1,6 +1,6 @@
 import { Animator } from "../userInterface/Animator.js";
 
-export function BooksList(SearchAndSortCallback) {
+export function BooksList(/* SearchAndSortCallback */) {
   const $viewSpace = document.querySelector("#viewSpace");
 
   const animator = Animator();
@@ -8,15 +8,15 @@ export function BooksList(SearchAndSortCallback) {
   function renderView(books) {
     const view = `
       <div class="container mt-2">
-        <form class="mt-4">
+        <form class="mt-4" method="get">
           <div class="form-row">
             <div class="form-group col-md-4">
               <label for="inputSearchText" id="accessibilityLabel">Search Text</label>
-              <input type="text" class="form-control" id="inputSearchText" placeholder="Search Text">
+              <input type="text" class="form-control" id="inputSearchText" name="inputSearchText" placeholder="Search Text">
             </div>
             <div class="form-group col-md-3">
               <label for="searchOption" id="accessibilityLabel">Search Option</label>
-              <select id="searchOption" class="form-control">
+              <select name="searchOption" id="searchOption" class="form-control">
                 <option selected value="title">Title</option>
                 <option value="author">Author</option>
                 <option value="isbn">ISBN</option>
@@ -24,7 +24,7 @@ export function BooksList(SearchAndSortCallback) {
             </div>
             <div class="form-group col-md-3">
               <label for="sortOption" id="accessibilityLabel">Sort Option</label>
-              <select id="sortOption" class="form-control">
+              <select name="sortOption" id="sortOption" class="form-control">
                 <option selected value="noSort">No sorting</option>
                 <option value="titleAsc">Title Ascending</option>
                 <option value="titleDesc">Title Descending</option>
@@ -33,7 +33,7 @@ export function BooksList(SearchAndSortCallback) {
               </select>
             </div>
             <div class="col-md-2">
-              <button type="submit" id="searchButton" class="btn btn-success pl-3 pr-3"><i class="fa fa-check"></i></button>
+              <button type="button" id="searchSortButton" class="btn btn-success pl-3 pr-3"><i class="fa fa-check"></i></button>
               <button type="reset" id="resetButton" class="btn btn-danger pl-3 pr-3 ml-1">✖</button>
             </div>
           </div>
@@ -57,22 +57,29 @@ export function BooksList(SearchAndSortCallback) {
     addBooksToTable(books);
   }
 
-  function bindSearchButtonClick() {
-    const $searchButton = document.querySelector("#searchButton");
-    const inputText = document.querySelector("#inputSearchText");
-    // Sanitize Input
-    const sanitizedInput = sanitizeInput(inputText.value);
-    const searchOption = document.querySelector("#searchOption").value;
-    const sortOption = document.querySelector("#sortOption").value;
+  function bindSearchButtonClick(callback) {
+    const $searchButton = document.querySelector("#searchSortButton");
 
     $searchButton.addEventListener("click", () => {
-      // Pass data of form to controller
-      SearchAndSortCallback(sanitizedInput, searchOption, sortOption);
+      // Get form's values
+      let searchText = document.forms[0].inputSearchText.value;
+      let sanitizedInput = sanitizeInput(searchText);
+      let searchOption = getDropdown('searchOption');
+      let sortOption = getDropdown('sortOption');
+
+      callback(sanitizedInput, searchOption, sortOption);
     });
   }
 
+  function getDropdown(dropdownName) {
+    // Get dropdown values of form
+    const item = document.forms[0][dropdownName].selectedIndex;
+    const result = document.forms[0][dropdownName].options[item].value;
+    return result;
+  }
+
   function sanitizeInput(input) {
-    // Remove special characters from given input
+    // Remove special characters and morph to lower case
     return input.replace(/[/\\#,+()$~%.^'"*<>{}]/g, "");
   }
 
@@ -166,8 +173,8 @@ export function BooksList(SearchAndSortCallback) {
   }
 
   function removeTable() {
-    /* const tableToRemove = document.querySelector("#book-list");
- */
+    const $tableToRemove = document.querySelector("#book-list");
+    $tableToRemove.innerHTML = ``
   }
 
   return {
@@ -175,6 +182,7 @@ export function BooksList(SearchAndSortCallback) {
     bindResetButtonClick: bindResetButtonClick,
     removeBook: removeBook,
     removeTable: removeTable,
+    addBooksToTable: addBooksToTable,
     bindRemoveButtonClick: bindRemoveButtonClick,
     bindDetailButtonClick: bindDetailButtonClick,
     renderView: renderView,

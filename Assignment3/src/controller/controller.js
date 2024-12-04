@@ -11,7 +11,7 @@ export function Controller() {
   // start ThemeSwitcher
   ThemeSwitcher();
 
-  const booksListView = BooksList(searchAndSort);
+  const booksListView = BooksList();
   const addBookView = AddBook();
   const bookDetailView = BookDetail();
 
@@ -45,10 +45,18 @@ export function Controller() {
   }
 
   function searchAndSort(textInput, searchOption, sortOption) {
-    let books = bookManager.getBooks();
-    let sortedBooks;
+    const filter = filterBooks(textInput, searchOption);
+    const sortedBooks = sortBooks(filter, sortOption);
 
-    // Filter based on selected options
+    // Remove Table
+    booksListView.removeTable();
+    // Pass filtered and sorted books to the view
+    booksListView.addBooksToTable(sortedBooks);
+  }
+
+  function filterBooks(textInput, searchOption) {
+    let books = bookManager.getBooks();
+
     if (searchOption === 'title') {
       books = books.filter(book => book.title.toLowerCase().includes(textInput.toLowerCase()));
     } else if (searchOption === 'author') {
@@ -57,7 +65,12 @@ export function Controller() {
       books = books.filter(book => book.isbn.toLowerCase().includes(textInput.toLowerCase()));
     }
 
-    // Sort the books
+    return books;
+  }
+
+  function sortBooks(books, sortOption) {
+    let sortedBooks;
+
     if (sortOption === 'titleAsc') {
       sortedBooks = books.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortOption === 'titleDesc') {
@@ -70,10 +83,7 @@ export function Controller() {
       sortedBooks = books;
     }
 
-    // Remove Table
-    booksListView.removeTable();
-    // Pass filtered and sorted books to the view
-    booksListView.renderView(sortedBooks);
+    return sortedBooks;
   }
 
   function executeAddBookRoute() {
