@@ -1,6 +1,6 @@
 import { Animator } from "../userInterface/Animator.js";
 
-export function BooksList(/* SearchAndSortCallback */) {
+export function BooksList() {
   const $viewSpace = document.querySelector("#viewSpace");
 
   const animator = Animator();
@@ -8,7 +8,7 @@ export function BooksList(/* SearchAndSortCallback */) {
   function renderView(books) {
     const view = `
       <div class="container mt-2">
-        <form class="mt-4" method="get">
+        <form class="mt-4">
           <div class="form-row">
             <div class="form-group col-md-4">
               <label for="inputSearchText" id="accessibilityLabel">Search Text</label>
