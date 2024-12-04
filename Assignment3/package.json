@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --config eslint.config.mjs src",
+    "lint": "eslint --config eslint.config.mjs src --max-warnings=0",
     "prepare": "echo \"Setting up Git hooks...\" && git config core.hooksPath ./Assignment3/.husky",
     "start": "webpack serve --mode development",
     "build:dev": "webpack --mode development",
