@@ -1,9 +1,5 @@
 #!/bin/sh
-# Prüfen, ob es auf Windows läuft und die Batch-Datei ausführen
-if [ "$(uname -s)" = "MINGW32_NT" ] || [ "$(uname -s)" = "MINGW64_NT" ]; then
-  .husky/pre-commit.bat
-else
+
   . "$(dirname "$0")/_/husky.sh"
-  echo "Wird in Shell ausgeführt"
+  echo "EsLint is running..."
   npm --prefix ./Assignment3 run lint
-fi
