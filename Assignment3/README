@@ -1,0 +1,9 @@
+Husky: Due to the structure of this project, we encountered some issues when configuring Husky. Husky typically expects the package.json to be in the root directory. Since this was not the case in our project, we manually configured the core.hooksPath in the config file within the .git directory.
+
+The solution suggested in the Husky documentation, "prepare": "cd .. && husky Assignment3/.husky", along with switching back with "cd Assignment3" in the respective hook, caused the hook not to be triggered, and the script was not executed. Other solution attempts, such as moving the affected files to different directories, led to more problems, so we decided to stick with the current approach.
+
+Setup the Husky-Configurations: 
+-For Husky to work properly, you must first run "npm install" while inside the Assignment3 directory. The advantage of this method is that it installs the other required packages for the project at the same time. 
+-Alternatively, you can also run the command "sh Assignment3/.husky/_/husky.sh" from the root directory via the terminal.
+
+Both of these options ensure that the Git hooks are searched for in the correct location.
