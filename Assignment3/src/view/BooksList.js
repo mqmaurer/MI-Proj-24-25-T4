@@ -34,7 +34,7 @@ export function BooksList() {
             </div>
             <div class="col-md-2">
               <button type="button" id="searchSortButton" class="btn btn-success pl-3 pr-3"><i class="fa fa-check"></i></button>
-              <button type="reset" id="resetButton" class="btn btn-danger pl-3 pr-3 ml-1">✖</button>
+              <button type="button" id="resetButton" class="btn btn-danger pl-3 pr-3 ml-1">✖</button>
             </div>
           </div>
         </form>
