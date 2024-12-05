@@ -11,10 +11,10 @@ export function ThemeSwitcher() {
     setTimeout(function () {
       let $stylesheet = document.querySelector("#stylesheet");
       if (theme === "default") {
-        $stylesheet.setAttribute("href", "src/assets/css/bootstrap.dark.css");
+        $stylesheet.setAttribute("href", "assets/css/bootstrap.dark.css");
         theme = "dark";
       } else {
-        $stylesheet.setAttribute("href", "src/assets/css/bootstrap.default.css");
+        $stylesheet.setAttribute("href", "assets/css/bootstrap.default.css");
         theme = "default";
       }
     }, 1000);
