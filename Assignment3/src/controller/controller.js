@@ -34,12 +34,72 @@ export   function Controller() {
   function executeBookListRoute() {
     const books = bookManager.getBooks();
     booksListView.renderView(books);
+
+    // Initialization of Button mechanics
+    initializeButtons();
+  }
+
+  function initializeButtons() {
+    const books = bookManager.getBooks();
+
+    // Functionality of form's submit button
+    booksListView.bindSearchButtonClick((textInput, searchOption, sortOption) => {
+      const filteredBooks = filterBooks(textInput, searchOption);
+      const sortedBooks = sortBooks(filteredBooks, sortOption);
+      // Remove Table
+      booksListView.removeTable();
+      // Pass filtered and sorted books to the view
+      booksListView.addBooksToTable(sortedBooks);
+      initializeButtons();
+    });
+
+    // Functionality of form's reset button
+    booksListView.bindResetButtonClick(() => {
+      booksListView.renderView(books);
+      initializeButtons();
+    });
+
+    // Functionality of table's detail button
     booksListView.bindDetailButtonClick(function (event) {
       location.hash = "#/details/" + event.target.dataset.isbn;
-    });
+    });;
+
+    // Functionality of table's remove button
     booksListView.bindRemoveButtonClick(function (event) {
       removeBook(event.target.dataset.isbn);
-    });
+    })
+  }
+
+  function filterBooks(textInput, searchOption) {
+    let books = bookManager.getBooks();
+
+    if (searchOption === 'title') {
+      books = books.filter(book => book.title.toLowerCase().includes(textInput.toLowerCase()));
+    } else if (searchOption === 'author') {
+      books = books.filter(book => book.author.toLowerCase().includes(textInput.toLowerCase()));
+    } else if (searchOption === 'isbn') {
+      books = books.filter(book => book.isbn.toLowerCase().includes(textInput.toLowerCase()));
+    }
+
+    return books;
+  }
+
+  function sortBooks(books, sortOption) {
+    let sortedBooks;
+
+    if (sortOption === 'titleAsc') {
+      sortedBooks = books.sort((a, b) => b.title.localeCompare(a.title));
+    } else if (sortOption === 'titleDesc') {
+      sortedBooks = books.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortOption === 'authorAsc') {
+      sortedBooks = books.sort((a, b) => b.author.localeCompare(a.author));
+    } else if (sortOption === 'authorDesc') {
+      sortedBooks = books.sort((a, b) => a.author.localeCompare(b.author));
+    } else if (sortOption === 'noSort') {
+      sortedBooks = books;
+    }
+
+    return sortedBooks;
   }
 
   function executeAddBookRoute() {

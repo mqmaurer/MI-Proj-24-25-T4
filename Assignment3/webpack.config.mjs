@@ -1,7 +1,7 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
- import ESLintPlugin from 'eslint-webpack-plugin';
+import ESLintPlugin from 'eslint-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin'; // for minimization
 
 const __dirname = path.resolve();
@@ -11,9 +11,9 @@ export default (env, argv) => {
   const isProduction = process.env.NODE_ENV === 'production';
 
   return {
-  
-    entry: './app.js',
-    
+
+    entry: './src/app.js',
+
     // Ausgabe
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -28,11 +28,11 @@ export default (env, argv) => {
     module: {
       rules: [
         {
-          test: /\.css$/, 
+          test: /\.css$/,
           use: ['style-loader', 'css-loader'],
         },
         {
-          test: /\.js$/, 
+          test: /\.js$/,
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
@@ -42,8 +42,8 @@ export default (env, argv) => {
     },
 
     stats: {
-        children: true,
-    },      
+      children: true,
+    },
 
     // Plugins
     plugins: [
@@ -55,13 +55,14 @@ export default (env, argv) => {
           { from: 'src/assets', to: 'assets' }, //copies from src/assets to dist/assets
         ],
       }),
-       new ESLintPlugin({
+      new ESLintPlugin({
         configType: 'flat',
         extensions: ['js'],
-        fix: true, 
+        fix: true,
         files: ["src/**/*.js"], // Lintet alle JavaScript-Dateien im src-Ordner
         failOnError: isProduction, // Lässt den Build im Fehlerfall scheitern, wenn es sich um Produktion handelt
-       overrideConfigFile: './eslint.config.mjs',}),
+        overrideConfigFile: './eslint.config.mjs',
+      }),
     ],
 
     // Development-Tools
@@ -80,7 +81,6 @@ export default (env, argv) => {
             overlay: true, // shows errors in browser
           },
         },
-        
 
     // Opitmization for Production
     optimization: isProduction

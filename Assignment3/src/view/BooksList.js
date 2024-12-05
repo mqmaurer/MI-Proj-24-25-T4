@@ -7,29 +7,93 @@ export function BooksList() {
 
   function renderView(books) {
     const view = `
-      <div class="container mt-4">
+      <div class="container mt-2">
+        <form class="mt-4" id="searchSortForm">
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="inputSearchText" id="accessibilityLabel">Search Text</label>
+              <input type="text" class="form-control" id="inputSearchText" name="inputSearchText" placeholder="Search Text">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="searchOption" id="accessibilityLabel">Search Option</label>
+              <select name="searchOption" id="searchOption" class="form-control">
+                <option selected value="title">Title</option>
+                <option value="author">Author</option>
+                <option value="isbn">ISBN</option>
+              </select>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="sortOption" id="accessibilityLabel">Sort Option</label>
+              <select name="sortOption" id="sortOption" class="form-control">
+                <option selected value="noSort">No sorting</option>
+                <option value="titleAsc">Title Ascending</option>
+                <option value="titleDesc">Title Descending</option>
+                <option value="authorAsc">Author Ascending</option>
+                <option value="authorDesc">Author Descending</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <button type="button" id="searchSortButton" class="btn btn-success pl-3 pr-3"><i class="fa fa-check"></i></button>
+              <button type="button" id="resetButton" class="btn btn-danger pl-3 pr-3 ml-1">✖</button>
+            </div>
+          </div>
+        </form>
         <table class="table table-striped mt-5">
-        <thead>
-          <tr>
-            <th>Titel</th>
-            <th>Author</th>
-            <th>ISBN</th>
-            <th>Detail</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody id="book-list"></tbody>
-      </table>
-      <div class="container mt-4">
-        `;
+          <thead>
+           <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>ISBN</th>
+              <th>Detail</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody id="book-list"></tbody>
+        </table>
+      </div>
+      `;
 
     $viewSpace.innerHTML = view;
     addBooksToTable(books);
   }
 
+  function bindSearchButtonClick(callback) {
+    const $searchButton = document.querySelector("#searchSortButton");
+
+    $searchButton.addEventListener("click", () => {
+      // Get form's values
+      let searchText = document.forms[0].inputSearchText.value;
+      let sanitizedInput = sanitizeInput(searchText);
+      let searchOption = getDropdown('searchOption');
+      let sortOption = getDropdown('sortOption');
+
+      callback(sanitizedInput, searchOption, sortOption);
+    });
+  }
+
+  function getDropdown(dropdownName) {
+    // Get dropdown values of form
+    const item = document.forms[0][dropdownName].selectedIndex;
+    const result = document.forms[0][dropdownName].options[item].value;
+    return result;
+  }
+
+  function sanitizeInput(input) {
+    // Remove special characters and morph to lower case
+    return input.replace(/[/\\#,+()$~%.^'"*<>{}]/g, "");
+  }
+
+  function bindResetButtonClick(callback) {
+    const $resetButton = document.querySelector("#resetButton");
+
+    $resetButton.addEventListener("click", (event) => {
+      callback(event);
+    });
+  }
+
   function addBooksToTable(books) {
     books.forEach(function (book) {
-      addBookAsTableRow(book, true);
+      addBookAsTableRow(book);
     });
   }
 
@@ -78,8 +142,8 @@ export function BooksList() {
   function bindDetailButtonClick(callback) {
     const $detailButtons = document.querySelectorAll(".detail-button");
 
-    for (let index = 0; index < $detailButtons.length; index++) {
-      const $detailButton = $detailButtons[index];
+    for (const element of $detailButtons) {
+      const $detailButton = element;
       $detailButton.addEventListener("click", function (event) {
         callback(event);
       });
@@ -89,8 +153,8 @@ export function BooksList() {
   function bindRemoveButtonClick(callback) {
     const $removeButtons = document.querySelectorAll(".remove-button");
 
-    for (let index = 0; index < $removeButtons.length; index++) {
-      const $removeButton = $removeButtons[index];
+    for (const element of $removeButtons) {
+      const $removeButton = element;
       $removeButton.addEventListener("click", function (event) {
         callback(event);
       });
@@ -107,10 +171,19 @@ export function BooksList() {
     animator.moveToRight($bookToRemove, remove);
   }
 
+  function removeTable() {
+    const $tableToRemove = document.querySelector("#book-list");
+    $tableToRemove.innerHTML = ``
+  }
+
   return {
+    bindSearchButtonClick: bindSearchButtonClick,
     removeBook: removeBook,
+    removeTable: removeTable,
+    addBooksToTable: addBooksToTable,
     bindRemoveButtonClick: bindRemoveButtonClick,
     bindDetailButtonClick: bindDetailButtonClick,
     renderView: renderView,
+    bindResetButtonClick: bindResetButtonClick,
   };
 }

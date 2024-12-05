@@ -1,4 +1,4 @@
-import { Controller } from "./src/controller/controller.js";
+import { Controller } from "./controller/controller.js";
 
 // Just for testing purposes
 const testData = [
