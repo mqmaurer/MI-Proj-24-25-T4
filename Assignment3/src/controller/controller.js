@@ -5,7 +5,7 @@ import { AddBook } from "../view/AddBook.js";
 import { BookDetail } from "../view/BookDetail.js";
 import { Router } from "./Router.js";
 
-export   function Controller() {
+export function Controller() {
   const bookManager = BookManager();
 
   // start ThemeSwitcher
@@ -40,7 +40,6 @@ export   function Controller() {
   }
 
   function initializeButtons() {
-    const books = bookManager.getBooks();
 
     // Functionality of form's submit button
     booksListView.bindSearchButtonClick((textInput, searchOption, sortOption) => {
@@ -55,7 +54,9 @@ export   function Controller() {
 
     // Functionality of form's reset button
     booksListView.bindResetButtonClick(() => {
-      booksListView.renderView(books);
+      // Update books for new view
+      const book = bookManager.getBooks();
+      booksListView.renderView(book);
       initializeButtons();
     });
 
