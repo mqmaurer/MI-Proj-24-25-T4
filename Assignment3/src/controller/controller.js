@@ -73,13 +73,13 @@ export function Controller() {
     let sortedBooks;
 
     if (sortOption === 'titleAsc') {
-      sortedBooks = books.sort((a, b) => a.title.localeCompare(b.title));
-    } else if (sortOption === 'titleDesc') {
       sortedBooks = books.sort((a, b) => b.title.localeCompare(a.title));
+    } else if (sortOption === 'titleDesc') {
+      sortedBooks = books.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortOption === 'authorAsc') {
-      sortedBooks = books.sort((a, b) => a.author.localeCompare(b.author));
-    } else if (sortOption === 'authorDesc') {
       sortedBooks = books.sort((a, b) => b.author.localeCompare(a.author));
+    } else if (sortOption === 'authorDesc') {
+      sortedBooks = books.sort((a, b) => a.author.localeCompare(b.author));
     } else if (sortOption === 'noSort') {
       sortedBooks = books;
     }
