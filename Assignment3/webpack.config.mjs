@@ -2,13 +2,13 @@ import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
-import TerserPlugin from 'terser-webpack-plugin'; // Für Minifizierung
+import TerserPlugin from 'terser-webpack-plugin'; // for minimization
 
 const __dirname = path.resolve();
 
-// Exportiere die Konfiguration als Default
+//exports configuration as default
 export default (env, argv) => {
-  const isProduction = argv.mode === 'production';
+  const isProduction = process.env.NODE_ENV === 'production';
 
   return {
 
@@ -17,14 +17,14 @@ export default (env, argv) => {
     // Ausgabe
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: isProduction ? '[name].[contenthash].js' : 'bundle.js', // Hash für Produktion, verhindert Verwechslung von alten Dateien aus dem Cache
-      clean: true, // löscht dist vor jedem Build
+      filename: isProduction ? '[name].[contenthash].js' : 'bundle.js', // Hash for production, so there is no caching problem
+      clean: true, // delete dist folder before build
     },
 
     // Modus
     mode: isProduction ? 'production' : 'development',
 
-    // Module und Loader
+    // Module and Loader
     module: {
       rules: [
         {
@@ -48,11 +48,11 @@ export default (env, argv) => {
     // Plugins
     plugins: [
       new HtmlWebpackPlugin({
-        template: './src/index.html', // HTML-Datei
+        template: './src/index.html', 
       }),
       new CopyWebpackPlugin({
         patterns: [
-          { from: 'src/assets', to: 'assets' }, // Kopiert alle Dateien aus src nach dist
+          { from: 'src/assets', to: 'assets' }, //copies from src/assets to dist/assets
         ],
       }),
       new ESLintPlugin({
@@ -65,28 +65,31 @@ export default (env, argv) => {
       }),
     ],
 
-    // Entwicklungs-Tools
-    devtool: isProduction ? 'source-map' : 'eval-source-map',
+    // Development-Tools
+    devtool: isProduction ? 'source-map' : 'eval-source-map', 
 
-    // Webpack Dev Server Konfiguration für Entwicklung
+    // Webpack Dev Server configuration
     devServer: isProduction
-      ? {} // Keine spezielle Dev-Server-Konfiguration für Produktion
+      ? {} //No special configuration for production
       : {
-        static: path.resolve(__dirname, 'dist'), //  Dateien aus dem dist-Ordner
-        port: 3000, // Lokaler Server läuft auf Port 3000
-        open: true, // Öffnet automatisch den Browser
-        hot: true, // Aktiviert Hot Module Replacement (HMR)
-        liveReload: true, // Aktiviert Live Reloading
-      },
+          static: path.resolve(__dirname, 'dist'), // files from dist 
+          port: 3000, 
+          open: true, 
+          hot: true, // Hot module Replacement
+          liveReload: true, // activatese live reload 
+          client: {
+            overlay: true, // shows errors in browser
+          },
+        },
 
-    // Optimierungen für Produktion
+    // Opitmization for Production
     optimization: isProduction
       ? {
-        minimize: true,
-        minimizer: [
-          new TerserPlugin(), // Minifiziert JavaScript
-        ],
-      }
+          minimize: true,
+          minimizer: [
+            new TerserPlugin(), // Minimize JavaScript
+          ],
+        }
       : {},
   };
 };
