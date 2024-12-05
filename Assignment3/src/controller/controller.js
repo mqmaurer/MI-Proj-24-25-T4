@@ -36,24 +36,31 @@ export function Controller() {
     booksListView.renderView(books);
 
     // Search and Sort functionality management
-    booksListView.bindSearchButtonClick(function (textInput, searchOption, sortOption) {
+    booksListView.bindSearchButtonClick((textInput, searchOption, sortOption) => {
       const filteredBooks = filterBooks(textInput, searchOption);
       const sortedBooks = sortBooks(filteredBooks, sortOption);
       // Remove Table
       booksListView.removeTable();
       // Pass filtered and sorted books to the view
       booksListView.addBooksToTable(sortedBooks);
+      initializeButtons();
     });
-    booksListView.bindResetButtonClick(books);
+    booksListView.bindResetButtonClick(()  => {
+      booksListView.renderView(books);
+      initializeButtons(); 
+    });
+    
+    // First initialization of table buttons
+    initializeButtons();
+  }
 
-    // Table button management
+  function initializeButtons(){
     booksListView.bindDetailButtonClick(function (event) {
       location.hash = "#/details/" + event.target.dataset.isbn;
-    });
+    });;
     booksListView.bindRemoveButtonClick(function (event) {
       removeBook(event.target.dataset.isbn);
-    });
-  }
+  })}
 
   function filterBooks(textInput, searchOption) {
     let books = bookManager.getBooks();

@@ -8,7 +8,7 @@ export function BooksList() {
   function renderView(books) {
     const view = `
       <div class="container mt-2">
-        <form class="mt-4">
+        <form class="mt-4" id="searchSortForm">
           <div class="form-row">
             <div class="form-group col-md-4">
               <label for="inputSearchText" id="accessibilityLabel">Search Text</label>
@@ -83,12 +83,11 @@ export function BooksList() {
     return input.replace(/[/\\#,+()$~%.^'"*<>{}]/g, "");
   }
 
-  function bindResetButtonClick(books) {
+  function bindResetButtonClick(callback) {
     const $resetButton = document.querySelector("#resetButton");
 
-    $resetButton.addEventListener("click", () => {
-      // Reset of tableview
-      renderView(books);
+    $resetButton.addEventListener("click", (event) => {
+      callback(event);
     });
   }
 
@@ -179,12 +178,12 @@ export function BooksList() {
 
   return {
     bindSearchButtonClick: bindSearchButtonClick,
-    bindResetButtonClick: bindResetButtonClick,
     removeBook: removeBook,
     removeTable: removeTable,
     addBooksToTable: addBooksToTable,
     bindRemoveButtonClick: bindRemoveButtonClick,
     bindDetailButtonClick: bindDetailButtonClick,
     renderView: renderView,
+    bindResetButtonClick: bindResetButtonClick,
   };
 }
