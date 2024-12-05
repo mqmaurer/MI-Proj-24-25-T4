@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --config eslint.config.mjs src",
-    "prepare": "husky",
+    "lint": "eslint --config eslint.config.mjs src --max-warnings=0",
+    "prepare": "echo \"Setting up Git hooks...\" && git config core.hooksPath ./Assignment3/.husky",
     "start": "webpack serve --mode development",
     "build:dev": "webpack --mode development",
     "build:prod": "webpack --mode production"
@@ -30,6 +30,7 @@
     "babel-loader": "^9.2.1",
     "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^7.1.2",
+    "eslint": "^9.15.0",
     "eslint-config-eslint": "^11.0.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-webpack-plugin": "^4.2.0",
