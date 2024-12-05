@@ -1,0 +1,2 @@
+[core]
+	hooksPath = ./Assignment3/.husky

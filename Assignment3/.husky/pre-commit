@@ -1,1 +1,5 @@
-npm run lint 
+#!/bin/sh
+
+  . "$(dirname "$0")/_/husky.sh"
+  echo "EsLint is running..."
+  npm --prefix ./Assignment3 run lint

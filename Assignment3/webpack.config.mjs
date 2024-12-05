@@ -58,10 +58,10 @@ export default (env, argv) => {
        new ESLintPlugin({
         configType: 'flat',
         extensions: ['js'],
-        fix: true, // Fehler mit ESlint beheben
+        fix: true, 
+        files: ["src/**/*.js"], // Lintet alle JavaScript-Dateien im src-Ordner
         failOnError: isProduction, // Lässt den Build im Fehlerfall scheitern, wenn es sich um Produktion handelt
-        overrideConfigFile: './eslint.config.mjs',
-       }),
+       overrideConfigFile: './eslint.config.mjs',}),
     ],
 
     // Entwicklungs-Tools
