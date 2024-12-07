@@ -1,5 +1,6 @@
 import Animator from "../userInterface/Animator";
 import { SORT_OPTIONS } from "../utils/sortBooksBySortOption";
+import BookManager from "../model/BookManager";
 
 class BooksList {
   static detailButtonClickCallback;
@@ -80,6 +81,8 @@ class BooksList {
             <option value=${SORT_OPTIONS.TITLE_DESCENDING}>Title Descending</option>
             <option value=${SORT_OPTIONS.AUTHOR_ASCENDING}>Author Ascending</option>
             <option value=${SORT_OPTIONS.AUTHOR_DESCENDING}>Author Descending</option>
+            <option value=${SORT_OPTIONS.RATING_ASCENDING}>Rating Ascending</option>
+            <option value=${SORT_OPTIONS.RATING_DESCENDING}>Rating Descending</option>
           </select>
         </div>
         <div class="form-group col-6 col-sm-1">
@@ -120,7 +123,7 @@ class BooksList {
     return $deleteCell;
   }
 
-  static createRatingCell(rating) {
+  static createRatingCell(rating=1) {
     const $ratingCell = document.createElement("td");
     $ratingCell.classList.add("rating");
 
@@ -142,6 +145,9 @@ class BooksList {
       star.addEventListener('click', (e) => {
         const rating = parseInt(e.target.dataset.rating);
         const $ratingCell = e.target.closest('td');
+
+        const isbn = e.target.closest('tr').getAttribute('data-isbn');
+        BookManager.updateRating(isbn, rating);
 
         $ratingCell.querySelectorAll('.star').forEach((s, index) => {
           if (index < rating) {

@@ -112,6 +112,10 @@ class Controller {
     BookManager.removeBook(isbn);
     BooksList.removeBook(isbn);
   }
+
+  static updateRating(isbn, rating) {
+    BooksList.updateRating(isbn, rating);
+  }
 }
 
 export default Controller;

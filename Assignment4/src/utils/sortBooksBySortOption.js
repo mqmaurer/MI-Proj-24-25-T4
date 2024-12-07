@@ -4,6 +4,8 @@ const SORT_OPTIONS = {
   TITLE_DESCENDING: "title-descending",
   AUTHOR_ASCENDING: "author-ascending",
   AUTHOR_DESCENDING: "author-descending",
+  RATING_ASCENDING: "rating-ascending",
+  RATING_DESCENDING:"rating-descending"
 };
 
 const sortBooksAscending = (books, bookProperty) => {
@@ -55,6 +57,14 @@ const sortBooksBySortOption = (books, sortOption) => {
 
   if (sortOption === SORT_OPTIONS.AUTHOR_DESCENDING) {
     return sortBooksDescending(books, "author");
+  }
+
+  if (sortOption === SORT_OPTIONS.RATING_ASCENDING) {
+    return sortBooksAscending(books, "rating");
+  }
+
+  if (sortOption === SORT_OPTIONS.RATING_DESCENDING) {
+    return sortBooksDescending(books, "rating");
   }
 
   return books;

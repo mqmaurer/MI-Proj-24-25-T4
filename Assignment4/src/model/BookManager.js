@@ -36,6 +36,11 @@ class BookManager {
   static removeBook(isbn) {
     Store.removeBook(isbn);
   }
+
+  static updateRating(isbn, rating) {
+    Store.updateRating(isbn, rating);
+  }
 }
+
 
 export default BookManager;
