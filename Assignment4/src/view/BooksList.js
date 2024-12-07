@@ -18,6 +18,7 @@ class BooksList {
             <th>ISBN</th>
             <th>Detail</th>
             <th>Delete</th>
+            <th>Rating</th>
           </tr>
         </thead>
         <tbody id="book-list"></tbody>
@@ -45,15 +46,18 @@ class BooksList {
 
       const $deleteCell = BooksList.createDeleteCell(book.isbn);
       const $detailCell = BooksList.createDetailCell(book.isbn);
+      const $ratingCell = BooksList.createRatingCell(book.rating);
 
       $row.appendChild($detailCell);
       $row.appendChild($deleteCell);
+      $row.appendChild($ratingCell);
 
       $bookList.appendChild($row);
     });
 
     BooksList.bindDetailButtonClick();
     BooksList.bindRemoveButtonClick();
+    BooksList.bindRatingClick();
   }
 
   static renderInputPanel() {
@@ -114,6 +118,42 @@ class BooksList {
     $deleteCell.appendChild($link);
 
     return $deleteCell;
+  }
+
+  static createRatingCell(rating) {
+    const $ratingCell = document.createElement("td");
+    $ratingCell.classList.add("rating");
+
+    for (let i = 1; i <= 5; i++) {
+      const star = document.createElement('i');
+      star.classList.add('star', 'fa-solid', 'fa-star', 'text-success');//solid star, theme color
+      if (i <= rating) {
+        star.classList.add("filled", 'text-warning');//turn into yellow star after rating
+      }
+      star.dataset.rating = i;
+      $ratingCell.appendChild(star);
+    }
+
+    return $ratingCell;
+  }
+
+  static bindRatingClick() {
+    document.querySelectorAll('.star').forEach((star) => {
+      star.addEventListener('click', (e) => {
+        const rating = parseInt(e.target.dataset.rating);
+        const $ratingCell = e.target.closest('td');
+
+        $ratingCell.querySelectorAll('.star').forEach((s, index) => {
+          if (index < rating) {
+            s.classList.add('text-warning');//color stars into yellow
+            s.classList.remove('text-success');//remove theme color
+          } else {
+            s.classList.remove('text-warning');//remove yellow color
+            s.classList.add('text-success');//back to theme color
+          }
+        });
+      });
+    });
   }
 
   static getSearchInput() {
