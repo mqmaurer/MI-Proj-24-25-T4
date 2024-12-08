@@ -1,5 +1,5 @@
 class Book {
-  constructor(title, author, isbn, description) {
+  constructor(title, author, isbn, description, rating = 0) {
     if (title === "" || author === "" || isbn === "" || description === "") {
       throw new Error("Please fill in all fields");
     }
@@ -10,7 +10,7 @@ class Book {
     this.author = author;
     this.isbn = isbn;
     this.description = description;
-    this.stars = 0;
+    this.rating = rating;
   }
 
   static isISBNValid(isbn) {

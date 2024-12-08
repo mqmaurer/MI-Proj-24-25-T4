@@ -49,6 +49,16 @@ class BooksList {
       const $detailCell = BooksList.createDetailCell(book.isbn);
       const $ratingCell = BooksList.createRatingCell(book.rating);
 
+      const savedRating = localStorage.getItem(book.isbn);
+      if (savedRating) {
+        [...$ratingCell.querySelectorAll('.star')].forEach((star, index) => {
+          if (index < savedRating) {
+            star.classList.add('text-warning');
+            star.classList.remove('text-success');
+          }
+        });
+    }
+
       $row.appendChild($detailCell);
       $row.appendChild($deleteCell);
       $row.appendChild($ratingCell);
@@ -127,6 +137,7 @@ class BooksList {
     const $ratingCell = document.createElement("td");
     $ratingCell.classList.add("rating");
 
+
     for (let i = 1; i <= 5; i++) {
       const star = document.createElement('i');
       star.classList.add('star', 'fa-solid', 'fa-star', 'text-success');//solid star, theme color
@@ -144,10 +155,11 @@ class BooksList {
     document.querySelectorAll('.star').forEach((star) => {
       star.addEventListener('click', (e) => {
         const rating = parseInt(e.target.dataset.rating);
-        const $ratingCell = e.target.closest('td');
 
         const isbn = e.target.closest('tr').getAttribute('data-isbn');
         BookManager.updateRating(isbn, rating);
+        localStorage.setItem(isbn, rating);
+        const $ratingCell = e.target.closest('td');
 
         $ratingCell.querySelectorAll('.star').forEach((s, index) => {
           if (index < rating) {
