@@ -5,7 +5,7 @@ import importPlugin from "eslint-plugin-import";
 export default [
   {
     name: "Global Ignore",
-    ignores: ["webpack.config.js", "dist/bundle.js"],
+    ignores: ["webpack.config.js", "dist/bundle.js", "../.github/*"],
   },
 
   importPlugin.flatConfigs.recommended,
