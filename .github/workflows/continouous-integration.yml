@@ -1,0 +1,38 @@
+name: "Jobs for Pull Requests"
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+
+  eslint-lint:
+    name: Run Eslint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./Assignment4
+    steps:
+    - uses: actions/checkout@v4
+    - run: npm run lint
+
+  vitest-test:
+    name: run Vitest tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./Assignment4
+    steps:
+    - uses: actions/checkout@v4
+    - run: npm run test
+
+  webpack-build:
+    name: run Webpack build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./Assignment4
+    steps:
+    - uses: actions/checkout@v4
+    - run: npm run build
