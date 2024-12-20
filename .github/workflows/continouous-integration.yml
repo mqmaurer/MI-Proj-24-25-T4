@@ -14,8 +14,20 @@ jobs:
       run:
         working-directory: ./Assignment4
     steps:
-    - uses: actions/checkout@v4
-    - run: npm run lint
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 21
+
+    - name: Install Node.js dependencies
+      run: npm ci
+
+    - name: Run Linter
+      run: npm run lint
+
 
   vitest-test:
     name: run Vitest tests
@@ -24,8 +36,20 @@ jobs:
       run:
         working-directory: ./Assignment4
     steps:
-    - uses: actions/checkout@v4
-    - run: npm run test
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 21
+
+    - name: Install Node.js dependencies
+      run: npm ci
+
+    - name: Run Tests
+      run: npm run test
+
 
   webpack-build:
     name: run Webpack build
@@ -34,5 +58,16 @@ jobs:
       run:
         working-directory: ./Assignment4
     steps:
-    - uses: actions/checkout@v4
-    - run: npm run build
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 21
+
+    - name: Install Node.js dependencies
+      run: npm ci
+
+    - name: Run Build
+      run: npm run build
