@@ -6,9 +6,7 @@ on:
       - main
 
 jobs:
-
-  eslint-lint:
-    name: Run Eslint
+  Pull_Request_Job:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -25,49 +23,11 @@ jobs:
     - name: Install Node.js dependencies
       run: npm ci
 
-    - name: Run Linter
+    - name: Run ESLint
       run: npm run lint
 
-
-  vitest-test:
-    name: run Vitest tests
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./Assignment4
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: 21
-
-    - name: Install Node.js dependencies
-      run: npm ci
-
-    - name: Run Tests
+    - name: Run Vitest
       run: npm run test
-
-
-  webpack-build:
-    name: run Webpack build
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./Assignment4
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: 21
-
-    - name: Install Node.js dependencies
-      run: npm ci
-
-    - name: Run Build
+    
+    - name: Run Webpack build
       run: npm run build
