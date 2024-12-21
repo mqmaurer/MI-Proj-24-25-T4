@@ -1,5 +1,5 @@
 class Book {
-  constructor(title, author, isbn, description, rating = 0) {
+  constructor(title, author, isbn, description, rating = 1) {
     if (title === "" || author === "" || isbn === "" || description === "") {
       throw new Error("Please fill in all fields");
     }

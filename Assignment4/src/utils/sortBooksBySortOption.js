@@ -39,6 +39,11 @@ const sortBooksDescending = (books, bookProperty) => {
 };
 
 const sortBooksBySortOption = (books, sortOption) => {
+  books.forEach((book) => {
+    const savedRating = localStorage.getItem(book.isbn);
+    book.rating = savedRating ? parseInt(savedRating) : 1; // 更新 book.rating
+  });
+
   if (sortOption === SORT_OPTIONS.NO_SORTING) {
     return books;
   }
