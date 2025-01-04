@@ -1,10 +1,8 @@
 import Animator from "../userInterface/Animator";
 import { SORT_OPTIONS } from "../utils/sortBooksBySortOption";
-import BookManager from "../model/BookManager";
 
 class BooksList {
   static detailButtonClickCallback;
-
   static removeButtonClickCallback;
 
   static renderView(books) {
@@ -27,7 +25,6 @@ class BooksList {
         `;
 
     document.querySelector("#viewSpace").innerHTML = view;
-
     BooksList.renderBookTable(books);
   }
 
@@ -155,9 +152,7 @@ class BooksList {
     document.querySelectorAll('.star').forEach((star) => {
       star.addEventListener('click', (e) => {
         const rating = parseInt(e.target.dataset.rating);
-
         const isbn = e.target.closest('tr').getAttribute('data-isbn');
-        BookManager.updateRating(isbn, rating);
         localStorage.setItem(isbn, rating);
         const $ratingCell = e.target.closest('td');
 
