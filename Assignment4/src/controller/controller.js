@@ -54,9 +54,7 @@ class Controller {
     });
 
     BooksList.bindInputPanelReset(() => {
-      const allBooks = BookManager.getBooks();
-
-      BooksList.renderBookTable(allBooks);
+      BooksList.renderBookTable(books);
       BooksList.resetInputPanel();
     });
 
@@ -114,7 +112,9 @@ class Controller {
   }
 
   static updateRating(isbn, rating) {
-    BooksList.updateRating(isbn, rating);
+    BookManager.updateRating(isbn, rating);
+    const books = BookManager.getBooks();
+    BooksList.renderBookTable(books);
   }
 }
 

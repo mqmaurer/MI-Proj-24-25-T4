@@ -3,7 +3,15 @@ import Book from "./Book";
 
 class BookManager {
   static getBooks() {
-    return Store.getBooks();
+    const books = Store.getBooks();
+    BookManager.addSavedRatings(books);
+    return books;
+  }
+  static addSavedRatings(books){
+    books.forEach((book) => {
+      const savedRating = localStorage.getItem(book.isbn);
+      book.savedRating = savedRating ? parseInt(savedRating) : 1;
+    });
   }
 
   static getBook(isbn) {

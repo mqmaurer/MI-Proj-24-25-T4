@@ -1,6 +1,5 @@
 import Animator from "../userInterface/Animator";
 import { SORT_OPTIONS } from "../utils/sortBooksBySortOption";
-import BookManager from "../model/BookManager";
 
 class BooksList {
   static detailButtonClickCallback;
@@ -157,7 +156,6 @@ class BooksList {
         const rating = parseInt(e.target.dataset.rating);
 
         const isbn = e.target.closest('tr').getAttribute('data-isbn');
-        BookManager.updateRating(isbn, rating);
         localStorage.setItem(isbn, rating);
         const $ratingCell = e.target.closest('td');
 
