@@ -1,0 +1,33 @@
+name: "Jobs for Pull Requests"
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Pull_Request_Job:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./Assignment4
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 21
+
+    - name: Install Node.js dependencies
+      run: npm ci
+
+    - name: Run ESLint
+      run: npm run lint
+
+    - name: Run Vitest
+      run: npm run test
+    
+    - name: Run Webpack build
+      run: npm run build
