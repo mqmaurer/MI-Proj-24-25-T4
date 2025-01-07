@@ -3,7 +3,7 @@ import { SORT_OPTIONS } from "../utils/sortBooksBySortOption";
 
 class BooksList {
   static detailButtonClickCallback;
-
+  static ratingClickCallback;
   static removeButtonClickCallback;
 
   static renderView(books) {
@@ -56,7 +56,7 @@ class BooksList {
             star.classList.remove('text-success');
           }
         });
-    }
+      }
 
       $row.appendChild($detailCell);
       $row.appendChild($deleteCell);
@@ -132,7 +132,7 @@ class BooksList {
     return $deleteCell;
   }
 
-  static createRatingCell(rating=1) {
+  static createRatingCell(rating = 1) {
     const $ratingCell = document.createElement("td");
     $ratingCell.classList.add("rating");
 
@@ -150,14 +150,19 @@ class BooksList {
     return $ratingCell;
   }
 
-  static bindRatingClick() {
-    document.querySelectorAll('.star').forEach((star) => {
-      star.addEventListener('click', (e) => {
-        const rating = parseInt(e.target.dataset.rating);
+  static setRatingClickCallback(callback) {
+    BooksList.ratingClickCallback = callback;
+  }
 
-        const isbn = e.target.closest('tr').getAttribute('data-isbn');
-        localStorage.setItem(isbn, rating);
-        const $ratingCell = e.target.closest('td');
+  static bindRatingClick() {
+    const $stars = document.querySelectorAll('.star');
+
+    $stars.forEach(($star) => {
+      $star.addEventListener('click', (event) => {
+        const rating = parseInt(event.target.dataset.rating);
+        const isbn = event.target.closest('tr').getAttribute('data-isbn');
+        BooksList.ratingClickCallback(rating, isbn); //Callback for updating stars
+        const $ratingCell = event.target.closest('td');
 
         $ratingCell.querySelectorAll('.star').forEach((s, index) => {
           if (index < rating) {
@@ -169,7 +174,7 @@ class BooksList {
           }
         });
       });
-    });
+    })
   }
 
   static getSearchInput() {

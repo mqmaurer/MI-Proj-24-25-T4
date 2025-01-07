@@ -65,6 +65,12 @@ class Controller {
     BooksList.setRemoveButtonClickCallback((isbn) => {
       Controller.removeBook(isbn);
     });
+
+    BooksList.setRatingClickCallback((rating, isbn) => {
+      BookManager.updateRating(isbn, rating);
+      const ratedBooks = BookManager.getBooks();
+      BooksList.renderBookTable(ratedBooks);
+    });
   }
 
   static executeAddBookRoute() {
@@ -109,12 +115,6 @@ class Controller {
   static removeBook(isbn) {
     BookManager.removeBook(isbn);
     BooksList.removeBook(isbn);
-  }
-
-  static updateRating(isbn, rating) {
-    BookManager.updateRating(isbn, rating);
-    const books = BookManager.getBooks();
-    BooksList.renderBookTable(books);
   }
 }
 
