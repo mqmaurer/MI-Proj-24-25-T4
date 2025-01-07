@@ -1,5 +1,5 @@
 import { describe, it, vi, expect, beforeEach } from "vitest";
-import Controller from "../src/controller/Controller";
+import Controller from "../src/controller/controller";
 import Router from "../src/controller/Router";
 import ThemeSwitcher from "../src/userInterface/ThemeSwitcher";
 import BookManager from "../src/model/BookManager";
@@ -15,7 +15,7 @@ vi.mock("../src/view/BooksList");
 vi.mock("../src/view/AddBook");
 vi.mock("../src/view/BookDetail");
 
-describe("Controller", () => {
+describe("controller", () => {
   let controller;
 
   beforeEach(() => {
