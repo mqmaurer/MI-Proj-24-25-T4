@@ -20,7 +20,15 @@ describe("Controller", () => {
 
   beforeEach(() => {
     controller = new Controller();
+  
+
+ 
+  vi.stubGlobal("window", {
+    location: {
+      hash: "",
+    },
   });
+});
 
   it("should initialize  and call Router and ThemeSwitcher", () => {
     controller.init();
@@ -59,7 +67,7 @@ describe("Controller", () => {
     AddBook.getFormInputs.mockReturnValue({
       title: "New Book",
       author: "Author",
-      isbn: "12345",
+      isbn: "123-456-789-X",
       description: "Description",
     });
 
@@ -73,7 +81,7 @@ describe("Controller", () => {
     expect(BookManager.addBook).toHaveBeenCalledWith(
       "New Book",
       "Author",
-      "12345",
+      "123-456-789-X",
       "Description"
     );
     expect(window.location.hash).toBe("#/books");
