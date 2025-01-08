@@ -33,7 +33,7 @@ class Controller {
 
   static executeBookListRoute() {
     const books = BookManager.getBooks();
-
+    console.log("Books passed to BooksList.renderView:", books);
     BooksList.renderView(books);
 
     BooksList.bindInputPanelSubmit(() => {
@@ -67,6 +67,7 @@ class Controller {
     });
 
     BooksList.setRatingClickCallback((rating, isbn) => {
+      console.log(`New rating for ISBN ${isbn}: ${rating}`);
       BookManager.updateRating(isbn, rating);
       const ratedBooks = BookManager.getBooks();
       BooksList.renderBookTable(ratedBooks);

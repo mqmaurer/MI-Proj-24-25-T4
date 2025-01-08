@@ -44,6 +44,7 @@ class Store {
 
   static updateRating(isbn, rating) {
     const books = Store.getBooks();
+    console.log("Books before rating update:", books);
     const updatedBooks = books.map((book) => {
       if (book.isbn === isbn) {
         book.rating = rating;
@@ -51,6 +52,7 @@ class Store {
       return book;
     });
     localStorage.setItem("books", JSON.stringify(updatedBooks));
+    console.log(`Updated books with new rating for ISBN ${isbn}:`, updatedBooks);
   }
 }
 
