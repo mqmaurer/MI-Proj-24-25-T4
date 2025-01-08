@@ -27,7 +27,7 @@ jobs:
       run: npm run lint
 
     - name: Run Vitest
-      run: npm run test
+      run: npm run coverage
     
     - name: Run Webpack build
       run: npm run build
