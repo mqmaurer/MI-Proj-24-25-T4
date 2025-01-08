@@ -41,6 +41,18 @@ class Store {
 
     localStorage.setItem("books", JSON.stringify(books));
   }
+
+  static updateRating(isbn, rating) {
+    localStorage.setItem(isbn, rating);
+    const books = Store.getBooks();
+    const updatedBooks = books.map((book) => {
+      if (book.isbn === isbn) {
+        book.rating = rating;
+      }
+      return book;
+    });
+    localStorage.setItem("books", JSON.stringify(updatedBooks));
+  }
 }
 
 export default Store;

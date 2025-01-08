@@ -3,7 +3,7 @@ import { SORT_OPTIONS } from "../utils/sortBooksBySortOption";
 
 class BooksList {
   static detailButtonClickCallback;
-
+  static ratingClickCallback;
   static removeButtonClickCallback;
 
   static renderView(books) {
@@ -18,6 +18,7 @@ class BooksList {
             <th>ISBN</th>
             <th>Detail</th>
             <th>Delete</th>
+            <th>Rating</th>
           </tr>
         </thead>
         <tbody id="book-list"></tbody>
@@ -45,15 +46,28 @@ class BooksList {
 
       const $deleteCell = BooksList.createDeleteCell(book.isbn);
       const $detailCell = BooksList.createDetailCell(book.isbn);
+      const $ratingCell = BooksList.createRatingCell(book.rating);
+
+      const savedRating = localStorage.getItem(book.isbn)
+      if (savedRating) {
+        [...$ratingCell.querySelectorAll('.star')].forEach((star, index) => {
+          if (index < savedRating) {
+            star.classList.add('text-warning');
+            star.classList.remove('text-success');
+          }
+        });
+      }
 
       $row.appendChild($detailCell);
       $row.appendChild($deleteCell);
+      $row.appendChild($ratingCell);
 
       $bookList.appendChild($row);
     });
 
     BooksList.bindDetailButtonClick();
     BooksList.bindRemoveButtonClick();
+    BooksList.bindRatingClick();
   }
 
   static renderInputPanel() {
@@ -76,6 +90,8 @@ class BooksList {
             <option value=${SORT_OPTIONS.TITLE_DESCENDING}>Title Descending</option>
             <option value=${SORT_OPTIONS.AUTHOR_ASCENDING}>Author Ascending</option>
             <option value=${SORT_OPTIONS.AUTHOR_DESCENDING}>Author Descending</option>
+            <option value=${SORT_OPTIONS.RATING_ASCENDING}>Rating Ascending</option>
+            <option value=${SORT_OPTIONS.RATING_DESCENDING}>Rating Descending</option>
           </select>
         </div>
         <div class="form-group col-6 col-sm-1">
@@ -114,6 +130,50 @@ class BooksList {
     $deleteCell.appendChild($link);
 
     return $deleteCell;
+  }
+
+  static createRatingCell(rating = 1) {
+    const $ratingCell = document.createElement("td");
+    $ratingCell.classList.add("rating");
+
+
+    for (let i = 1; i <= 5; i++) {
+      const star = document.createElement('i');
+      star.classList.add('star', 'fa-solid', 'fa-star', 'text-success');//solid star, theme color
+      if (i <= rating) {
+        star.classList.add("filled", 'text-warning');//turn into yellow star after rating
+      }
+      star.dataset.rating = i;
+      $ratingCell.appendChild(star);
+    }
+
+    return $ratingCell;
+  }
+
+  static setRatingClickCallback(callback) {
+    BooksList.ratingClickCallback = callback;
+  }
+
+  static bindRatingClick() {
+    const $stars = document.querySelectorAll('.star');
+    $stars.forEach(($star) => {
+      $star.addEventListener('click', (event) => {
+        const rating = parseInt(event.target.dataset.rating);
+        const isbn = event.target.closest('tr').getAttribute('data-isbn');
+        BooksList.ratingClickCallback(rating, isbn);
+        const $ratingCell = event.target.closest('td');
+
+        $ratingCell.querySelectorAll('.star').forEach((s, index) => {
+          if (index < rating) {
+            s.classList.add('text-warning');//color stars into yellow
+            s.classList.remove('text-success');//remove theme color
+          } else {
+            s.classList.remove('text-warning');//remove yellow color
+            s.classList.add('text-success');//back to theme color
+          }
+        });
+      });
+    })
   }
 
   static getSearchInput() {
