@@ -24,7 +24,7 @@ export default [
   {
     name: "My Custom Rules",
     rules: {
-      //"no-console": "warn",
+      "no-console": "warn",
       "import/no-cycle": "error",
     },
   },

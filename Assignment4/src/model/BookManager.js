@@ -11,7 +11,6 @@ class BookManager {
   static addSavedRatings(books) {
     books.forEach((book) => {
       const savedRating = localStorage.getItem(book.isbn);
-      console.log(`Book ISBN ${book.isbn} saved rating:`, savedRating);
       book.savedRating = savedRating ? parseInt(savedRating) : 1;
     });
   }

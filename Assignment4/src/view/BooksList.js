@@ -35,7 +35,6 @@ class BooksList {
     $bookList.innerHTML = "";
 
     books.forEach((book) => {
-      console.log(`Rendering book:`, book);
       const $row = document.createElement("tr");
       $row.setAttribute("data-isbn", book.isbn);
 
@@ -157,14 +156,11 @@ class BooksList {
 
   static bindRatingClick() {
     const $stars = document.querySelectorAll('.star');
-    console.log("Binding click events to stars:", $stars);
     $stars.forEach(($star) => {
       $star.addEventListener('click', (event) => {
         const rating = parseInt(event.target.dataset.rating);
         const isbn = event.target.closest('tr').getAttribute('data-isbn');
-        console.log(`Clicked star with rating ${rating} for ISBN ${isbn}`);
         BooksList.ratingClickCallback(rating, isbn); //Callback for updating stars
-        localStorage.setItem(isbn, rating);
         const $ratingCell = event.target.closest('td');
 
         $ratingCell.querySelectorAll('.star').forEach((s, index) => {
