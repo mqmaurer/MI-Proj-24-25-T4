@@ -32,21 +32,24 @@ class Controller {
   }
 
   static executeBookListRoute() {
+    let currentSearchInput = { searchText: "", searchOption: "title" };
+    let currentSortOption = "noSorting";
+
     const books = BookManager.getBooks();
     BooksList.renderView(books);
 
     BooksList.bindInputPanelSubmit(() => {
-      const searchInput = BooksList.getSearchInput();
-      const sortOption = BooksList.getSortOption();
+      currentSearchInput = BooksList.getSearchInput();
+      currentSortOption = BooksList.getSortOption();
 
       const filteredBooks = filterBooksBySearch(
         BookManager.getBooks(),
-        searchInput
+        currentSearchInput
       );
 
       const sortedFilteredBooks = sortBooksBySortOption(
         filteredBooks,
-        sortOption
+        currentSortOption
       );
 
       BooksList.renderBookTable(sortedFilteredBooks);
@@ -55,6 +58,9 @@ class Controller {
     BooksList.bindInputPanelReset(() => {
       BooksList.renderBookTable(books);
       BooksList.resetInputPanel();
+
+      currentSearchInput = { searchText: "", searchOption: "title" };
+      currentSortOption = "noSorting";
     });
 
     BooksList.setDetailButtonClickCallback((isbn) => {
@@ -66,9 +72,7 @@ class Controller {
     });
 
     BooksList.setRatingClickCallback((rating, isbn) => {
-      BookManager.updateRating(isbn, rating);
-      const ratedBooks = BookManager.getBooks();
-      BooksList.renderBookTable(ratedBooks);
+      Controller.updateRatingForBook(isbn, rating, currentSearchInput, currentSortOption);
     });
   }
 
@@ -94,6 +98,19 @@ class Controller {
         AddBook.addBook(error);
       }
     });
+  }
+
+  static updateRatingForBook(isbn, rating, currentSearchInput, currentSortOption) {
+    BookManager.updateRating(isbn, rating);
+    localStorage.setItem(isbn, rating);
+    const books = BookManager.getBooks();
+    const filteredBooks = filterBooksBySearch(books, currentSearchInput);
+    const sortedFilteredBooks = sortBooksBySortOption(
+      filteredBooks,
+      currentSortOption
+    );
+
+    BooksList.renderBookTable(sortedFilteredBooks);
   }
 
   static executeBookDetailRoute() {

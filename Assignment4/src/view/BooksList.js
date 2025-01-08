@@ -160,7 +160,7 @@ class BooksList {
       $star.addEventListener('click', (event) => {
         const rating = parseInt(event.target.dataset.rating);
         const isbn = event.target.closest('tr').getAttribute('data-isbn');
-        BooksList.ratingClickCallback(rating, isbn); //Callback for updating stars
+        BooksList.ratingClickCallback(rating, isbn);
         const $ratingCell = event.target.closest('td');
 
         $ratingCell.querySelectorAll('.star').forEach((s, index) => {
