@@ -1,8 +1,6 @@
 import filterBooksBySearch from "../src/utils/filterBooksBySearch";
 import { describe, it, expect } from "vitest";
 
-import filterBooksBySearch from "../src/utils/filterBooksBySearch";
-
 describe("filterBooksBySearch", () => {
   const books = [
     { title: "JavaScript Basics", author: "Author A" },
