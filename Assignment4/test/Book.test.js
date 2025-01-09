@@ -4,13 +4,13 @@ import { describe, it, expect } from "vitest";
 
 describe("Book", () => {
   it("should create a Book instance with valid data", () => {
-    const book = new Book("Title", "Author", "123-456-789-X", "A book description");
+    const book = new Book("Title", "Author", "123-456-789-X", "A book description", 0);
 
     expect(book.title).toBe("Title");
     expect(book.author).toBe("Author");
     expect(book.isbn).toBe("123-456-789-X");
     expect(book.description).toBe("A book description");
-    expect(book.stars).toBe(0);
+    expect(book.rating).toBe(0);
   });
 
   it("should throw an error if any field is empty", () => {
