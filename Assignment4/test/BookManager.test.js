@@ -8,6 +8,7 @@ vi.mock("../src/model/Store", () => ({
     getBook: vi.fn(),
     addBook: vi.fn(),
     removeBook: vi.fn(),
+    updateRating: vi.fn(),
   },
 }));
 
@@ -16,6 +17,11 @@ describe("BookManager", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+
+    global.localStorage = {
+      getItem: vi.fn(),
+    };
+
     mockBooks = [
       {
         title: "Book 1",
@@ -32,6 +38,36 @@ describe("BookManager", () => {
     ];
 
     Store.getBooks.mockReturnValue(mockBooks);
+  });
+
+  describe("addSavedRatings", () => {
+    it("should add saved ratings from localStorage to books", () => {
+      global.localStorage.getItem.mockImplementation((isbn) => {
+        if (isbn === "9783-16-148-0") return "5";
+        if (isbn === "0-306-40615-2") return "3";
+        return null;
+      });
+
+      BookManager.addSavedRatings(mockBooks);
+
+      expect(mockBooks[0].savedRating).toBe(5);
+      expect(mockBooks[1].savedRating).toBe(3);
+
+      expect(localStorage.getItem).toHaveBeenCalledWith("9783-16-148-0");
+      expect(localStorage.getItem).toHaveBeenCalledWith("0-306-40615-2");
+    });
+
+    it("should set default rating to 1 if no saved rating is found", () => {
+      global.localStorage.getItem.mockReturnValue(null);
+
+      BookManager.addSavedRatings(mockBooks);
+
+      expect(mockBooks[0].savedRating).toBe(1);
+      expect(mockBooks[1].savedRating).toBe(1);
+
+      expect(localStorage.getItem).toHaveBeenCalledWith("9783-16-148-0");
+      expect(localStorage.getItem).toHaveBeenCalledWith("0-306-40615-2");
+    });
   });
 
   describe("getBooks", () => {
@@ -120,6 +156,17 @@ describe("BookManager", () => {
       BookManager.removeBook(isbnToRemove);
 
       expect(Store.removeBook).toHaveBeenCalledWith(isbnToRemove);
+    });
+  });
+
+  describe("updateRating", () => {
+    it("should update the rating of a book by ISBN", () => {
+      const isbnToUpdate = "0-306-40615-2";
+      const newRating = 4;
+
+      BookManager.updateRating(isbnToUpdate, newRating);
+
+      expect(Store.updateRating).toHaveBeenCalledWith(isbnToUpdate, newRating);
     });
   });
 });
