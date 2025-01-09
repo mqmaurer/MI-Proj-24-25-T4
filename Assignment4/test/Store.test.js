@@ -8,8 +8,6 @@ describe("Store", () => {
     global.localStorage = {
       getItem: vi.fn(),
       setItem: vi.fn(),
-      removeItem: vi.fn(),
-      clear: vi.fn(),
     };
 
     mockBooks = [
@@ -173,6 +171,57 @@ describe("Store", () => {
       Store.removeBook("1234");
 
       expect(localStorage.setItem).toHaveBeenCalledWith("books", "[]");
+    });
+  });
+
+  describe("updateRating(isbn, rating)", () => {
+    it("should update the rating of the book with the given ISBN", () => {
+      const isbnToUpdate = "9783-16-148-0";
+      const newRating = 4;
+
+      Store.updateRating(isbnToUpdate, newRating);
+
+      expect(localStorage.setItem).toHaveBeenCalledWith(
+        isbnToUpdate,
+        newRating
+      );
+
+      const updatedBooks = [
+        {
+          title: "Book 1",
+          author: "Author 1",
+          isbn: "9783-16-148-0",
+          description: "Description 1",
+          rating: newRating,
+        },
+        {
+          title: "Book 2",
+          author: "Author 2",
+          isbn: "0-306-40615-2",
+          description: "Description 2",
+        },
+      ];
+
+      expect(localStorage.setItem).toHaveBeenCalledWith(
+        "books",
+        JSON.stringify(updatedBooks)
+      );
+    });
+
+    it("should not update anything if the ISBN is not found", () => {
+      const isbnToUpdate = "9999";
+      const newRating = 3;
+
+      Store.updateRating(isbnToUpdate, newRating);
+
+      expect(localStorage.setItem).toHaveBeenCalledWith(
+        isbnToUpdate,
+        newRating
+      );
+      expect(localStorage.setItem).toHaveBeenCalledWith(
+        "books",
+        JSON.stringify(mockBooks)
+      );
     });
   });
 });
