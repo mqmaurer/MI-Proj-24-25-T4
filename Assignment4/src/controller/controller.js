@@ -32,22 +32,24 @@ class Controller {
   }
 
   static executeBookListRoute() {
-    const books = BookManager.getBooks();
+    let currentSearchInput = { searchText: "", searchOption: "title" };
+    let currentSortOption = "noSorting";
 
+    const books = BookManager.getBooks();
     BooksList.renderView(books);
 
     BooksList.bindInputPanelSubmit(() => {
-      const searchInput = BooksList.getSearchInput();
-      const sortOption = BooksList.getSortOption();
+      currentSearchInput = BooksList.getSearchInput();
+      currentSortOption = BooksList.getSortOption();
 
       const filteredBooks = filterBooksBySearch(
         BookManager.getBooks(),
-        searchInput
+        currentSearchInput
       );
 
       const sortedFilteredBooks = sortBooksBySortOption(
         filteredBooks,
-        sortOption
+        currentSortOption
       );
 
       BooksList.renderBookTable(sortedFilteredBooks);
@@ -56,6 +58,9 @@ class Controller {
     BooksList.bindInputPanelReset(() => {
       BooksList.renderBookTable(books);
       BooksList.resetInputPanel();
+
+      currentSearchInput = { searchText: "", searchOption: "title" };
+      currentSortOption = "noSorting";
     });
 
     BooksList.setDetailButtonClickCallback((isbn) => {
@@ -64,6 +69,10 @@ class Controller {
 
     BooksList.setRemoveButtonClickCallback((isbn) => {
       Controller.removeBook(isbn);
+    });
+
+    BooksList.setRatingClickCallback((rating, isbn) => {
+      Controller.updateRatingForBook(isbn, rating, currentSearchInput, currentSortOption);
     });
   }
 
@@ -91,6 +100,19 @@ class Controller {
     });
   }
 
+  static updateRatingForBook(isbn, rating, currentSearchInput, currentSortOption) {
+    BookManager.updateRating(isbn, rating);
+    localStorage.setItem(isbn, rating);
+    const books = BookManager.getBooks();
+    const filteredBooks = filterBooksBySearch(books, currentSearchInput);
+    const sortedFilteredBooks = sortBooksBySortOption(
+      filteredBooks,
+      currentSortOption
+    );
+
+    BooksList.renderBookTable(sortedFilteredBooks);
+  }
+
   static executeBookDetailRoute() {
     const isbn = Controller.getBookIsbnFromHash();
     const book = BookManager.getBook(isbn);
@@ -109,12 +131,6 @@ class Controller {
   static removeBook(isbn) {
     BookManager.removeBook(isbn);
     BooksList.removeBook(isbn);
-  }
-
-  static updateRating(isbn, rating) {
-    BookManager.updateRating(isbn, rating);
-    const books = BookManager.getBooks();
-    BooksList.renderBookTable(books);
   }
 }
 
