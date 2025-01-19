@@ -8,12 +8,6 @@ export default defineConfig({
         eslintPlugin({
             emitWarning: true,
             emitError: true,
-        })
-    ],
-    server: {
-        overlay: {
-            warnings: true,
-            errors: true,
-        }
-    }
+        }),
+    ]
 })
