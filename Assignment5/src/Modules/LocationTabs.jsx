@@ -1,17 +1,17 @@
 const LocationTabs = () => {
 
     return (
-        {/* <ul id="navigation" class="nav nav-tabs nav-fill">
-            <li class="nav-item">
-                <a class="nav-link" href="#/books">Book List</a>
+        <ul id="navigation" className="nav nav-tabs nav-fill">
+            <li className="nav-item">
+                <a className="nav-link" href="#/books">Book List</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#/addBooks">Add Book</a>
+            <li className="nav-item">
+                <a className="nav-link" href="#/addBooks">Add Book</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#/details">Book Detail</a>
+            <li className="nav-item">
+                <a className="nav-link" href="#/details">Book Detail</a>
             </li>
-        </ul> */}
+        </ul>
     );
 }
 
