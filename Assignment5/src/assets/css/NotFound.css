@@ -5,6 +5,7 @@
       align-items: center;
       height: 100vh;
       text-align: center;
+      padding-top: 2rem;
     }
 
     .not-found-title {
@@ -13,6 +14,6 @@
     }
 
     .not-found-link {
-      color: #78C2AD
+      color: #78C2AD;
       text-decoration: underline;
     }
