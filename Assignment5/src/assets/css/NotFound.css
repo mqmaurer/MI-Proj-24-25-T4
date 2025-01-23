@@ -1,11 +1,18 @@
 .not-found-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  text-align: center;
-}
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
 
-.not-found-content {
-  font-size: 24px;
-}
+    .not-found-title {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .not-found-link {
+      color: #78C2AD
+      text-decoration: underline;
+    }
