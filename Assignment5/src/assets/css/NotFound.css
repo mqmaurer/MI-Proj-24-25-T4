@@ -1,0 +1,19 @@
+.not-found-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      padding-top: 2rem;
+    }
+
+    .not-found-title {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .not-found-link {
+      color: #78C2AD;
+      text-decoration: underline;
+    }
