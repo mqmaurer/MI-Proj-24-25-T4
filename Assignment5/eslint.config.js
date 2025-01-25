@@ -33,6 +33,9 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+      'react/prop-types': 'off',
+      'no-console': 'warn',
+      //'no-console': ['warn', { allow: ['warn', 'error'] }],
     },
   },
 ]
