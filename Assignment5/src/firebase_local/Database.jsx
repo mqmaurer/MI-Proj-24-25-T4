@@ -1,38 +1,58 @@
-// import { useEffect, useState } from "react";
-// import firebaseApp from "../App";
-// import { getDatabase, ref, onValue } from "firebase/database";
+import { useEffect, useState } from "react";
+import { getDatabase, ref, onValue, set, push } from "firebase/database";
+import firebaseApp from "./FB_App";
 
-// // Work in progress
-// function Database() {
-//     const [data, setData] = useState([]);
+// Work in progress
+function Database() {
+    const [data, setData] = useState([]);
+  
 
-//     useEffect(() => {
-//         // Initialize the Firebase database with the provided configuration
-//         const database = getDatabase(firebaseApp);
+    
 
-//         // Reference to the specific collection in the database
-//         const collectionRef = ref(database, "your_collection");
+    useEffect(() => {
+        console.log(firebaseApp);
+        // Initialize the Firebase database with the provided configuration
+        const database = getDatabase(firebaseApp);
 
-//         // Function to fetch data from the database
-//         const fetchData = () => {
-//             // Listen for changes in the collection
-//             onValue(collectionRef, (snapshot) => {
-//                 const dataItem = snapshot.val();
+        // Reference to the specific collection in the database
+        const collectionRef = ref(database, "testbooks");
+console.log(collectionRef);
+        // Function to fetch data from the database
+        const fetchData = () => {
+            // Listen for changes in the collection
+            onValue(collectionRef, (snapshot) => {
+                const dataItem = snapshot.val();
 
-//                 // Check if dataItem exists
-//                 if (dataItem) {
-//                     // Convert the object values into an array
-//                     const displayItem = Object.values(dataItem);
-//                     setData(displayItem);
-//                 }
-//             });
-//         };
+                // Check if dataItem exists
+                if (dataItem) {
+                    // Convert the object values into an array
+                    const displayItem = Object.values(dataItem);
+                    setData(displayItem);
+                }
+            });
+        };
 
-//         // Fetch data when the component mounts
-//         fetchData();
-//     }, []);
+        // Fetch data when the component mounts
+        fetchData();
+    }, []);
 
-//     return data;
-// }
+      const addBook = (newBook) => {
+    const database = getDatabase(firebaseApp);
+    const collectionRef = ref(database, "testbooks");
 
-// export default Database;
+    // Speichert das neue Buch mit einer eindeutigen ID
+    const newBookRef = push(collectionRef); // Erzeugt eine eindeutige ID
+    set(newBookRef, newBook)
+      .then(() => {
+        console.log("Buch erfolgreich hinzugefügt!");
+      })
+      .catch((error) => {
+        console.error("Fehler beim Hinzufügen des Buchs:", error);
+      });
+  };
+
+  return { data, addBook }; // Gibt die Daten und die Funktion zurück
+}
+    
+
+export default Database;

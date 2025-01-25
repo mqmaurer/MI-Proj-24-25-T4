@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 //import BookDetail from '../BookDetail';
 
 const BookTable = ({ books }) => {
+  console.log(books);
       const navigate = useNavigate();
 
     const onDetailClick = (book) => {
