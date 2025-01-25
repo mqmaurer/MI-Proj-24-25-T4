@@ -1,7 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookReader } from '@fortawesome/free-solid-svg-icons'
+import { useLocation } from 'react-router-dom'
 
-const BookDetail = ({ book }) => {
+const BookDetail = () => {
+
+  const location = useLocation();
+  const { book } = location.state || {};
+
   if (!book) {
     return (
       <div className="container mt-4">
