@@ -7,8 +7,14 @@ import BookList from './Modules/BookList/BookList'
 import AddBook from './Modules/AddBook'
 import BookDetail from './Modules/BookDetail'
 import NotFound from './Modules/NotFound';
+//import Database from './firebase_local/Database'; // Hook importieren
+//import { firebaseApp } from './firebase_local/FB_App.jsx';
 
 function App() {
+
+ // firebaseApp();
+
+ // const books = Database();
   const books = [
     {
       author: "Max",
