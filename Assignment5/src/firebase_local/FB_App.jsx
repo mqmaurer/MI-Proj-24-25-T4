@@ -1,19 +1,19 @@
-// import { initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app";
 
-// export const firebaseApp = () => {
-//     // Firebase Config
-//     const firebaseConfig = {
-//         apiKey: import.meta.env.FIREBASE_API_KEY,
-//         authDomain: import.meta.env.FIREBASE_AUTH_DOMAIN,
-//         projectId: import.meta.env.FIREBASE_PROJECT_ID,
-//         storageBucket: import.meta.env.FIREBASE_STORAGE_BUCKET,
-//         messagingSenderId: import.meta.env.FIREBASE_MESSAGING_SENDER_ID,
-//         appId: import.meta.env.FIREBASE_APP_ID,
-//         measurementId: import.meta.env.FIREBASE_MEASUREMENT_ID
-//     }
+const firebaseConfig = {
+    // Firebase Config
+  
+        apiKey: "AIzaSyCgaMfxBjiMZuoE6dZPHMPE5ontVH-AwRY",
+  authDomain: "ibooks-bcb55.firebaseapp.com",
+  databaseURL:"https://ibooks-bcb55-default-rtdb.europe-west1.firebasedatabase.app/",
+  projectId: "ibooks-bcb55",
+  storageBucket: "ibooks-bcb55.firebasestorage.app",
+  messagingSenderId: "882579150432",
+  appId: "1:882579150432:web:2611f7e092e88c86495505",
+  measurementId: "G-W4D0DPWMKD"
+    }
 
-//     // Initialize Firebase
-//     const app = initializeApp(firebaseConfig);
+    // Initialize Firebase
+    const firebaseApp = initializeApp(firebaseConfig);
     
-//     return app;
-// };
+export default firebaseApp;
