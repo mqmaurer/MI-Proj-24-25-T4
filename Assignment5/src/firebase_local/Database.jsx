@@ -4,45 +4,43 @@ import firebaseApp from "./FB_App";
 
 // Work in progress
 function Database() {
-    const [data, setData] = useState([]);
-  
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    console.log(firebaseApp);
+    // Initialize the Firebase database with the provided configuration
+    const database = getDatabase(firebaseApp);
+
+    // Reference to the specific collection in the database
+    const collectionRef = ref(database, "testbooks");
+    console.log(collectionRef);
 
 
-    useEffect(() => {
-        console.log(firebaseApp);
-        // Initialize the Firebase database with the provided configuration
-        const database = getDatabase(firebaseApp);
+    // Function to fetch data from the database
+    const fetchData = () => {
+      // Listen for changes in the collection
+      onValue(collectionRef, (snapshot) => {
+        const dataItem = snapshot.val();
 
-        // Reference to the specific collection in the database
-        const collectionRef = ref(database, "testbooks");
-        console.log(collectionRef);
+        // Check if dataItem exists
+        if (dataItem) {
+          // Füge die IDs (Schlüssel) als Teil jedes Buchobjekts hinzu
+          const displayItem = Object.keys(dataItem).map((key) => ({
+            id: key, // Firebase generierte ID
+            ...dataItem[key], // Die eigentlichen Buchdaten
+          }));
+          setData(displayItem);
+        } else {
+          setData([]); // Keine Daten vorhanden
+        }
+      });
+    };
 
-        
-        // Function to fetch data from the database
-        const fetchData = () => {
-            // Listen for changes in the collection
-            onValue(collectionRef, (snapshot) => {
-                const dataItem = snapshot.val();
+    // Fetch data when the component mounts
+    fetchData();
+  }, []);
 
-                // Check if dataItem exists
-                if (dataItem) {
-                    // Füge die IDs (Schlüssel) als Teil jedes Buchobjekts hinzu
-                    const displayItem = Object.keys(dataItem).map((key) => ({
-                      id: key, // Firebase generierte ID
-                      ...dataItem[key], // Die eigentlichen Buchdaten
-                    }));
-                    setData(displayItem);
-                  } else {
-                    setData([]); // Keine Daten vorhanden
-                  }
-                });
-              };
-
-        // Fetch data when the component mounts
-        fetchData();
-    }, []);
-
-      const addBook = (newBook) => {
+  const addBook = (newBook) => {
     const database = getDatabase(firebaseApp);
     const collectionRef = ref(database, "testbooks");
 
@@ -71,6 +69,6 @@ function Database() {
 
   return { data, addBook, deleteBook }; // Gibt die Daten und die Funktion zurück
 }
-    
+
 
 export default Database;
