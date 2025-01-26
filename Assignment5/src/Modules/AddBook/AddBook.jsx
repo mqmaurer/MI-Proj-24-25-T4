@@ -1,11 +1,14 @@
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import TextInput from "./Input";
 import validateInput from "./Validation";
 import Database from "../../firebase_local/Database";
 
 const AddBook = () => {
-  const { addBook } = Database(); // Zugriff auf die addBook-Funktion
+  // Zugriff auf die addBook-Funktion
+  const { addBook } = Database();
+
   const [formData, setFormData] = useState({
     author: "",
     title: "",
@@ -29,7 +32,14 @@ const AddBook = () => {
     }
 
     // Erfolgsnachricht
-    toast.success("Book added successfully");
+    toast.success("Book added successfully", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeButton: true,
+      className: "bg-primary text-white",
+      icon: false,
+    });
 
     addBook(formData); // Fügt das Buch der Firebase-Datenbank hinzu
 
@@ -87,6 +97,3 @@ const AddBook = () => {
 };
 
 export default AddBook;
-
-//TODO
-// style warnings anpassen

@@ -7,12 +7,12 @@ import BookList from "./Modules/BookList";
 import AddBook from "./Modules/AddBook/AddBook";
 import BookDetail from "./Modules/BookDetail";
 import NotFound from "./Modules/NotFound";
-import Toast from "./Modules/Toast";
+//import Toast from "./Modules/Toast";
 
 function App() {
   return (
     <Router>
-      <Toast />
+      {/* <Toast /> */}
       <Header />
       <LocationTabs />
       <ViewSpace />
