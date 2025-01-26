@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 const firebaseConfig = {
     // Firebase Config
   
-        apiKey: "AIzaSyCgaMfxBjiMZuoE6dZPHMPE5ontVH-AwRY",
+  apiKey: "AIzaSyCgaMfxBjiMZuoE6dZPHMPE5ontVH-AwRY",
   authDomain: "ibooks-bcb55.firebaseapp.com",
   databaseURL:"https://ibooks-bcb55-default-rtdb.europe-west1.firebasedatabase.app/",
   projectId: "ibooks-bcb55",

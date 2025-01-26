@@ -1,6 +1,11 @@
 import { useState } from "react";
 import Database from "../firebase_local/Database.jsx";
 
+
+
+// nur zum Testen
+//Rating, ISBN-Prüfung und so fehlt  
+// Funktionen sollten grundlegen aber stimmen
 const AddBook = () => {
   const { addBook } = Database(); // Zugriff auf die addBook-Funktion
   const [bookDetails, setBookDetails] = useState({
