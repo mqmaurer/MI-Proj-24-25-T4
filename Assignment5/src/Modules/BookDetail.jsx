@@ -1,6 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBookReader } from '@fortawesome/free-solid-svg-icons'
-import { useLocation } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBookReader } from '@fortawesome/free-solid-svg-icons';
+import { useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const BookDetail = () => {
 
@@ -10,9 +11,14 @@ const BookDetail = () => {
   if (!book) {
     return (
       <div className="container mt-4">
-        <div className="alert alert-warning">
+         <motion.div
+          className="alert alert-warning"
+          initial={{ opacity: 0 }} // Startzustand: Unsichtbar
+          animate={{ opacity: 1 }} // Endzustand: Voll sichtbar
+          transition={{ duration: 1.5 }} // Dauer der Animation
+        >
           No Book selected!!!
-        </div>
+        </motion.div>
       </div>
     )
   }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getDatabase, ref, onValue, set, push } from "firebase/database";
+import { getDatabase, ref, onValue, set, push, remove } from "firebase/database";
 import firebaseApp from "./FB_App";
 
 // Work in progress
@@ -7,7 +7,6 @@ function Database() {
     const [data, setData] = useState([]);
   
 
-    
 
     useEffect(() => {
         console.log(firebaseApp);
@@ -16,7 +15,9 @@ function Database() {
 
         // Reference to the specific collection in the database
         const collectionRef = ref(database, "testbooks");
-console.log(collectionRef);
+        console.log(collectionRef);
+
+        
         // Function to fetch data from the database
         const fetchData = () => {
             // Listen for changes in the collection
@@ -25,12 +26,17 @@ console.log(collectionRef);
 
                 // Check if dataItem exists
                 if (dataItem) {
-                    // Convert the object values into an array
-                    const displayItem = Object.values(dataItem);
+                    // Füge die IDs (Schlüssel) als Teil jedes Buchobjekts hinzu
+                    const displayItem = Object.keys(dataItem).map((key) => ({
+                      id: key, // Firebase generierte ID
+                      ...dataItem[key], // Die eigentlichen Buchdaten
+                    }));
                     setData(displayItem);
-                }
-            });
-        };
+                  } else {
+                    setData([]); // Keine Daten vorhanden
+                  }
+                });
+              };
 
         // Fetch data when the component mounts
         fetchData();
@@ -51,7 +57,19 @@ console.log(collectionRef);
       });
   };
 
-  return { data, addBook }; // Gibt die Daten und die Funktion zurück
+  const deleteBook = (bookId) => {
+    const database = getDatabase(firebaseApp);
+    const bookRef = ref(database, `testbooks/${bookId}`); // Pfad zum spezifischen Buch
+    remove(bookRef)
+      .then(() => {
+        console.log("Buch erfolgreich gelöscht!");
+      })
+      .catch((error) => {
+        console.error("Fehler beim Löschen des Buchs:", error);
+      });
+  };
+
+  return { data, addBook, deleteBook }; // Gibt die Daten und die Funktion zurück
 }
     
 

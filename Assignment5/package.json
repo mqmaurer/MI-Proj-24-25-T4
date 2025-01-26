@@ -14,7 +14,7 @@
     "assignment5": "file:",
     "firebase": "^11.2.0",
     "firebase-tools": "^13.29.2",
-    "motion": "^12.0.3",
+    "motion": "^12.0.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-fontawesome": "^1.7.1",
