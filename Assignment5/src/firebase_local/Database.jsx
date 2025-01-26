@@ -1,74 +1,59 @@
 import { useEffect, useState } from "react";
-import { getDatabase, ref, onValue, set, push, remove } from "firebase/database";
-import firebaseApp from "./FB_App";
+import { collection, getDocs, addDoc, deleteDoc, doc, getFirestore } from "firebase/firestore";
+import firebaseConfig from "./FB_config";
+import { initializeApp } from "firebase/app";
 
-// Work in progress
 function Database() {
   const [data, setData] = useState([]);
+  const app = initializeApp(firebaseConfig);
+  const database = getFirestore(app);
 
   useEffect(() => {
-    console.log(firebaseApp);
-    // Initialize the Firebase database with the provided configuration
-    const database = getDatabase(firebaseApp);
-
     // Reference to the specific collection in the database
-    const collectionRef = ref(database, "testbooks");
+    const collectionRef = collection(database, "testbooks");
     console.log(collectionRef);
 
-
     // Function to fetch data from the database
-    const fetchData = () => {
-      // Listen for changes in the collection
-      onValue(collectionRef, (snapshot) => {
-        const dataItem = snapshot.val();
-
-        // Check if dataItem exists
-        if (dataItem) {
-          // Füge die IDs (Schlüssel) als Teil jedes Buchobjekts hinzu
-          const displayItem = Object.keys(dataItem).map((key) => ({
-            id: key, // Firebase generierte ID
-            ...dataItem[key], // Die eigentlichen Buchdaten
-          }));
-          setData(displayItem);
-        } else {
-          setData([]); // Keine Daten vorhanden
-        }
-      });
+    const fetchData = async () => {
+      try {
+        const querySnapshot = await getDocs(collectionRef); // Lesezugriff scheinbar verweigert, Code sollte funktionieren
+        const displayItem = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setData(displayItem);
+      } catch (error) {
+        console.error("Error loading data:", error);
+      }
     };
 
     // Fetch data when the component mounts
     fetchData();
-  }, []);
+  }, [database]);
 
-  const addBook = (newBook) => {
-    const database = getDatabase(firebaseApp);
-    const collectionRef = ref(database, "testbooks");
+  const addBook = async (newBook) => {
+    const collectionRef = collection(database, "testbooks");
 
-    // Speichert das neue Buch mit einer eindeutigen ID
-    const newBookRef = push(collectionRef); // Erzeugt eine eindeutige ID
-    set(newBookRef, newBook)
-      .then(() => {
-        console.log("Buch erfolgreich hinzugefügt!");
-      })
-      .catch((error) => {
-        console.error("Fehler beim Hinzufügen des Buchs:", error);
-      });
+    try {
+      await addDoc(collectionRef, newBook);
+      console.log("Book added successfully!"); // TODO: Visuelle Erfolgsmeldung
+    } catch (error) {
+      console.error("Error adding book:", error); // TODO: Visuelle Fehlermeldung
+    }
   };
 
-  const deleteBook = (bookId) => {
-    const database = getDatabase(firebaseApp);
-    const bookRef = ref(database, `testbooks/${bookId}`); // Pfad zum spezifischen Buch
-    remove(bookRef)
-      .then(() => {
-        console.log("Buch erfolgreich gelöscht!");
-      })
-      .catch((error) => {
-        console.error("Fehler beim Löschen des Buchs:", error);
-      });
+  const deleteBook = async (bookId) => {
+    const bookRef = doc(database, `testbooks/${bookId}`); // Pfad zum spezifischen Buch
+
+    try {
+      await deleteDoc(bookRef);
+      console.log("Book deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting book:", error);
+    }
   };
 
   return { data, addBook, deleteBook }; // Gibt die Daten und die Funktion zurück
 }
-
 
 export default Database;
