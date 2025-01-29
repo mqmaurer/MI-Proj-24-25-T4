@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { collection, getDocs, addDoc, deleteDoc, doc, getFirestore } from "firebase/firestore";
-import firebaseConfig from "./FB_config";
-import { initializeApp } from "firebase/app";
+import firebaseApp from "./FB_App";
 
 function Database() {
   const [data, setData] = useState([]);
-  const app = initializeApp(firebaseConfig);
-  const database = getFirestore(app);
+  const database = getFirestore(firebaseApp);
+  console.log(database);
 
   useEffect(() => {
     // Reference to the specific collection in the database
