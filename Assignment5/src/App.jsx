@@ -4,7 +4,7 @@ import LocationTabs from './Modules/LocationTabs'
 import ViewSpace from './Modules/ViewSpace'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import BookList from './Modules/BookList/BookList'
-import AddBook from './Modules/AddBook'
+import AddBook from './Modules/AddBook/AddBook'
 import BookDetail from './Modules/BookDetail'
 import NotFound from './Modules/NotFound';
 import Database from './firebase_local/Database'; // Hook importieren
