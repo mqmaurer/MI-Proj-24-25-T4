@@ -15,7 +15,7 @@ function Database() {
     // Function to fetch data from the database
     const fetchData = async () => {
       try {
-        const querySnapshot = await getDocs(collectionRef); // Lesezugriff scheinbar verweigert, Code sollte funktionieren
+        const querySnapshot = await getDocs(collectionRef);
         const displayItem = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
@@ -30,19 +30,23 @@ function Database() {
     fetchData();
   }, [database]);
 
+  // Function to add a book to the database
   const addBook = async (newBook) => {
     const collectionRef = collection(database, "testbooks");
 
+    // TODO: Change Error Handling when adding a book
     try {
       await addDoc(collectionRef, newBook);
-      console.log("Book added successfully!"); // TODO: Visuelle Erfolgsmeldung
+      console.log("Book added successfully!");
     } catch (error) {
-      console.error("Error adding book:", error); // TODO: Visuelle Fehlermeldung
+      console.error("Error adding book:", error);
     }
   };
 
+  // Function to delete a book from the database
   const deleteBook = async (bookId) => {
-    const bookRef = doc(database, `testbooks/${bookId}`); // Pfad zum spezifischen Buch
+    // Path of book to be deleted
+    const bookRef = doc(database, `testbooks/${bookId}`);
 
     try {
       await deleteDoc(bookRef);
@@ -52,7 +56,7 @@ function Database() {
     }
   };
 
-  return { data, addBook, deleteBook }; // Gibt die Daten und die Funktion zurück
+  return { data, addBook, deleteBook };
 }
 
 export default Database;
