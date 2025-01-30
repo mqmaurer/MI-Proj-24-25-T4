@@ -9,7 +9,9 @@ const BooksList = ({ books }) => {
   const [filteredBooks, setFilteredBooks] = useState(books);
   const [deletedBooks, setDeletedBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true); 
+ 
   const { deleteBook } = Database();
+ 
 
   const onRemoveClick = (bookId) => {
  // Zeile nach rechts verschieben (Animation)
@@ -25,15 +27,14 @@ const BooksList = ({ books }) => {
 
 useEffect(() => {
   // Setze den Ladevorgang, wenn filteredBooks leer ist
-  setIsLoading(filteredBooks.length === 0);
+  setIsLoading(books.length === 0 );
+ 
 
-  // Hier könnte eine Abfrage oder Datenaktualisierung implementiert werden
   const loadBooks = () => {
-    if (filteredBooks.length === 0) {
-      // Simuliere das Laden von Daten (Datenbankabfrage kann hier eingebaut werden)
-      setTimeout(() => {
-        setFilteredBooks(books); // Beispiel: Bücher nach Ladezeit hinzufügen
-      }, 1000); // Ladezeit simulieren
+    if (filteredBooks.length === 0 && isLoading) {
+      
+         setFilteredBooks(books);
+     // Ladezeit simulieren
     }
   };
   loadBooks();

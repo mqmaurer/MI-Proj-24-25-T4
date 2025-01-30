@@ -15,8 +15,7 @@ function App() {
 
 
   const books = Database();
-
-
+  
   return (
     <Router>
       <Header />
@@ -24,7 +23,7 @@ function App() {
       <ViewSpace />
         <Routes>
             <Route path="/" element={<ViewSpace />} />
-            <Route path="/books" element={<BookList books={books.data}/>} />
+            <Route path="/books" element={<BookList books={books.data} />} />
             <Route path="/addBooks" element={<AddBook />} />
             <Route path="/details" element={<BookDetail />} />
             <Route path="*" element={<NotFound />} />
