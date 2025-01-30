@@ -9,7 +9,7 @@ const BooksList = ({ books }) => {
   const [filteredBooks, setFilteredBooks] = useState(books);
   const [deletedBooks, setDeletedBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true); 
-  const { deleteBook } = Database();
+  const { deleteBook, fetchData, updateBookRating } = Database();
 
   const onRemoveClick = (bookId) => {
  // Zeile nach rechts verschieben (Animation)
@@ -22,6 +22,15 @@ const BooksList = ({ books }) => {
  }, 500); 
 
 };
+
+  const handleRatingChange = (bookId, newRating) => {
+    updateBookRating(bookId, newRating);
+    setFilteredBooks((prevBooks) =>
+      prevBooks.map((book) =>
+        book.id === bookId ? { ...book, rating: newRating } : book
+      )
+    );
+  };
 
 useEffect(() => {
   // Setze den Ladevorgang, wenn filteredBooks leer ist
@@ -37,7 +46,7 @@ useEffect(() => {
     }
   };
   loadBooks();
-}, [filteredBooks, books]);
+}, [filteredBooks, books, fetchData]);
 
   return (
     <div className="container mt-4">
@@ -55,7 +64,7 @@ useEffect(() => {
         <p className="ml-2">Loading...</p>
       </div>
     ) : (
-      <BookTable books={filteredBooks} onRemoveClick={onRemoveClick} deletedBooks={deletedBooks} />
+      <BookTable books={filteredBooks} onRemoveClick={onRemoveClick} deletedBooks={deletedBooks} onRatingChange={handleRatingChange} />
     )}
   </div>
 );

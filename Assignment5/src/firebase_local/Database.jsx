@@ -1,5 +1,6 @@
+
 import { useEffect, useState } from "react";
-import { getDatabase, ref, onValue, set, push, remove } from "firebase/database";
+import { getDatabase, ref, onValue, set, push, remove, update } from "firebase/database";
 import firebaseApp from "./FB_App";
 
 // Work in progress
@@ -9,13 +10,13 @@ function Database() {
 
 
     useEffect(() => {
-        console.log(firebaseApp);
+        //console.log(firebaseApp);
         // Initialize the Firebase database with the provided configuration
         const database = getDatabase(firebaseApp);
 
         // Reference to the specific collection in the database
         const collectionRef = ref(database, "testbooks");
-        console.log(collectionRef);
+        //console.log(collectionRef);
 
         
         // Function to fetch data from the database
@@ -50,7 +51,7 @@ function Database() {
     const newBookRef = push(collectionRef); // Erzeugt eine eindeutige ID
     set(newBookRef, newBook)
       .then(() => {
-        console.log("Buch erfolgreich hinzugefügt!");
+        //console.log("Buch erfolgreich hinzugefügt!");
       })
       .catch((error) => {
         console.error("Fehler beim Hinzufügen des Buchs:", error);
@@ -62,14 +63,26 @@ function Database() {
     const bookRef = ref(database, `testbooks/${bookId}`); // Pfad zum spezifischen Buch
     remove(bookRef)
       .then(() => {
-        console.log("Buch erfolgreich gelöscht!");
+        //console.log("Buch erfolgreich gelöscht!");
       })
       .catch((error) => {
         console.error("Fehler beim Löschen des Buchs:", error);
       });
   };
 
-  return { data, addBook, deleteBook }; // Gibt die Daten und die Funktion zurück
+  const updateRating = (bookId, rating) => {
+    const database = getDatabase(firebaseApp);
+    const bookRef = ref(database, `testbooks/${bookId}`);
+
+    update(bookRef, { rating })
+      .then(() => {
+        //console.log(`Buch mit ID ${bookId} wurde erfolgreich bewertet!`);
+      })
+      .catch((error) => {
+        console.error("Fehler beim Aktualisieren der Bewertung:", error);
+      });
+  };
+  return { data, addBook, deleteBook, updateRating }; // Gibt die Daten und die Funktion zurück
 }
     
 
