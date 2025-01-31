@@ -17,6 +17,7 @@ function App() {
 
   return (
     <Router>
+      {/* <Toast /> */}
       <Header />
       <LocationTabs />
       <ViewSpace />
@@ -28,7 +29,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
