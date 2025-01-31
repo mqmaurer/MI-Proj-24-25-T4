@@ -18,6 +18,7 @@ function App() {
       <Header />
       <LocationTabs />
       <Routes>
+        <Route path="/" element={<BookList books={books.data} />} />
         <Route path="/books" element={<BookList books={books.data} />} />
         <Route path="/addBooks" element={<AddBook />} />
         <Route path="/details" element={<BookDetail />} />
