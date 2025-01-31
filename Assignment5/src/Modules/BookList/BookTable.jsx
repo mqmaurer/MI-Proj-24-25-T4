@@ -6,7 +6,7 @@ import Database from '../../firebase_local/Database';
 
 const BookTable = ({ books,  onDelete, onUpdate, onRatingChange }) => {
   const navigate = useNavigate();
-  const { deleteBook} = Database();
+  const { deleteBook, isLoading} = Database();
    const [deletedBooks, setDeletedBooks] = useState([]);
 
   
@@ -45,11 +45,26 @@ const BookTable = ({ books,  onDelete, onUpdate, onRatingChange }) => {
     return stars;
   };
  
-   if (books.length === 0) {
-    return (
+   if (books.length === 0 && !isLoading) {
+    return ( 
+      <div>
+         <table className="table table-striped mt-5">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>ISBN</th>
+          <th>Detail</th>
+          <th>Delete</th>
+          <th>Rating</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
       <div className="alert alert-info mt-5">
        <div> No books in database! Want to add books? </div>
 <button className="btn btn-outline-light" onClick={() => navigate('/addBooks')}>Add Book</button>
+      </div>
       </div>
     );}
 
