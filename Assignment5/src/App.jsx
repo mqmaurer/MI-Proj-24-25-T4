@@ -10,6 +10,9 @@ import NotFound from './Modules/NotFound';
 import Database from './firebase_local/Database'; // Hook importieren
 
 
+import Database from './firebase_local/Database'; // Hook importieren
+
+
 
 function App() {
 

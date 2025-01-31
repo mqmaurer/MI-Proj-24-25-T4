@@ -4,25 +4,13 @@ import BookTable from "../BookList/BookTable";
 import Database from "../../firebase_local/Database.jsx"; 
 
 
-const BooksList = ({ books }) => {
-
+const BooksList = ({ books1 }) => { 
+  const books = Database().data;
+  const { updateData, isLoading, updateRating } = Database();
   const [filteredBooks, setFilteredBooks] = useState(books);
-  const [deletedBooks, setDeletedBooks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); 
-  const { deleteBook, fetchData, updateRating } = Database();
-
-  const onRemoveClick = (bookId) => {
- // Zeile nach rechts verschieben (Animation)
- setDeletedBooks((prev) => [...prev, bookId]);
-
+ // const [isLoading1, setIsLoading] = useState(true); 
+  const [update, setUpdate] = useState(false);
  
- setTimeout(() => {
-   deleteBook(bookId); 
-   setFilteredBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
- }, 500); 
-
-};
-
   const handleRatingChange = (bookId, newRating) => {
     updateRating(bookId, newRating);
     setFilteredBooks((prevBooks) =>
@@ -31,22 +19,29 @@ const BooksList = ({ books }) => {
       )
     );
   };
+  
+
 
 useEffect(() => {
   // Setze den Ladevorgang, wenn filteredBooks leer ist
-  setIsLoading(filteredBooks.length === 0);
+  
+ if(update){
+  console.log("Update ausgeführt!");
+   updateData();
+   setUpdate(false);
+   setFilteredBooks(books);
+  console.log("Update ausgeführt!" + books);
+ }
 
-  // Hier könnte eine Abfrage oder Datenaktualisierung implementiert werden
   const loadBooks = () => {
-    if (filteredBooks.length === 0) {
-      // Simuliere das Laden von Daten (Datenbankabfrage kann hier eingebaut werden)
-      setTimeout(() => {
-        setFilteredBooks(books); // Beispiel: Bücher nach Ladezeit hinzufügen
-      }, 1000); // Ladezeit simulieren
+    if (filteredBooks.length === 0 ) {
+      console.log("Ausgeführt!" + books);
+         setFilteredBooks(books);
+     // Ladezeit simulieren
     }
   };
   loadBooks();
-}, [filteredBooks, books, fetchData]);
+}, [filteredBooks, books]);
 
   return (
     <div className="container mt-4">
@@ -64,7 +59,7 @@ useEffect(() => {
         <p className="ml-2">Loading...</p>
       </div>
     ) : (
-      <BookTable books={filteredBooks} onRemoveClick={onRemoveClick} deletedBooks={deletedBooks} onRatingChange={handleRatingChange} />
+      <BookTable books={filteredBooks} onDelete={setFilteredBooks} onUpdate={setUpdate} onRatingChange={handleRatingChange}/>
     )}
   </div>
 );

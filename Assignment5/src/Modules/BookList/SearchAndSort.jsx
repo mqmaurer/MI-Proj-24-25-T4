@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import Database from "../../firebase_local/Database";
 
 const SearchAndSort = ({
   books, // Liste der Bücher
   onFilteredBooksChange, // Callback, um die gefilterten Bücher zurückzugeben
 }) => {
+  
   const [searchText, setSearchText] = useState("");
   const [searchOption, setSearchOption] = useState("title");
   const [sortOption, setSortOption] = useState("NO_SORTING");
@@ -12,9 +14,10 @@ const SearchAndSort = ({
   useEffect(() => {
     // Diese Funktion wird ausgeführt, wenn triggerSubmit geändert wird
     if (triggerSubmit) {
+     // console.log("triggerSubmit" + aktbooks);
       // Filter- und Sortierlogik
       const filteredBooks = books.filter((book) => {
-        if (!searchText) return true; // Keine Suche, alle Bücher anzeigen
+        if (!searchText) return books; // Keine Suche, alle Bücher anzeigen
         return book[searchOption]?.toLowerCase().includes(searchText.toLowerCase());
       });
 
@@ -25,10 +28,10 @@ const SearchAndSort = ({
         const order = sortOption.endsWith("ASCENDING") ? 1 : -1;
 
         if (field === "rating") {
-        const ratingA = a.rating || 1;
-        const ratingB = b.rating || 1;
-        return (ratingA - ratingB) * order;
-      }
+          const ratingA = a.rating || 1;
+          const ratingB = b.rating || 1;
+          return (ratingA - ratingB) * order;
+        }
         if (a[field] < b[field]) return -1 * order;
         if (a[field] > b[field]) return 1 * order;
         return 0;

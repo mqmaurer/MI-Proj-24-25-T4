@@ -44,7 +44,6 @@ const BookDetail = () => {
       </div>
     )
   }
-
   return (
     <div className="container mt-4">
       <div className="card mx-auto" style={{ maxWidth: '25rem' }}>
@@ -67,5 +66,4 @@ const BookDetail = () => {
     </div>
   )
 }
-
 export default BookDetail
