@@ -23,13 +23,28 @@ const AddBook = () => {
       return {
         title: book.title || "Unbekannter Titel",
         author: book.authors?.[0]?.name || "Unbekannter Autor",
-        isbn: isbn,
+        isbn: formatISBN10(isbn),
         description: book.excerpts?.[0]?.text || "Keine Beschreibung verfügbar"
       };
     } else {
       console.log("Kein Buch gefunden!" );
       return null;
     }
+  }
+
+  function formatISBN10(isbn) {
+    // Entfernt alle nicht-ziffern oder 'X'
+    const cleanedISBN = isbn.replace(/[^0-9X]/gi, '');
+  
+    // Überprüfen, ob die ISBN-Nummer die richtige Länge hat (10 Zeichen)
+    if (cleanedISBN.length !== 10) {
+      return null;  // Ungültige ISBN-10
+    }
+  
+    // Formatieren der ISBN in das Format "XXX-XXX-XXXXX-X"
+    const formattedISBN = cleanedISBN.replace(/^(\d{1})(\d{3})(\d{5})(\d{1})$/, '$1-$2-$3-$4');
+  
+    return formattedISBN;
   }
   
   const einBuchbitte = (isbn) => { 
@@ -60,7 +75,7 @@ const AddBook = () => {
     });  
   };
   
-  const [formISBN, setFormISBN] = useState("");
+  const [formISBN, setFormISBN] = useState(null);
 
   const [formData, setFormData] = useState({
     author: "",
@@ -126,7 +141,7 @@ const AddBook = () => {
     <div className="container mt-4">
       
       <form id="isbn-form" onSubmit={einBuchbitte}>
-        <TextInput label="searchISBN" id="searchISBN" value={formISBN} onChange={handleISBNChange} />
+        <TextInput label="search Book in OpenLibrary" id="searchISBN" value={formISBN} onChange={handleISBNChange} placeholder="isbn" />
         <button type="submit" className="btn btn-primary btn-block add-button">
           Add Book Details by ISBN 
         </button>
