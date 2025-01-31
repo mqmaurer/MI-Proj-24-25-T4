@@ -2,11 +2,33 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookReader } from '@fortawesome/free-solid-svg-icons';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 
 const BookDetail = () => {
 
   const location = useLocation();
   const { book } = location.state || {};
+  const [isLoading, setIsLoading] = useState(true);
+  const minimumLoadingTime = 200;
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, minimumLoadingTime);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="container mt-4 text-center" style={{ marginTop: '2000px' }}>
+        <div className="spinner-grow text-primary" role="status" style={{ width: '3rem', height: '3rem' }}>
+          <span className="sr-only">Loading ...</span>
+        </div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   if (!book) {
     return (
