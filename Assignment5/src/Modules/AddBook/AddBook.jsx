@@ -9,6 +9,59 @@ const AddBook = () => {
   // Zugriff auf die Database-Funktionen
   const database = Database();
 
+  async function getBookByISBN(isbn) {
+    
+    const isbnAPI = isbn;
+   const api = `https://openlibrary.org/api/books?bibkeys=ISBN:${isbnAPI}&format=json&jscmd=data`;
+   console.log(api);
+    const response = await fetch(api);
+    const data = await response.json();
+    console.log(data);
+    // Prüfen, ob das Buch existiert
+    if (data[`ISBN:${isbnAPI}`]) {console.log("ISBN: " + isbnAPI);
+      const book = data[`ISBN:${isbn}`];
+      return {
+        title: book.title || "Unbekannter Titel",
+        author: book.authors?.[0]?.name || "Unbekannter Autor",
+        isbn: isbn,
+        description: book.excerpts?.[0]?.text || "Keine Beschreibung verfügbar"
+      };
+    } else {
+      console.log("Kein Buch gefunden!" );
+      return null;
+    }
+  }
+  
+  const einBuchbitte = (isbn) => { 
+    event.preventDefault();
+    console.log("ISBN: " + formISBN);
+    getBookByISBN(formISBN).then(book => {
+      console.log(book);
+      if (book === null) {
+        toast.error("Buch nicht in OpenLibrary gefunden", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeButton: true,
+          className: "bg-secondary text-white",
+          icon: false,
+        });
+        return;
+      }
+  
+     // Buchdetails setzen
+      setFormData({
+        title: book.title, 
+        author: book.author, 
+        isbn: book.isbn, 
+        description: book.description
+      });
+  
+    });  
+  };
+  
+  const [formISBN, setFormISBN] = useState("");
+
   const [formData, setFormData] = useState({
     author: "",
     title: "",
@@ -22,6 +75,10 @@ const AddBook = () => {
       ...prevData,
       [id]: value,
     }));
+  };
+
+  const handleISBNChange = (e) => {
+    setFormISBN(e.target.value);
   };
 
   const handleAddBook = async (e) => {
@@ -67,6 +124,14 @@ const AddBook = () => {
 
   return (
     <div className="container mt-4">
+      
+      <form id="isbn-form" onSubmit={einBuchbitte}>
+        <TextInput label="searchISBN" id="searchISBN" value={formISBN} onChange={handleISBNChange} />
+        <button type="submit" className="btn btn-primary btn-block add-button">
+          Add Book Details by ISBN 
+        </button>
+      </form>
+      
       <form id="book-form" onSubmit={handleAddBook}>
         <TextInput
           label="Author"
