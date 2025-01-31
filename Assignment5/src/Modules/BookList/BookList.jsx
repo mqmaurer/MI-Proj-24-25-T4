@@ -4,35 +4,31 @@ import BookTable from "../BookList/BookTable";
 import Database from "../../firebase_local/Database.jsx"; 
 
 
-const BooksList = ({ books }) => {
-
+const BooksList = ({ books1 }) => { 
+  const books = Database().data;
+  const { updateData, isLoading } = Database();
   const [filteredBooks, setFilteredBooks] = useState(books);
-  const [deletedBooks, setDeletedBooks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); 
+ // const [isLoading1, setIsLoading] = useState(true); 
+  const [update, setUpdate] = useState(false);
  
-  const { deleteBook } = Database();
  
+  
 
-  const onRemoveClick = (bookId) => {
- // Zeile nach rechts verschieben (Animation)
- setDeletedBooks((prev) => [...prev, bookId]);
-
- 
- setTimeout(() => {
-   deleteBook(bookId); 
-   setFilteredBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
- }, 500); 
-
-};
 
 useEffect(() => {
   // Setze den Ladevorgang, wenn filteredBooks leer ist
-  setIsLoading(books.length === 0 );
- 
+  
+ if(update){
+  console.log("Update ausgeführt!");
+   updateData();
+   setUpdate(false);
+   setFilteredBooks(books);
+  console.log("Update ausgeführt!" + books);
+ }
 
   const loadBooks = () => {
-    if (filteredBooks.length === 0 && isLoading) {
-      
+    if (filteredBooks.length === 0 ) {
+      console.log("Ausgeführt!" + books);
          setFilteredBooks(books);
      // Ladezeit simulieren
     }
@@ -56,7 +52,7 @@ useEffect(() => {
         <p className="ml-2">Loading...</p>
       </div>
     ) : (
-      <BookTable books={filteredBooks} onRemoveClick={onRemoveClick} deletedBooks={deletedBooks} />
+      <BookTable books={filteredBooks} onDelete={setFilteredBooks} onUpdate={setUpdate} />
     )}
   </div>
 );

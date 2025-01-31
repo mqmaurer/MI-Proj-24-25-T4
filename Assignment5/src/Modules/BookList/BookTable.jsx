@@ -1,18 +1,44 @@
 
 import { useNavigate } from 'react-router-dom';
+import { useState} from "react";
 import { motion, AnimatePresence } from 'framer-motion';
+import Database from '../../firebase_local/Database';
 
-const BookTable = ({ books, onRemoveClick, deletedBooks }) => {
+const BookTable = ({ books,  onDelete, onUpdate }) => {
   const navigate = useNavigate();
+  const { deleteBook} = Database();
+   const [deletedBooks, setDeletedBooks] = useState([]);
+
   
   const onDetailClick = (book) => {
     console.log(book);
     navigate('/details', { state: { book } });
   };
 
+  const onRemoveClick = (bookId) => {
+    // Zeile nach rechts verschieben (Animation)
+    setDeletedBooks((prev) => [...prev, bookId]);
+   console.log("Book in Databank!" + books);
+    setTimeout(async() => {
+      try {
+      await deleteBook(bookId); onUpdate(true);} catch (error) {
+      };
+     
+      console.log("Book deleted!" + books);
+      onDelete((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
+    }, 500); 
+   
+   };
  
+   if (books.length === 0) {
+    return (
+      <div className="alert alert-info mt-5">
+       <div> No books in database! Want to add books? </div>
+<button className="btn btn-outline-light" onClick={() => navigate('/addBooks')}>Add Book</button>
+      </div>
+    );}
 
-  return (
+  return ( 
     <table className="table table-striped mt-5">
       <thead>
         <tr>

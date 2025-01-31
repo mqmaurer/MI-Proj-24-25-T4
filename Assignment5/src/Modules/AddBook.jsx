@@ -15,6 +15,58 @@ const AddBook = () => {
     description: "",
   });
 
+  async function getBookByISBN(isbn) {
+    const response = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`);
+    const data = await response.json();
+    
+    // Prüfen, ob das Buch existiert
+    if (data[`ISBN:${isbn}`]) {
+      const book = data[`ISBN:${isbn}`];
+      return {
+        title: book.title || "Unbekannter Titel",
+        author: book.authors?.[0]?.name || "Unbekannter Autor",
+        isbn: isbn,
+        description: book.excerpts?.[0]?.text || "Keine Beschreibung verfügbar"
+      };
+    } else {
+      console.log("Kein Buch gefunden!");
+      return null;
+    }
+  }
+  
+  const einBuchbitte = (isbn) => { 
+    getBookByISBN(isbn).then(book => {
+      console.log(book);
+      if (book === null) {
+        alert("Kein Buch gefunden!");
+        return;
+      }
+  
+      // Buchdetails setzen
+      setBookDetails({
+        title: book.title, 
+        author: book.author, 
+        isbn: book.isbn, 
+        description: book.description
+      });
+  
+      // Buch in die Datenbank hinzufügen
+      addBook({ title: book.title, 
+        author: book.author, 
+        isbn: book.isbn, 
+        description: book.description});
+  
+      // Formular leeren
+      setBookDetails({
+        title: "",
+        author: "",
+        isbn: "",
+        description: "",
+      });
+    });  
+  };
+  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setBookDetails((prevDetails) => ({
@@ -25,6 +77,10 @@ const AddBook = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!bookDetails.title && !bookDetails.author && bookDetails.isbn) {
+      einBuchbitte(bookDetails.isbn);
+      return;
+    }
     if (!bookDetails.title || !bookDetails.author || !bookDetails.isbn) {
       alert("Bitte alle Felder ausfüllen!");
       return;
