@@ -9,7 +9,7 @@ const BooksList = ({ books }) => {
   const [filteredBooks, setFilteredBooks] = useState(books);
   const [deletedBooks, setDeletedBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true); 
-  const { deleteBook, fetchData, updateBookRating } = Database();
+  const { deleteBook, fetchData, updateRating } = Database();
 
   const onRemoveClick = (bookId) => {
  // Zeile nach rechts verschieben (Animation)
@@ -24,7 +24,7 @@ const BooksList = ({ books }) => {
 };
 
   const handleRatingChange = (bookId, newRating) => {
-    updateBookRating(bookId, newRating);
+    updateRating(bookId, newRating);
     setFilteredBooks((prevBooks) =>
       prevBooks.map((book) =>
         book.id === bookId ? { ...book, rating: newRating } : book
