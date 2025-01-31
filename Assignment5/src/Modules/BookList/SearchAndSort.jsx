@@ -27,6 +27,11 @@ const SearchAndSort = ({
         const field = sortOption.split("_")[0].toLowerCase(); // z. B. "title" oder "author"
         const order = sortOption.endsWith("ASCENDING") ? 1 : -1;
 
+        if (field === "rating") {
+          const ratingA = a.rating || 1;
+          const ratingB = b.rating || 1;
+          return (ratingA - ratingB) * order;
+        }
         if (a[field] < b[field]) return -1 * order;
         if (a[field] > b[field]) return 1 * order;
         return 0;

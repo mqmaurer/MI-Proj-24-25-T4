@@ -6,12 +6,19 @@ import Database from "../../firebase_local/Database.jsx";
 
 const BooksList = ({ books1 }) => { 
   const books = Database().data;
-  const { updateData, isLoading } = Database();
+  const { updateData, isLoading, updateRating } = Database();
   const [filteredBooks, setFilteredBooks] = useState(books);
  // const [isLoading1, setIsLoading] = useState(true); 
   const [update, setUpdate] = useState(false);
  
- 
+  const handleRatingChange = (bookId, newRating) => {
+    updateRating(bookId, newRating);
+    setFilteredBooks((prevBooks) =>
+      prevBooks.map((book) =>
+        book.id === bookId ? { ...book, rating: newRating } : book
+      )
+    );
+  };
   
 
 
@@ -52,7 +59,7 @@ useEffect(() => {
         <p className="ml-2">Loading...</p>
       </div>
     ) : (
-      <BookTable books={filteredBooks} onDelete={setFilteredBooks} onUpdate={setUpdate} />
+      <BookTable books={filteredBooks} onDelete={setFilteredBooks} onUpdate={setUpdate} onRatingChange={handleRatingChange}/>
     )}
   </div>
 );

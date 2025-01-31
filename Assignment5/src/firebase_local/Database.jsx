@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs, addDoc, deleteDoc, doc, getFirestore, onSnapshot } from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, doc, getFirestore, onSnapshot, updateDoc } from "firebase/firestore";
 import firebaseApp from "./FB_App";
 
 function Database() {
@@ -25,14 +25,10 @@ function Database() {
 
   // Lädt die Daten nur beim ersten Laden der Komponente
   useEffect(() => {
-    console.log("Effect" + data);
     updateData();
-    if(isLoading === false){
-      console.log("Fertig!" + isLoading);
-  };
   }, []);
 
-  // Funktion zum manuellen Aktualisieren der Daten per Button
+ 
   const updateData = async () => {
     setisLoading(true);
    setTimeout(() => { //testen der Ladezeit
@@ -77,7 +73,19 @@ finally {
     }
   };
 
-  return { data, addBook, deleteBook, updateData, isLoading };
+  const updateRating = async (bookId, rating) => {
+    const database = getFirestore(firebaseApp);
+    const bookRef = doc(database, "testbooks", bookId);
+  
+    try {
+      await updateDoc(bookRef, { rating });
+      console.log(`Buch mit ID ${bookId} wurde erfolgreich bewertet!`);
+    } catch (error) {
+      console.error("Fehler beim Aktualisieren der Bewertung:", error);
+    }
+  };
+
+  return { data, addBook, deleteBook, updateData, isLoading, updateRating };
 }
 
 export default Database;

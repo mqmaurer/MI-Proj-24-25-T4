@@ -4,14 +4,13 @@ import { useState} from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 import Database from '../../firebase_local/Database';
 
-const BookTable = ({ books,  onDelete, onUpdate }) => {
+const BookTable = ({ books,  onDelete, onUpdate, onRatingChange }) => {
   const navigate = useNavigate();
   const { deleteBook} = Database();
    const [deletedBooks, setDeletedBooks] = useState([]);
 
   
   const onDetailClick = (book) => {
-    console.log(book);
     navigate('/details', { state: { book } });
   };
 
@@ -29,6 +28,22 @@ const BookTable = ({ books,  onDelete, onUpdate }) => {
     }, 500); 
    
    };
+
+   const renderRatingStars = (rating, bookId) => {
+    const maxRating = 5;
+    const stars = [];
+
+    for (let i = 1; i <= maxRating; i++) {
+      stars.push(
+        <i
+          key={i}
+          className={`fa-solid fa-star ${i <= rating ? 'text-warning' : 'text-success'}`}
+          onClick={() => onRatingChange(bookId, i)}
+        ></i>
+      );
+    }
+    return stars;
+  };
  
    if (books.length === 0) {
     return (
@@ -77,6 +92,11 @@ const BookTable = ({ books,  onDelete, onUpdate }) => {
                 onClick={() => { onRemoveClick(book.id)}} // Löschen des Buchs
               ></a>
             </td>
+            <td>
+                    <div className="rating-stars">
+                        {renderRatingStars(book.rating || 1, book.id)}
+                    </div>
+                </td>
           </motion.tr>
         ))}
           </AnimatePresence>
