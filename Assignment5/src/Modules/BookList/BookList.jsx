@@ -4,7 +4,7 @@ import BookTable from "../BookList/BookTable";
 import Database from "../../firebase_local/Database.jsx"; 
 
 
-const BooksList = ({ books1 }) => { 
+const BooksList = () => { 
   const books = Database().data;
   const { updateData, isLoading, updateRating } = Database();
   const [filteredBooks, setFilteredBooks] = useState(books);

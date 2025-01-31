@@ -23,7 +23,7 @@ function Database() {
     }
   };
 
-  // Lädt die Daten nur beim ersten Laden der Komponente
+ 
   useEffect(() => {
     updateData();
   }, []);
@@ -32,15 +32,13 @@ function Database() {
   const updateData = async () => {
     setisLoading(true);
    setTimeout(() => { //testen der Ladezeit
-    try{ console.log("Lädt!" + isLoading);
+    try{ 
      onSnapshot(collectionRef, (querySnapshot) => {
       const displayItem = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       }));
-      setData(displayItem);
-      console.log("Daten eingetragen!" + displayItem);
-    
+      setData(displayItem);    
   });
 }catch (error) {  }
 finally { 
@@ -52,13 +50,22 @@ finally {
   // Funktion zum Hinzufügen eines Buches
   const addBook = async (newBook) => {
     try {
+      // Überprüfen, ob die ISBN bereits existiert
+      const existingBook = data.find(book => book.isbn === newBook.isbn);
+      if (existingBook) {
+        throw new Error("Ein Buch mit dieser ISBN existiert bereits!");
+      }
+  
       await addDoc(collectionRef, newBook);
       console.log("Book added successfully!");
       updateData(); // Nach dem Hinzufügen direkt aktualisieren
+      return { success: true }; // Erfolg zurückgeben
     } catch (error) {
-      console.error("Error adding book:", error);
+      console.error("Error adding book:", error.message);
+      return { success: false, message: error.message }; // Fehler zurückgeben
     }
   };
+  
 
   // Funktion zum Löschen eines Buches
   const deleteBook = async (bookId) => {
