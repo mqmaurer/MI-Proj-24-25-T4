@@ -3,7 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import TextInput from "./Input";
 import validateInput from "./Validation";
-import Database from "../../firebase_local/Database";
+import Database from "../../firebase_local/Database.jsx";
 
 const AddBook = () => {
   // Zugriff auf die Database-Funktionen
