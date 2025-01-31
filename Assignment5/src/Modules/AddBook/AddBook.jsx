@@ -40,7 +40,7 @@ const AddBook = () => {
         autoClose: 3000,
         hideProgressBar: true,
         closeButton: true,
-        className: "bg-danger text-white",
+        className: "bg-warning text-white",
         icon: false,
       });
       return;

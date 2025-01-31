@@ -2,22 +2,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookReader } from '@fortawesome/free-solid-svg-icons';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import Database from '../firebase_local/Database';
 
 const BookDetail = () => {
 
   const location = useLocation();
   const { book } = location.state || {};
-  const [isLoading, setIsLoading] = useState(true);
-  const minimumLoadingTime = 200;
+  const { isLoading  } = Database();
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, minimumLoadingTime);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   if (isLoading) {
     return (

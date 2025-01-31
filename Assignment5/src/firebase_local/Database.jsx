@@ -8,21 +8,6 @@ function Database() {
   const database = getFirestore(firebaseApp);
   const collectionRef = collection(database, "testbooks");
 
-  // Funktion zum Laden der Daten
-  const fetchData = async () => {
-    try { 
-      const querySnapshot = await getDocs(collectionRef);
-      const displayItem = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setData(displayItem);
-      console.log("Daten eingetragen!" + data);
-    } catch (error) {
-      console.error("Error loading data:", error);
-    }
-  };
-
  
   useEffect(() => {
     updateData();
@@ -31,7 +16,7 @@ function Database() {
  
   const updateData = async () => {
     setisLoading(true);
-   setTimeout(() => { //testen der Ladezeit
+   //setTimeout(() => { //testen der Ladezeit
     try{ 
      onSnapshot(collectionRef, (querySnapshot) => {
       const displayItem = querySnapshot.docs.map(doc => ({
@@ -44,7 +29,7 @@ function Database() {
 finally { 
   setisLoading(false);
   };
-}, 200);
+//}, 500);
 };
 
   // Funktion zum Hinzufügen eines Buches
