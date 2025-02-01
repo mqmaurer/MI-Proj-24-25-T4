@@ -25,7 +25,6 @@ useEffect(() => {
  if(update){
    updateData();
    setUpdate(false);
-   setFilteredBooks(books);
  }
 
   const loadBooks = () => {
