@@ -2,30 +2,32 @@ import './assets/css/App.css'
 import Header from './Modules/Header'
 import LocationTabs from './Modules/LocationTabs'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import BookList from './Modules/BookList'
+import BookList from './Modules/BookList/BookList'
 import AddBook from './Modules/AddBook/AddBook'
 import BookDetail from './Modules/BookDetail'
 import NotFound from './Modules/NotFound';
-import Database from './firebase_local/Database';
+import Database from './firebase_local/Database'; // Hook importieren
+
+
+
 
 function App() {
 
-  const books = Database();
+
 
   return (
     <Router>
-      {/* <Toast /> */}
       <Header />
       <LocationTabs />
       <Routes>
-        <Route path="/" element={<BookList books={books.data} />} />
-        <Route path="/books" element={<BookList books={books.data} />} />
+        <Route path="/" element={<BookList  />} />
+        <Route path="/books" element={<BookList  />} />
         <Route path="/addBooks" element={<AddBook />} />
         <Route path="/details" element={<BookDetail />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App

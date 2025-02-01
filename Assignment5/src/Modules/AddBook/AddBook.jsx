@@ -6,8 +6,8 @@ import validateInput from "./Validation";
 import Database from "../../firebase_local/Database.jsx";
 
 const AddBook = () => {
-  // Zugriff auf die addBook-Funktion
-  const { addBook } = Database();
+  // Zugriff auf die Database-Funktionen
+  const database = Database();
 
   const [formData, setFormData] = useState({
     author: "",
@@ -24,15 +24,30 @@ const AddBook = () => {
     }));
   };
 
-  const handleAddBook = (e) => {
+  const handleAddBook = async (e) => {
     e.preventDefault();
-
+  
     if (!validateInput(formData)) {
       return;
     }
+  
+    const result = await database.addBook(formData); 
 
+    if (!result.success) {
+      // Fehler anzeigen
+      toast.error(result.message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeButton: true,
+        className: "bg-warning text-white",
+        icon: false,
+      });
+      return;
+    }
+  
     // Erfolgsnachricht
-    toast.success("Book added successfully", {
+    toast.success(result.message, {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: true,
@@ -40,9 +55,7 @@ const AddBook = () => {
       className: "bg-primary text-white",
       icon: false,
     });
-
-    addBook(formData); // Fügt das Buch der Firebase-Datenbank hinzu
-
+  
     // Formular zurücksetzen
     setFormData({
       author: "",
@@ -88,10 +101,6 @@ const AddBook = () => {
         </button>
       </form>
       <ToastContainer position="top-right" autoClose={3000} />
-      <div>
-        <p></p>
-        <div></div>
-      </div>
     </div>
   );
 };

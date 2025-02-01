@@ -1,62 +1,83 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs, addDoc, deleteDoc, doc, getFirestore } from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, doc, getFirestore, onSnapshot, updateDoc } from "firebase/firestore";
 import firebaseApp from "./FB_App";
 
 function Database() {
   const [data, setData] = useState([]);
+  const [isLoading, setisLoading] = useState(true);
   const database = getFirestore(firebaseApp);
-  console.log(database);
+  const collectionRef = collection(database, "testbooks");
 
+ 
   useEffect(() => {
-    // Reference to the specific collection in the database
-    const collectionRef = collection(database, "testbooks");
-    console.log(collectionRef);
+    updateData();
+  }, []);
 
-    // Function to fetch data from the database
-    const fetchData = async () => {
-      try {
-        const querySnapshot = await getDocs(collectionRef);
-        const displayItem = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        setData(displayItem);
-      } catch (error) {
-        console.error("Error loading data:", error);
-      }
-    };
+ 
+  const updateData = async () => {
+    setisLoading(true);
+   //setTimeout(() => { //testen der Ladezeit
+    try{ 
+     onSnapshot(collectionRef, (querySnapshot) => {
+      const displayItem = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setData(displayItem);    
+  });
+}catch (error) {  }
+finally { 
+  setisLoading(false);
+  };
+//}, 500);
+};
 
-    // Fetch data when the component mounts
-    fetchData();
-  }, [database]);
-
-  // Function to add a book to the database
+  // Funktion zum Hinzufügen eines Buches
   const addBook = async (newBook) => {
-    const collectionRef = collection(database, "testbooks");
-
-    // TODO: Change Error Handling when adding a book
     try {
+      // Überprüfen, ob die ISBN bereits existiert
+      const existingBook = data.find(book => book.isbn === newBook.isbn);
+      if (existingBook) {
+        throw new Error("There already exists a book with this ISBN!");
+      }
+  
       await addDoc(collectionRef, newBook);
       console.log("Book added successfully!");
+      updateData(); // Nach dem Hinzufügen direkt aktualisieren
+      return { success: true, message: "Book added successfully!" }; // Erfolg zurückgeben
     } catch (error) {
-      console.error("Error adding book:", error);
+      console.error("Error adding book:", error.message);
+      return { success: false, message: error.message }; // Fehler zurückgeben
     }
   };
+  
 
-  // Function to delete a book from the database
+  // Funktion zum Löschen eines Buches
   const deleteBook = async (bookId) => {
-    // Path of book to be deleted
     const bookRef = doc(database, `testbooks/${bookId}`);
 
     try {
       await deleteDoc(bookRef);
       console.log("Book deleted successfully!");
+      updateData(); // Nach dem Löschen direkt aktualisieren
     } catch (error) {
       console.error("Error deleting book:", error);
     }
   };
 
-  return { data, addBook, deleteBook };
+  const updateRating = async (bookId, rating) => {
+    const database = getFirestore(firebaseApp);
+    const bookRef = doc(database, "testbooks", bookId);
+  
+    try {
+      await updateDoc(bookRef, { rating });
+      console.log(`Buch mit ID ${bookId} wurde erfolgreich bewertet!`);
+    } catch (error) {
+      console.error("Fehler beim Aktualisieren der Bewertung:", error);
+    }
+  };
+
+  return { data, addBook, deleteBook, updateData, isLoading, updateRating };
 }
 
 export default Database;
