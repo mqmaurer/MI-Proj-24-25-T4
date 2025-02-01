@@ -142,7 +142,7 @@ const AddBook = () => {
       
       <form id="isbn-form" onSubmit={einBuchbitte}>
         <TextInput label="search Book in OpenLibrary" id="searchISBN" value={formISBN} onChange={handleISBNChange} placeholder="isbn" />
-        <button type="submit" className="btn btn-primary btn-block add-button">
+        <button type="submit" className="btn btn-outline-primary btn-block add-button">
           Add Book Details by ISBN 
         </button>
       </form>
