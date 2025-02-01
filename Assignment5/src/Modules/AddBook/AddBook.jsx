@@ -47,7 +47,7 @@ const AddBook = () => {
     }
   
     // Erfolgsnachricht
-    toast.success("Book added successfully", {
+    toast.success(result.message, {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: true,

@@ -44,7 +44,7 @@ finally {
       await addDoc(collectionRef, newBook);
       console.log("Book added successfully!");
       updateData(); // Nach dem Hinzufügen direkt aktualisieren
-      return { success: true }; // Erfolg zurückgeben
+      return { success: true, message: "Book added successfully!" }; // Erfolg zurückgeben
     } catch (error) {
       console.error("Error adding book:", error.message);
       return { success: false, message: error.message }; // Fehler zurückgeben
