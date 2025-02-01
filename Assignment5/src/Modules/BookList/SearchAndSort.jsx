@@ -32,8 +32,8 @@ const SearchAndSort = ({
           const ratingB = b.rating || 1;
           return (ratingA - ratingB) * order;
         }
-        if (a[field] < b[field]) return -1 * order;
-        if (a[field] > b[field]) return 1 * order;
+        if (a[field].toLowerCase() < b[field].toLowerCase()) return -1 * order;
+        if (a[field].toLowerCase() > b[field].toLowerCase()) return 1 * order;
         return 0;
       });
 
