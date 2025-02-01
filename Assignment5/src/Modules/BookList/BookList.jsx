@@ -37,6 +37,7 @@ useEffect(() => {
   loadBooks();
 }, [filteredBooks, books]);
 
+
   return (
     <div className="container mt-4">
     <SearchAndSort
@@ -44,16 +45,9 @@ useEffect(() => {
       onFilteredBooksChange={setFilteredBooks} // Gefilterte Bücher updaten
     />
 
-    {isLoading ? (
-      <div className="d-flex justify-content-center mt-5">
-        <div className="spinner-border text-success" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
-        <p className="ml-2">Loading...</p>
-      </div>
-    ) : (
+   
       <BookTable books={filteredBooks} onDelete={setFilteredBooks} onUpdate={setUpdate} onRatingChange={handleRatingChange}/>
-    )}
+    
   </div>
 );
 };

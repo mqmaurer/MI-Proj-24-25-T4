@@ -59,65 +59,70 @@ const BookTable = ({ books,  onDelete, onUpdate, onRatingChange }) => {
           <th>Rating</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody><tr><td>
+        No books in database! Want to add books? 
+</td></tr></tbody>
     </table>
-      <div className="alert alert-info mt-5">
-       <div> No books in database! Want to add books? </div>
-<button className="btn btn-outline-light" onClick={() => navigate('/addBooks')}>Add Book</button>
-      </div>
-      </div>
+    
+</div>
     );}
 
-  return ( 
-    <table className="table table-striped mt-5">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Author</th>
-          <th>ISBN</th>
-          <th>Detail</th>
-          <th>Delete</th>
-          <th>Rating</th>
-        </tr>
-      </thead>
-      <tbody>
-      <AnimatePresence>
-        {books.map((book) => (
-          <motion.tr
-            key={book.isbn}
-            initial={{ opacity: 1, x: 0 }} // Anfangszustand: Sichtbar, an ursprünglicher Position
-            animate={{
-              opacity: deletedBooks.includes(book.id) ? 0 : 1, // Wenn gelöscht, unsichtbar
-              x: deletedBooks.includes(book.id) ? 200 : 0, // Wenn gelöscht, nach rechts verschieben
-            }}
-            transition={{ type: "spring", stiffness: 50 }}
-          >
-            <td>{book.title}</td>
-            <td>{book.author}</td>
-            <td>{book.isbn}</td>
-            <td>
-              <a
-                className="fas fa-eye text-primary detail-button"
-                onClick={() => onDetailClick(book)}
-              ></a>
-            </td>
-            <td>
-              <a
-                className="fas fa-trash text-primary remove-button"
-                onClick={() => { onRemoveClick(book.id)}} // Löschen des Buchs
-              ></a>
-            </td>
-            <td>
-                    <div className="rating-stars">
-                        {renderRatingStars(book.rating || 1, book.id)}
+    return (
+      <div>
+        <table className="table table-striped mt-5">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>ISBN</th>
+              <th>Detail</th>
+              <th>Delete</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <AnimatePresence>
+              { !isLoading && books.length === 0 ? (
+                <tr>
+                  <td colSpan="6">
+                    <div className="d-flex justify-content-center align-items-center">
+                      No books found. Please add a book.
+                     
+                       
                     </div>
-                </td>
-          </motion.tr>
-        ))}
-          </AnimatePresence>
-      </tbody>
-    </table>
-  );
+                  </td>
+                </tr>
+              ) : (
+                books.map((book) => (
+                  <motion.tr
+                    key={book.isbn}
+                    initial={{ opacity: 1, x: 0 }}
+                    animate={{
+                      opacity: deletedBooks.includes(book.id) ? 0 : 1,
+                      x: deletedBooks.includes(book.id) ? 200 : 0,
+                    }}
+                    transition={{ type: "spring", stiffness: 50 }}
+                  >
+                    <td>{book.title}</td>
+                    <td>{book.author}</td>
+                    <td>{book.isbn}</td>
+                    <td>
+                      <a className="fas fa-eye text-primary detail-button" onClick={() => onDetailClick(book)}></a>
+                    </td>
+                    <td>
+                      <a className="fas fa-trash text-primary remove-button" onClick={() => onRemoveClick(book.id)}></a>
+                    </td>
+                    <td>
+                      <div className="rating-stars">{renderRatingStars(book.rating || 1, book.id)}</div>
+                    </td>
+                  </motion.tr>
+                ))
+              )}
+            </AnimatePresence>
+          </tbody>
+        </table>
+      </div>
+    );
 };
 
 export default BookTable;
