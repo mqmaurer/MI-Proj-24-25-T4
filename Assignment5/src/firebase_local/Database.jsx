@@ -38,7 +38,7 @@ finally {
       // Überprüfen, ob die ISBN bereits existiert
       const existingBook = data.find(book => book.isbn === newBook.isbn);
       if (existingBook) {
-        throw new Error("Ein Buch mit dieser ISBN existiert bereits!");
+        throw new Error("There already exists a book with this ISBN!");
       }
   
       await addDoc(collectionRef, newBook);
