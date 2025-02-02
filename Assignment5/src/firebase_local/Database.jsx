@@ -6,8 +6,8 @@ function Database() {
   const [data, setData] = useState([]);
   const [isLoading, setisLoading] = useState(true);
   const database = getFirestore(firebaseApp);
-  const collectionRef = collection(database, "testbooks");
-
+  const collectionName = "testbooks";
+  const collectionRef = collection(database, collectionName);
  
   useEffect(() => {
     updateData();
@@ -54,7 +54,7 @@ finally {
 
   // Funktion zum Löschen eines Buches
   const deleteBook = async (bookId) => {
-    const bookRef = doc(database, `testbooks/${bookId}`);
+    const bookRef = doc(database, `${collectionName}/${bookId}`);
 
     try {
       await deleteDoc(bookRef);
@@ -67,7 +67,7 @@ finally {
 
   const updateRating = async (bookId, rating) => {
     const database = getFirestore(firebaseApp);
-    const bookRef = doc(database, "testbooks", bookId);
+    const bookRef = doc(database, collectionName, bookId);
   
     try {
       await updateDoc(bookRef, { rating });
