@@ -1,38 +1,37 @@
-# MI-Proj-B/M: Gruppe T4 
+# MI-Proj-B/M: Group T4 
 
+**Description:**  
+This repository contains the partial submissions of our university project on the topic of "Modern Web Development with JavaScript." The goal of the project is to learn and practically apply modern web technologies. We use various technologies from the JavaScript ecosystem, including Webpack, Babel, React, ESLint, Firebase, and more.
 
-**Beschreibung:**  
-Dieses Repository enthält die Teilabgaben unseres Uni-Projekts zum Thema "Moderne Webentwicklung mit JavaScript". Ziel des Projekts ist es, moderne Web-Technologien kennenzulernen und praktisch anzuwenden. Dabei setzen wir verschiedene Technologien des JavaScript-Ökosystems ein, darunter Webpack, Babel, React, ESLint, Firebase und viele weitere.
+The project consists of several parts, each focusing on specific concepts and tools. In the final part, the previously learned technologies are combined to develop a comprehensive web application.
 
-Das Projekt besteht aus mehreren Teilaufgaben, die jeweils bestimmte Konzepte und Werkzeuge vertiefen. In der letzten Teilaufgabe werden die zuvor erlernten Technologien kombiniert, um eine umfassende Webanwendung zu entwickeln.
+## 🚀 Assignments with Features
 
-## 🚀 Teilabgaben mit Features
+### 📌 Assignment 1: Literature Management System (Website)  
+- Implementation of a **Single-Page Application (SPA)**  
+- Use of **ECMAScript (ES6+)** features  
+- Application of the **MVC pattern**  
 
-### 📌 Teil 1: Literaturverwaltungssystem (Website)  
-- Umsetzung einer **Single-Page Application (SPA)**  
-- Anwendung von **ECMAScript (ES6+)** Features  
-- Nutzung des **MVC-Patterns** 
+### 📌 Assignment 2: CLI Application  
+- Use of **third-party modules** via **npm**  
+- Implementation of **asynchronous programming**  
 
-### 📌 Teil 2: CLI-Anwendung  
-- Nutzung von **Third-Party-Modules** über **npm**  
-- Nutzung von **asynchroner Programmierung**  
+### 📌 Assignment 3: Website Extension  
+- Integration of **Babel** and **Webpack**  
+- Code quality improvement with **ESLint**  
+- Addition of a **rating system**  
 
-### 📌 Teil 3: Erweiterung der Website  
-- Integration von **Babel** und **Webpack**  
-- Code-Qualität verbessern mit **ESLint**  
-- Erweiterung um ein **Rating-System**  
+### 📌 Assignment 4: Testing & CI/CD  
+- Introduction to **automated testing**  
+- Setting up **CI/CD pipelines** with **GitHub Actions**  
 
-### 📌 Teil 4: Testing & CI/CD  
-- Einführung in **automatisiertes Testing**  
-- Einrichtung von **CI/CD-Pipelines** mit **GitHub Actions**  
-
-### 📌 Teil 5: Finales Projekt mit React 
-- Umsetzung einer vollständigen Webanwendung mit **React**  
-- Nutzung einer **Firebase-Datenbank**  
+### 📌 Assignment 5: Final Project with React  
+- Implementation of a complete web application with **React**  
+- Use of a **Firebase database**  
 
 ---
 
-## 🛠 Technologien & Tools  
+## 🛠 Technologies & Tools  
 ✅ **JavaScript (ES6+)**  
 ✅ **React**  
 ✅ **Node.js & npm**  
@@ -43,9 +42,10 @@ Das Projekt besteht aus mehreren Teilaufgaben, die jeweils bestimmte Konzepte un
 
 ---
 
-📌 **Hinweis:** Jedes Teilprojekt befindet sich in einem eigenen Ordner im Repository. 🚀  
+📌 **Note:** Each Assignment is located in its own folder within the repository. 🚀  
 
-## 📂 Ordnerstruktur
+## 📂 Folder Structure
+
 
 ```
 📦 MI-Proj-24-35-T4
@@ -59,30 +59,32 @@ Das Projekt besteht aus mehreren Teilaufgaben, die jeweils bestimmte Konzepte un
 ```
 
 ---
+
 ## Installation  
 
-### Benötigte Software  
-Um das Projekt lokal zu installieren und auszuführen, benötigen Sie die folgende Software:  
-- **Node.js** (ab Version 14.x)  
-- **npm** (wird mit Node.js installiert)  
-- **Git** (für das Klonen des Repositories)  
+### Required Software  
+To install and run the project locally, you will need the following software:  
+- **Node.js** (version 14.x or higher)  
+- **npm** (installed with Node.js)  
+- **Git** (for cloning the repository)  
 
-### Schritte zur Installation  
-1. Klonen Sie das Repository:
+### Installation Steps  
+1. Clone the repository:
    ```bash
    git clone <Repository-URL>
    
-2.  Navigieren Sie in das jeweilige Teilleistungs-Verzeichnis
-      ```bash
-      cd <Assignment>
-      
-3.  Installieren Sie die Abhängigkeiten
-     ```bash
-    npm install
+2. Navigate to the respective assignment folder:
+   ```bash
+   cd <Assignment>
    
+3. Install the dependencies:
+   ```bash
+   npm install
+
 ---
-## Verwendung
-Wird noch ergänzt
+
+## Usage
+To be added  
 ### Assignment 1
 
 
@@ -100,17 +102,17 @@ Wird noch ergänzt
 
 ---
 
-## 👥Autorinnen
-👤 Elena Julia Laubinger
-👤 Anna-Lena Lumpp
-👤 Monique Maurer
-👤 Xinyu Ren
+## 👥Authors  
+👤 Elena Julia Laubinger  
+👤 Anna-Lena Lumpp  
+👤 Monique Maurer  
+👤 Xinyu Ren  
 
 ---
 
-## 🔒 Lizenz
+## 🔒 License  
 BSD 3-Clause License
 
 Copyright (c) [2025], [Elena Julia Laubinger, Anna-Lena Lumpp, Monique Maurer, Xinyu Ren]
 
-Erlaubt ist die Nutzung, Modifikation und Weitergabe des Codes, mit der Bedingung, dass der Copyright-Hinweis und diese Lizenz in allen Kopien des Codes enthalten sind. Der Name des Autors oder der Organisation darf nicht ohne ausdrückliche Genehmigung in Verbindung mit abgeleiteten Arbeiten verwendet werden.
+Use, modification, and distribution of the code are permitted with the condition that the copyright notice and this license are included in all copies of the code. The name of the author or organization may not be used in connection with derived works without explicit permission.
