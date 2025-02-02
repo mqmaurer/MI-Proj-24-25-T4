@@ -42,10 +42,8 @@ The project consists of several parts, each focusing on specific concepts and to
 
 ---
 
-📌 **Note:** Each Assignment is located in its own folder within the repository. 🚀  
-
 ## 📂 Folder Structure
-
+📌 **Note:** Each Assignment is located in its own folder within the repository. 🚀  
 
 ```
 📦 MI-Proj-24-35-T4
@@ -84,8 +82,14 @@ To install and run the project locally, you will need the following software:
 ---
 
 ## Usage
-To be added  
+ 
 ### Assignment 1
+<details> 
+ <summary> Show more </summary>
+ 
+You can use the Live Server VS Code Extension to start the application.
+</details>
+
 ### Assignment 2 
 <details> 
  <summary> Show more </summary>
@@ -106,7 +110,7 @@ To be added
  <summary> Show more </summary>
 
 - Build the application in Developer Mode
-  - Creates a dist-folder with bundeled JS-Code
+  - Creates a dist-folder with bundled JS-Code
    ```bash
    npm run build:dev
  
@@ -125,9 +129,10 @@ To be added
 ### Assignment 4
 <details> 
  <summary> Show more </summary>
-The application runs scripts in a CI-Pipeline, if you create a Pull-Request to the main-Branch of this Repo
  
-# How to run the scripts manually
+The application runs scripts in a CI-Pipeline, if you create a Pull-Request to the main-Branch of this repository.
+ 
+#### How to run the scripts manually
  - Check the Test-Coverage
     ```bash
     npm run coverage
@@ -153,10 +158,12 @@ The application runs scripts in a CI-Pipeline, if you create a Pull-Request to t
 ### Assignment 5 //Vorläufig-Kontrolle nach Deployment und Fertigstellung
 <details> 
  <summary> Show more </summary>
-1. To use the application you need to have a Google-Account or create one, because it uses the Cloud Firestore Service. 
-2. If you have created your own Firestore Database, you need to add a .env-file with the Firebase Global Configurations.
-3. You need to change the collectionName in the Database.jsx to the name of your own collection
  
+ 1. To use the application you need to have a Google-Account or create one, because it uses the Cloud Firestore Service.
+ 2. If you have created your own Firestore Database, you need to add a .env-file with the Firebase Global Configurations.
+ 3. You need to change the collectionName in the Database.jsx to the name of your own collection
+
+ ```
     📂 Assignment5
      ┣ 📂 src
         ┣ 📂 assets
@@ -167,9 +174,9 @@ The application runs scripts in a CI-Pipeline, if you create a Pull-Request to t
         ┣ ⚛️ App.jsx
         ┣ ⚛️ main.jsx
         ...
-    
+  ```
   ![image](https://github.com/user-attachments/assets/b299327b-03d3-4586-b5c2-a40ab123b65d)
-  
+  </details>
 
 ---
 
