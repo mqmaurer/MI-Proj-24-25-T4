@@ -1,7 +1,10 @@
 import { ToastContainer } from "react-toastify";
 //import "react-toastify/dist/ReactToastify.css";
 import "../assets/css/bootstrap.default.css";
-
+/**
+ * Toast component that displays toast notifications.
+ * @returns {JSX.Element} The rendered Toast component.
+ */
 const Toast = () => {
   return (
     <ToastContainer

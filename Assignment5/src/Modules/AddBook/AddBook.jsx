@@ -4,7 +4,14 @@ import { useState } from "react";
 import TextInput from "./Input";
 import validateInput from "./Validation";
 import Database from "../../firebase_local/Database.jsx";
-
+/**
+ * AddBook component allows users to add a new book by filling out the form.
+ * The form includes fields for author, title, ISBN, and description, all mandatory.
+ * After submitting the form, the book is added to the database, and a toast notification is displayed.
+ * If each blanks in the form is filled, and there's no book in the database with the same ISBN, a successful notification is displayed.
+ * If there's input missing, or the book with the same ISBN has been found in the database, then a failure notification is displayed.
+ * @returns {JSX.Element} Rendered AddBook component with a form and toast notifications
+ */
 const AddBook = () => {
   // Zugriff auf die Database-Funktionen
   const database = Database();
@@ -15,7 +22,10 @@ const AddBook = () => {
     isbn: "",
     description: "",
   });
-
+  /**
+   * Handles input field changes and updates the form data state.
+   * @param {React.ChangeEvent} e - The event object for the input change
+   */
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({
@@ -23,7 +33,11 @@ const AddBook = () => {
       [id]: value,
     }));
   };
-
+  /**
+   * Handles form submission to add a new book to the database.
+   * If the form data is valid, the book is added to the database and a success or error toast notification is displayed.
+   * @param {React.FormEvent} e - The event object for form submission
+   */
   const handleAddBook = async (e) => {
     e.preventDefault();
   

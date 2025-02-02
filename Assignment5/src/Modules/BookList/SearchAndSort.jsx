@@ -1,6 +1,15 @@
 import { useState, useEffect } from "react";
 import Database from "../../firebase_local/Database";
-
+/**
+ * Search component allows the user to filter out the books according to the book's title or author
+ * Sort component allows the user to sort the book list in the ascending/descending order of author, title or rating
+ *
+ * @param {Object} props - Component props
+ * @param {Book[]} props.books - Array of book objects to filter and sort
+ * @param {Function} props.onFilteredBooksChange - Callback function to return the filtered and sorted books
+ *
+ * @returns {JSX.Element} Rendered SearchAndSort component with filter and sorting options
+ */
 const SearchAndSort = ({
   books, // Liste der Bücher
   onFilteredBooksChange, // Callback, um die gefilterten Bücher zurückzugeben
@@ -41,11 +50,15 @@ const SearchAndSort = ({
       setTriggerSubmit(false); // Setze den Trigger zurück, um unnötige Berechnungen zu vermeiden
     }
   }, [triggerSubmit, books, searchText, searchOption, sortOption, onFilteredBooksChange]); // Überwachung der relevanten Zustände
-
+  /**
+   * Handles form submission and triggers the filtering and sorting of books
+   */
   const handleSubmit = () => {
     setTriggerSubmit(true); // Setzt den Trigger, um die Filterung und Sortierung auszulösen
   };
-
+  /**
+   * Resets the search and sort options to their default values
+   */
   const handleReset = () => {
     setSearchText("");
     setSearchOption("title");
