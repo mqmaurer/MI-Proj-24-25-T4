@@ -10,7 +10,7 @@ Das Projekt besteht aus mehreren Teilaufgaben, die jeweils bestimmte Konzepte un
 
 ### 📌 Teil 1: Literaturverwaltungssystem (Website)  
 - Umsetzung einer **Single-Page Application (SPA)**  
-- Anwendung von **ECMAScript 6 (ES6)** Features  
+- Anwendung von **ECMAScript (ES6+)** Features  
 - Nutzung des **MVC-Patterns** 
 
 ### 📌 Teil 2: CLI-Anwendung  
