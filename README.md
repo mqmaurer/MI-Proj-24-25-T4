@@ -15,7 +15,7 @@ Das Projekt besteht aus mehreren Teilaufgaben, die jeweils bestimmte Konzepte un
 
 ### 📌 Teil 2: CLI-Anwendung  
 - Nutzung von **Third-Party-Modules** über **npm**  
-- ENutzung von **asynchroner Programmierung**  
+- Nutzung von **asynchroner Programmierung**  
 
 ### 📌 Teil 3: Erweiterung der Website  
 - Integration von **Babel** und **Webpack**  
