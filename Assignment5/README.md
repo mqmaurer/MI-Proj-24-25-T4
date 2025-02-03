@@ -14,28 +14,30 @@
 
 4. Follow the authentification process
 
-5. <details>
-    <summary> Initialize Firebase with the following mandatory settings:</summary>
-    - ```bash 
-      firebase init
-    - Which features?
-        Mark `Hosting´ with spacebar & press Enter
-    - Project Setup 
-        - Choose either an existing or a new project
-        - Follow the process you're guided through
-    - Hosting Setup
-        - Set up automatic build & deploys with GitHub?
-        ```bash 
-        Y
-        - Follow the steps guiding through GitHub-Authentication process
-    - Set up the workflow to run a build script before every deploy?
-        ```bash 
-        Y
-    - What script?
-        ```bash 
-        npm ci && npm run build
-    - Choose either first or second auto-generated firebase-hosting-workflow
-    - Revoke Authorization for the Firebase CLI through given link
+5. <details><summary> Initialize Firebase with the following mandatory settings:</summary>
+
+    1. Initialize firebase CLI   
+        ```bash
+        firebase init   
+    2. Which features?    
+        Mark `Hosting` with spacebar & press Enter
+    3. Project Setup   
+        - Choose either an existing or a new project   
+        - Follow the process you're guided through   
+    4. Hosting Setup    
+        - Set up automatic build & deploys with GitHub?   
+            ```bash 
+            Y
+        - Follow the steps guiding through GitHub-Authentication process   
+        - Set up the workflow to run a build script before every deploy?   
+            ```bash 
+            Y
+        - What script?   
+            ```bash 
+            npm ci && npm run build
+        - Choose either first or second auto-generated firebase-hosting-workflow   
+    5. Revoke Authorization for the Firebase CLI through given link   
+
 </details>
 
 6. Modify generated firebase-hosting-workflow
