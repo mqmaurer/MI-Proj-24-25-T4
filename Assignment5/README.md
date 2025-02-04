@@ -2,6 +2,7 @@
 
 
 ## How to initialize Firebase Hosting
+
 1. Open a console of your choice in the project's source folder
 
 2. Install Firebase tools:
@@ -46,3 +47,5 @@
 
 
 ## Public App URL
+
+https://ibooks-bcb55.web.app
