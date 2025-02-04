@@ -1,8 +1,48 @@
-# React + Vite
+# Deployment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+## How to initialize Firebase Hosting
+1. Open a console of your choice in the project's source folder
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. Install Firebase tools:
+    ```bash 
+    npm install -g firebase-tools
+
+3. Log into Firebase through Google login: 
+    ```bash 
+    firebase login 
+
+4. Follow the authentification process
+
+5. <details><summary> Initialize Firebase with the following mandatory settings:</summary>
+
+    1. Initialize firebase CLI   
+        ```bash
+        firebase init   
+    2. Which features?    
+        Mark `Hosting` with spacebar & press Enter
+    3. Project Setup   
+        - Choose either an existing or a new project   
+        - Follow the process you're guided through   
+    4. Hosting Setup    
+        - Set up automatic build & deploys with GitHub?   
+            ```bash 
+            Y
+        - Follow the steps guiding through GitHub-Authentication process   
+        - Set up the workflow to run a build script before every deploy?   
+            ```bash 
+            Y
+        - What script?   
+            ```bash 
+            npm ci && npm run build
+        - Choose either first or second auto-generated firebase-hosting-workflow   
+    5. Revoke Authorization for the Firebase CLI through given link   
+
+</details>
+
+6. Modify generated firebase-hosting-workflow
+
+7. Done!
+
+
+## Public App URL
