@@ -12,6 +12,9 @@ permissions:
 jobs:
   build_and_preview:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./Assignment5
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
