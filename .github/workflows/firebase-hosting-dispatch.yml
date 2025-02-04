@@ -20,3 +20,4 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_IBOOKS_BCB55 }}
           channelId: live
           projectId: ibooks-bcb55
+          entryPoint: Assignment5
