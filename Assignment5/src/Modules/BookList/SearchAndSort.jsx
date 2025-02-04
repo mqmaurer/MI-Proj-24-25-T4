@@ -18,9 +18,9 @@ const SearchAndSort = ({
       // Filter- und Sortierlogik
       const filteredBooks = books.filter((book) => {
         if (!searchText) return books; // Keine Suche, alle Bücher anzeigen
-        return book[searchOption]?.toLowerCase().includes(searchText.toLowerCase());
+        return book[searchOption]?.toString().toLowerCase().includes(searchText.toLowerCase());
       });
-
+     
       const sortedBooks = filteredBooks.sort((a, b) => {
         if (sortOption === "NO_SORTING") return 0;
 
@@ -32,8 +32,8 @@ const SearchAndSort = ({
           const ratingB = b.rating || 1;
           return (ratingA - ratingB) * order;
         }
-        if (a[field].toLowerCase() < b[field].toLowerCase()) return -1 * order;
-        if (a[field].toLowerCase() > b[field].toLowerCase()) return 1 * order;
+        if (a[field].toString().toLowerCase() < b[field].toString().toLowerCase()) return -1 * order;
+        if (a[field].toString().toLowerCase() > b[field].toString().toLowerCase()) return 1 * order;
         return 0;
       });
 

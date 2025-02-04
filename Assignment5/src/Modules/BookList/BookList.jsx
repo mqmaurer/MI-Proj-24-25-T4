@@ -18,6 +18,7 @@ const BooksList = () => {
       )
     );
   };
+
   
 useEffect(() => {
   // Setze den Ladevorgang, wenn filteredBooks leer ist
@@ -29,12 +30,13 @@ useEffect(() => {
 
   const loadBooks = () => {
     if (filteredBooks.length === 0 ) {
-         setFilteredBooks(books);
+      console.log("BooksList: Lade Bücher...");
+      setFilteredBooks(books);
      // Ladezeit simulieren
     }
   };
   loadBooks();
-}, [filteredBooks, books]);
+}, [ books]);
 
 
   return (
