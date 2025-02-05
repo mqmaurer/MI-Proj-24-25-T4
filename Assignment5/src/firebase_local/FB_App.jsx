@@ -1,4 +1,12 @@
 import { initializeApp } from "firebase/app";
+/**
+ * @typedef {Object} FirebaseApp
+ */
+
+/**
+ * Firebase configuration settings retrieved from environment variables.
+ * @type {Object}
+ */
 
 // Firebase Configuration
 const firebaseConfig = {
@@ -11,6 +19,10 @@ const firebaseConfig = {
   measurementId: process.env.FIREBASE_MEASUREMENT_ID
 }
 
+/**
+ * Initializes and exports the Firebase application instance.
+ * @type {FirebaseApp}
+ */
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
