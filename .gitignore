@@ -50,3 +50,6 @@ bower_components
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
+
+# JSDoc generated output
+out/

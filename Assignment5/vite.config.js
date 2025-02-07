@@ -15,6 +15,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     define: envWithProcessPrefix,
+    
     test: {
       // Vitest configuration
       globals: true,
@@ -25,3 +26,4 @@ export default defineConfig(({ mode }) => {
     },
   };
 });
+
