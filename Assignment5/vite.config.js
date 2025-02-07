@@ -14,13 +14,16 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
-    define: envWithProcessPrefix,
+    define: {
+      "process.env": env,
+    },
+
     test: {
-      // Vitest configuration
+      // Vitest Konfiguration hinzufügen
       globals: true,
-      environment: "jsdom",
+      environment: "jsdom", // Damit React-Komponenten in einer Browser-ähnlichen Umgebung getestet werden
       coverage: {
-        reporter: ["text", "lcov"],
+        reporter: ["text", "lcov"], // Textausgabe + lcov für HTML-Reports
       },
     },
   };
