@@ -77,28 +77,7 @@ const BookTable = ({ books,  onDelete, onUpdate, onRatingChange }) => {
     }
     return stars;
   };
- 
-   if (books.length === 0 && !isLoading) {
-    return ( 
-      <div>
-         <table className="table table-striped mt-5">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Author</th>
-          <th>ISBN</th>
-          <th>Detail</th>
-          <th>Delete</th>
-          <th>Rating</th>
-        </tr>
-      </thead>
-      <tbody><tr><td>
-        No books in database! Want to add books? 
-</td></tr></tbody>
-    </table>
-    
-</div>
-    );}
+
 
     return (
       <div>
@@ -119,8 +98,7 @@ const BookTable = ({ books,  onDelete, onUpdate, onRatingChange }) => {
                 <tr>
                   <td colSpan="6">
                     <div className="d-flex justify-content-center align-items-center">
-                      No books found. Please add a book.
-                     
+                      No books found.
                        
                     </div>
                   </td>

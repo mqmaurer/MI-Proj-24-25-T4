@@ -30,6 +30,7 @@ const BooksList = () => {
       )
     );
   };
+
   
 useEffect(() => {
   // Setze den Ladevorgang, wenn filteredBooks leer ist
@@ -41,12 +42,13 @@ useEffect(() => {
 
   const loadBooks = () => {
     if (filteredBooks.length === 0 ) {
-         setFilteredBooks(books);
+      console.log("BooksList: Lade Bücher...");
+      setFilteredBooks(books);
      // Ladezeit simulieren
     }
   };
   loadBooks();
-}, [filteredBooks, books]);
+}, [ books]);
 
 
   return (
@@ -56,9 +58,16 @@ useEffect(() => {
       onFilteredBooksChange={setFilteredBooks} // Gefilterte Bücher updaten
     />
 
-   
+{isLoading ? (
+      <div className="container mt-4 text-center" style={{ marginTop: '2000px' }}>
+      <div className="spinner-grow text-primary" role="status" style={{ width: '3rem', height: '3rem' }}>
+        <span className="sr-only">Loading ...</span>
+      </div>
+      <p>Loading...</p>
+    </div>
+    ) : (
       <BookTable books={filteredBooks} onDelete={setFilteredBooks} onUpdate={setUpdate} onRatingChange={handleRatingChange}/>
-    
+    )}
   </div>
 );
 };

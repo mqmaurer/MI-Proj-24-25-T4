@@ -42,10 +42,8 @@ The project consists of several parts, each focusing on specific concepts and to
 
 ---
 
-📌 **Note:** Each Assignment is located in its own folder within the repository. 🚀  
-
 ## 📂 Folder Structure
-
+📌 **Note:** Each Assignment is located in its own folder within the repository. 🚀  
 
 ```
 📦 MI-Proj-24-35-T4
@@ -84,21 +82,101 @@ To install and run the project locally, you will need the following software:
 ---
 
 ## Usage
-To be added  
+ 
 ### Assignment 1
-
+<details> 
+ <summary> Show more </summary>
+ 
+You can use the Live Server VS Code Extension to start the application.
+</details>
 
 ### Assignment 2 
+<details> 
+ <summary> Show more </summary>
 
+1. Build the application:
+   ```bash
+   npm run build
+
+2. Choose with the arrow-keys if you just want to validate the JS dependencies or also want to minify the JS Code. Confirm with ENTER.
+
+   ![image](https://github.com/user-attachments/assets/6b5ede25-2ce2-4e0b-8028-ac16667fc78f)
+
+</details>
 
 ### Assignment 3
 
+<details> 
+ <summary> Show more </summary>
+
+- Build the application in Developer Mode
+  - Creates a dist-folder with bundled JS-Code
+   ```bash
+   npm run build:dev
+ 
+- Build the application in Production Mode
+  - Creates a dist-folder with minified JS-Code
+   ```bash 
+    npm run build:prod
+   
+- Start the application
+1. Start the application:
+   ```bash
+   npm run start
+2. Open the Browser at http://localhost:3000/
+</details>
 
 ### Assignment 4
+<details> 
+ <summary> Show more </summary>
+ 
+The application runs scripts in a CI-Pipeline, if you create a Pull-Request to the main-Branch of this repository.
+ 
+#### How to run the scripts manually
+ - Check the Test-Coverage
+    ```bash
+    npm run coverage
+  
+ - Run tests on code
+    ```bash 
+    npm run test
+    
+ - Run the liniting
+    ```bash 
+    npm run lint
+    
+ - Build
+   - Development-Mode
+     ```bash 
+     npm run dev
+   - Production-Mode
+     ```bash 
+     npm run build
 
+</details>
 
-### Assignment 5
+### Assignment 5 //Vorläufig-Kontrolle nach Deployment und Fertigstellung
+<details> 
+ <summary> Show more </summary>
+ 
+ 1. To use the application you need to have a Google-Account or create one, because it uses the Cloud Firestore Service.
+ 2. If you have created your own Firestore Database, you need to add a .env-file with the Firebase Global Configurations.
+ 3. You need to change the collectionName in the Database.jsx to the name of your own collection
 
+ ```
+    📂 Assignment5
+     ┣ 📂 src
+        ┣ 📂 assets
+        ┣ 📂 firebase_local
+           ┣ ⚛️ Database.jsx    🡄
+           ┣ ⚛️ FB_App.jsx
+        ┣ 📂 Modules
+        ┣ ⚛️ App.jsx
+        ┣ ⚛️ main.jsx
+        ...
+  ```
+  ![image](https://github.com/user-attachments/assets/b299327b-03d3-4586-b5c2-a40ab123b65d)
+  </details>
 
 ---
 
