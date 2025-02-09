@@ -4,13 +4,32 @@ import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Database from '../firebase_local/Database';
 
-const BookDetail = () => {
+/**
+ * @typedef {Object} Book
+ * @property {string} author - The author of the book
+ * @property {string} title - The title of the book
+ * @property {string} isbn - The ISBN of the book
+ * @property {string} description - A description of the book
+ */
 
+/**
+ * @component
+ * @returns {JSX.Element} A React component displaying book details.
+ */
+const BookDetail = () => {
+    /**
+   * Fetches the selected book from the page's location state.
+   * @type {{ book: Book }}
+   */
   const location = useLocation();
   const { book } = location.state || {};
+  /**
+   * Fetches loading state from the Database module.
+   * @type {{ isLoading: boolean }}
+   */
   const { isLoading  } = Database();
 
-
+  /** Displays a loading spinner during the process of data retrieval */
   if (isLoading) {
     return (
       <div className="container mt-4 text-center" style={{ marginTop: '2000px' }}>
@@ -36,6 +55,7 @@ const BookDetail = () => {
       </div>
     )
   }
+
   return (
     <div className="container mt-4">
       <div className="card mx-auto" style={{ maxWidth: '25rem' }}>
