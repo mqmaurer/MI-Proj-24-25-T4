@@ -1,3 +1,7 @@
+/**
+ * Header component including title and subtitle.
+ * @returns {JSX.Element} The rendered Header component.
+ */
 const Header = () => {
     return (
         <div className="jumbotron">

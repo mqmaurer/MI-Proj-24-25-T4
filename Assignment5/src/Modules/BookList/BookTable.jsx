@@ -3,17 +3,45 @@ import { useNavigate } from 'react-router-dom';
 import { useState} from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 import Database from '../../firebase_local/Database';
+/**
+ * @typedef {Object} Book
+ * @property {string} id - The ID for the book
+ * @property {string} title - The Title of the book
+ * @property {string} author - The Author of the book
+ * @property {string} isbn - The ISBN of the book
+ * @property {number} [rating] - Current rating (stars) of the book (1-5 stars)
+ */
+
+/**
+ * BookTable component displays a table of books with interactive features like
+ * delete, rating, and show book detail.
+ *
+ * @param {Object} props - Component props
+ * @param {Book[]} props.books - Array of book objects to display
+ * @param {Function} props.onDelete - Callback function to handle book deletion
+ * @param {Function} props.onUpdate - Callback function to trigger parent component updates
+ * @param {Function} props.onRatingChange - Callback function to handle book rating changes
+ * @returns {JSX.Element} Rendered table of books with interactive features
+ *
+ */
 
 const BookTable = ({ books,  onDelete, onUpdate, onRatingChange }) => {
   const navigate = useNavigate();
   const { deleteBook, isLoading} = Database();
    const [deletedBooks, setDeletedBooks] = useState([]);
 
-  
+  /**
+   * Navigates to the detail page of a specific book
+   * @param {Book} book - The book object to show details for
+   */
   const onDetailClick = (book) => {
     navigate('/details', { state: { book } });
   };
 
+  /**
+   * Handles the deletion of a book with animation
+   * @param {string} bookId - ID of the book to be deleted
+   */
   const onRemoveClick = (bookId) => {
     // Zeile nach rechts verschieben (Animation)
     setDeletedBooks((prev) => [...prev, bookId]);
@@ -28,7 +56,12 @@ const BookTable = ({ books,  onDelete, onUpdate, onRatingChange }) => {
     }, 500); 
    
    };
-
+  /**
+   * Renders the rating of a book
+   * @param {number} rating - Current rating value (1-5)
+   * @param {string} bookId - ID of the book being rated
+   * @returns {JSX.Element[]} Array of star elements
+   */
    const renderRatingStars = (rating, bookId) => {
     const maxRating = 5;
     const stars = [];

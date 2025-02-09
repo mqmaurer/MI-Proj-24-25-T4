@@ -1,5 +1,8 @@
 import { NavLink } from 'react-router-dom'
-
+/**
+ * LocationTabs component that navigates user to different pages.
+ * @returns {JSX.Element} The rendered LocationTabs component.
+ */
 const LocationTabs = () => {
 
     return (

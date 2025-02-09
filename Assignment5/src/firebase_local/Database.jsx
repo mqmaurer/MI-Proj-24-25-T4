@@ -2,6 +2,18 @@ import { useEffect, useState } from "react";
 import { collection, getDocs, addDoc, deleteDoc, doc, getFirestore, onSnapshot, updateDoc } from "firebase/firestore";
 import firebaseApp from "./FB_App";
 
+/**
+ * A custom hook to interact with a Firestore database for managing books.
+ * @returns {{
+ *   data: Array<Object>,
+ *   addBook: Function,
+ *   deleteBook: Function,
+ *   updateData: Function,
+ *   isLoading: boolean,
+ *   updateRating: Function
+ * }} An object containing functions and state variables for book management.
+ */
+
 function Database() {
   const [data, setData] = useState([]);
   const [isLoading, setisLoading] = useState(true);
@@ -13,7 +25,10 @@ function Database() {
     updateData();
   }, []);
 
- 
+  /**
+   * Function to update the local data state with the latest books from Firestore.
+   * Sets isLoading to true during data fetch.
+   */
   const updateData = async () => {
     setisLoading(true);
    //setTimeout(() => { //testen der Ladezeit
@@ -31,7 +46,11 @@ finally {
   };
 //}, 500);
 };
-
+  /**
+   * Function to add a book to Firestore collection.
+   * @param {Object} newBook The new book object to add.
+   * @returns {Object} Object indicating success or failure of the Add operation.
+   */
   // Funktion zum Hinzufügen eines Buches
   const addBook = async (newBook) => {
     try {
@@ -51,7 +70,10 @@ finally {
     }
   };
   
-
+  /**
+   * Function to delete a book from Firestore collection.
+   * @param {string} bookId The ID of the book to delete.
+   */
   // Funktion zum Löschen eines Buches
   const deleteBook = async (bookId) => {
     const bookRef = doc(database, `${collectionName}/${bookId}`);
@@ -65,6 +87,11 @@ finally {
     }
   };
 
+  /**
+   * Function to update the rating of books in Firestore collection.
+   * @param {string} bookId The ID of the book to update.
+   * @param {number} rating The new rating to update.
+   */
   const updateRating = async (bookId, rating) => {
     const database = getFirestore(firebaseApp);
     const bookRef = doc(database, collectionName, bookId);
