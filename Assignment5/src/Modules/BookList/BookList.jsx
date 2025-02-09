@@ -2,6 +2,11 @@ import { useState, useEffect} from "react";
 import SearchAndSort from "../BookList/SearchAndSort";
 import BookTable from "../BookList/BookTable";
 import Database from "../../firebase_local/Database.jsx"; 
+/**
+ * BooksList component that displays a list of books with sorting, filtering, and rating features.
+ * It fetches added books from the Database, handles rating changes, and manages the filtered book list.
+ * @returns {JSX.Element} The rendered BooksList component.
+ */
 
 
 const BooksList = () => { 
@@ -9,7 +14,14 @@ const BooksList = () => {
   const { updateData, isLoading, updateRating } = Database();
   const [filteredBooks, setFilteredBooks] = useState(books);
   const [update, setUpdate] = useState(false);
- 
+
+  /**
+   * Handles rating changes for books rated by user.
+   * Updates the rating both in the database and locally in the filtered books list.
+   *
+   * @param {string} bookId - The ID of the book whose rating is being changed.
+   * @param {number} newRating - The number of stars given to the book.
+   */
   const handleRatingChange = (bookId, newRating) => {
     updateRating(bookId, newRating);
     setFilteredBooks((prevBooks) =>
@@ -18,6 +30,7 @@ const BooksList = () => {
       )
     );
   };
+
   
 useEffect(() => {
   // Setze den Ladevorgang, wenn filteredBooks leer ist
@@ -25,17 +38,18 @@ useEffect(() => {
  if(update){
    updateData();
    setUpdate(false);
-   setFilteredBooks(books);
  }
 
   const loadBooks = () => {
     if (filteredBooks.length === 0 ) {
-         setFilteredBooks(books);
+      console.log("BooksList: Lade Bücher...");
+      setFilteredBooks(books);
      // Ladezeit simulieren
     }
   };
   loadBooks();
-}, [filteredBooks, books]);
+}, [ books]);
+
 
   return (
     <div className="container mt-4">
@@ -44,13 +58,13 @@ useEffect(() => {
       onFilteredBooksChange={setFilteredBooks} // Gefilterte Bücher updaten
     />
 
-    {isLoading ? (
-      <div className="d-flex justify-content-center mt-5">
-        <div className="spinner-border text-success" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
-        <p className="ml-2">Loading...</p>
+{isLoading ? (
+      <div className="container mt-4 text-center" style={{ marginTop: '2000px' }}>
+      <div className="spinner-grow text-primary" role="status" style={{ width: '3rem', height: '3rem' }}>
+        <span className="sr-only">Loading ...</span>
       </div>
+      <p>Loading...</p>
+    </div>
     ) : (
       <BookTable books={filteredBooks} onDelete={setFilteredBooks} onUpdate={setUpdate} onRatingChange={handleRatingChange}/>
     )}

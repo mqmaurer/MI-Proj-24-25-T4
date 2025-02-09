@@ -8,7 +8,11 @@ import BookDetail from './Modules/BookDetail'
 import NotFound from './Modules/NotFound';
 import Database from './firebase_local/Database'; // Hook importieren
 
-
+/**
+ * App component that sets up the routing and renders the main sections of the app.
+ * It includes the header, location tabs, and routes for different pages like book list, add book, book details, and a 404 page.
+ * @returns {JSX.Element} The rendered App component.
+ */
 
 
 function App() {

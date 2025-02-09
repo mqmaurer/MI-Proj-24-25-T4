@@ -4,9 +4,15 @@ import { useState } from "react";
 import TextInput from "./Input";
 import validateInput from "./Validation";
 import Database from "../../firebase_local/Database.jsx";
-
+/**
+ * AddBook component allows users to add a new book by filling out the form.
+ * The form includes fields for author, title, ISBN, and description, all mandatory.
+ * After submitting the form, the book is added to the database, and a toast notification is displayed.
+ * If each blank in the form is filled, the ISBN format is correct and there's no book in the database with the same ISBN, a success notification is displayed.
+ * If there's input missing, the ISBN has the wrong format or the book with the same ISBN has been found in the database, then an error notification is displayed.
+ * @returns {JSX.Element} Rendered AddBook component with a form and toast notifications
+ */
 const AddBook = () => {
-  // Zugriff auf die Database-Funktionen
   const database = Database();
 
   async function getBookByISBN(isbn) {
@@ -83,7 +89,10 @@ const AddBook = () => {
     isbn: "",
     description: "",
   });
-
+  /**
+   * Handles input field changes and updates the form data state.
+   * @param {React.ChangeEvent} e - The event object for the input change
+   */
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({
@@ -95,18 +104,22 @@ const AddBook = () => {
   const handleISBNChange = (e) => {
     setFormISBN(e.target.value);
   };
-
+  /**
+   * Handles form submission to add a new book to the database.
+   * If the form data is valid, the book is added to the database and a success toast notification is displayed.
+   * If the form data isn't valid an error toast notification is displayed
+   * @param {React.FormEvent} e - The event object for form submission
+   */
   const handleAddBook = async (e) => {
     e.preventDefault();
-  
+
     if (!validateInput(formData)) {
       return;
     }
-  
-    const result = await database.addBook(formData); 
+
+    const result = await database.addBook(formData);
 
     if (!result.success) {
-      // Fehler anzeigen
       toast.error(result.message, {
         position: "top-right",
         autoClose: 3000,
@@ -117,9 +130,8 @@ const AddBook = () => {
       });
       return;
     }
-  
-    // Erfolgsnachricht
-    toast.success("Book added successfully", {
+
+    toast.success(result.message, {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: true,
@@ -127,8 +139,7 @@ const AddBook = () => {
       className: "bg-primary text-white",
       icon: false,
     });
-  
-    // Formular zurücksetzen
+
     setFormData({
       author: "",
       title: "",
