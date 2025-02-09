@@ -1,7 +1,7 @@
 # MI-Proj-B/M: Group T4 
 
 **Description:**  
-This repository contains the partial submissions of our university project on the topic of "Modern Web Development with JavaScript." The goal of the project is to learn and practically apply modern web technologies. We use various technologies from the JavaScript ecosystem, including Webpack, Babel, React, ESLint, Firebase, and more.
+This repository contains the submissions of our university project on the topic of "Modern Web Development with JavaScript." The goal of the project is to learn and practically apply modern web technologies. We use various technologies from the JavaScript ecosystem, including Webpack, Babel, React, ESLint, Firebase, and more.
 
 The project consists of several parts, each focusing on specific concepts and tools. In the final part, the previously learned technologies are combined to develop a comprehensive web application.
 
@@ -69,7 +69,7 @@ To install and run the project locally, you will need the following software:
 ### Installation Steps  
 1. Clone the repository:
    ```bash
-   git clone <Repository-URL>
+   git clone https://github.com/ElenaLaubinger/MI-Proj-24-25-T4.git
    
 2. Navigate to the respective assignment folder:
    ```bash
@@ -87,7 +87,11 @@ To install and run the project locally, you will need the following software:
 <details> 
  <summary> Show more </summary>
  
-You can use the Live Server VS Code Extension to start the application.
+1. If you use Visual Studio Code, you can install the Live Server VS Code Extension.
+2. Open the project and right-click on the **index.html** file and select **"Open with Live Server"**.
+3. Your browser should automatically open and show the application.
+
+
 </details>
 
 ### Assignment 2 
@@ -98,9 +102,13 @@ You can use the Live Server VS Code Extension to start the application.
    ```bash
    npm run build
 
-2. Choose with the arrow-keys if you just want to validate the JS dependencies or also want to minify the JS Code. Confirm with ENTER.
+2. Choose with the arrow-keys if you just want to **validate the JS dependencies** or also want to **minify the JS Code**.
+   
+     ![image](https://github.com/user-attachments/assets/6b5ede25-2ce2-4e0b-8028-ac16667fc78f)
+   
+3. Confirm with **ENTER**
 
-   ![image](https://github.com/user-attachments/assets/6b5ede25-2ce2-4e0b-8028-ac16667fc78f)
+ 
 
 </details>
 
@@ -108,6 +116,8 @@ You can use the Live Server VS Code Extension to start the application.
 
 <details> 
  <summary> Show more </summary>
+
+#### Build
 
 - Build the application in Developer Mode
   - Creates a dist-folder with bundled JS-Code
@@ -119,7 +129,8 @@ You can use the Live Server VS Code Extension to start the application.
    ```bash 
     npm run build:prod
    
-- Start the application
+#### Start the application
+
 1. Start the application:
    ```bash
    npm run start
@@ -130,7 +141,7 @@ You can use the Live Server VS Code Extension to start the application.
 <details> 
  <summary> Show more </summary>
  
-The application runs scripts in a CI-Pipeline, if you create a Pull-Request to the main-Branch of this repository.
+📌 **Note:** The application runs scripts in a CI-Pipeline, if you create a Pull-Request to the main-Branch of this repository.
  
 #### How to run the scripts manually
  - Check the Test-Coverage
@@ -141,7 +152,7 @@ The application runs scripts in a CI-Pipeline, if you create a Pull-Request to t
     ```bash 
     npm run test
     
- - Run the liniting
+ - Run the linting
     ```bash 
     npm run lint
     
