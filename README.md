@@ -67,7 +67,7 @@ To install and run the project locally, you will need the following software:
 - **Git** (for cloning the repository)  
 
 ### Installation Steps  
-1. Clone the repository:
+1. Clone the repository and open the project folder:
    ```bash
    git clone https://github.com/ElenaLaubinger/MI-Proj-24-25-T4.git
    
@@ -166,15 +166,39 @@ To install and run the project locally, you will need the following software:
 
 </details>
 
-### Assignment 5 //Vorläufig-Kontrolle nach Deployment und Fertigstellung
+### Assignment 5 
 <details> 
  <summary> Show more </summary>
- 
+
+#### Public App
+
+You can access the published App with the following Link: https://ibooks-bcb55.web.app
+
+#### Get the developer documentation
+
+1. Run following command
+
+   ```bash
+   npx jsdoc src -r
+   
+2. The folder *out* will be created in the Assignment directory. This folder contains the generated HTML documentation.
+3. Open **index.html** with **Live Server** and you can now navigate through the documentation to explore the component details.
+
+#### Configuration for firebase 
  1. To use the application you need to have a Google-Account or create one, because it uses the Cloud Firestore Service.
  2. If you have created your own Firestore Database, you need to add a .env-file with the Firebase Global Configurations.
- 3. You need to change the collectionName in the Database.jsx to the name of your own collection
 
- ```
+    ```env
+    VITE_FIREBASE_API_KEY=your-api-key
+    VITE_FIREBASE_AUTH_DOMAIN=your-auth-domain
+    VITE_FIREBASE_DATABASE_URL=your-database-url
+    VITE_FIREBASE_PROJECT_ID=your-project-id
+    VITE_FIREBASE_STORAGE_BUCKET=your-storage-bucket
+    VITE_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
+    VITE_FIREBASE_APP_ID=your-app-id
+
+ 3. You need to change the **collectionName** in the **Database.jsx** to the name of your own collection
+     ```
     📂 Assignment5
      ┣ 📂 src
         ┣ 📂 assets
@@ -185,8 +209,43 @@ To install and run the project locally, you will need the following software:
         ┣ ⚛️ App.jsx
         ┣ ⚛️ main.jsx
         ...
-  ```
+  
   ![image](https://github.com/user-attachments/assets/b299327b-03d3-4586-b5c2-a40ab123b65d)
+
+#### Deployment
+Please look up information on Deployment in the **README.md** file in the *Assignment5* folder
+
+
+#### How to run the scripts manually
+
+- **Testing**
+  - Check the Test-Coverage
+     ```bash
+     npm run test:coverage
+   
+  - Run test on BookDetail.jsx
+     ```bash 
+     npm run test
+     
+- **Linting**
+  - Run the linting
+     ```bash 
+     npm run lint
+    
+- **Build for Production**
+  - Production-Mode
+    ```bash 
+    npm run build
+    
+- **Show Preview of build application**
+    ```bash 
+    npm run preview
+   
+- **Start Development Server**
+   - Development-Mode
+     ```bash 
+     npm run dev
+
   </details>
 
 ---
