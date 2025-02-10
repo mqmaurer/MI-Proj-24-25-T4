@@ -1,3 +1,14 @@
 .jumbotron {
   margin-bottom: 0;
 }
+
+.tableButton {
+  background-color: transparent;
+  border: none;
+  padding: 0.05em;
+  outline: none;
+}
+
+.tableButton:focus {
+  outline: none;
+}

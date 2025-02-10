@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs, addDoc, deleteDoc, doc, getFirestore, onSnapshot, updateDoc } from "firebase/firestore";
+import { collection, addDoc, deleteDoc, doc, getFirestore, onSnapshot, updateDoc } from "firebase/firestore";
 import firebaseApp from "./FB_App";
 
 /**
@@ -16,11 +16,11 @@ import firebaseApp from "./FB_App";
 
 function Database() {
   const [data, setData] = useState([]);
-  const [isLoading, setisLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const database = getFirestore(firebaseApp);
   const collectionName = "testbooks";
   const collectionRef = collection(database, collectionName);
- 
+
   useEffect(() => {
     updateData();
   }, []);
@@ -30,22 +30,22 @@ function Database() {
    * Sets isLoading to true during data fetch.
    */
   const updateData = async () => {
-    setisLoading(true);
-   //setTimeout(() => { //testen der Ladezeit
-    try{ 
-     onSnapshot(collectionRef, (querySnapshot) => {
-      const displayItem = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setData(displayItem);    
-  });
-}catch (error) {  }
-finally { 
-  setisLoading(false);
+    setIsLoading(true);
+    //setTimeout(() => { //testen der Ladezeit
+    try {
+      onSnapshot(collectionRef, (querySnapshot) => {
+        const displayItem = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setData(displayItem);
+      });
+    } catch (error) { }
+    finally {
+      setIsLoading(false);
+    };
+    //}, 500);
   };
-//}, 500);
-};
   /**
    * Function to add a book to Firestore collection.
    * @param {Object} newBook The new book object to add.
@@ -59,7 +59,7 @@ finally {
       if (existingBook) {
         throw new Error("There already exists a book with this ISBN!");
       }
-  
+
       await addDoc(collectionRef, newBook);
       console.log("Book added successfully!");
       updateData(); // Nach dem Hinzufügen direkt aktualisieren
@@ -69,7 +69,7 @@ finally {
       return { success: false, message: error.message }; // Fehler zurückgeben
     }
   };
-  
+
   /**
    * Function to delete a book from Firestore collection.
    * @param {string} bookId The ID of the book to delete.
@@ -95,7 +95,7 @@ finally {
   const updateRating = async (bookId, rating) => {
     const database = getFirestore(firebaseApp);
     const bookRef = doc(database, collectionName, bookId);
-  
+
     try {
       await updateDoc(bookRef, { rating });
       console.log(`Buch mit ID ${bookId} wurde erfolgreich bewertet!`);

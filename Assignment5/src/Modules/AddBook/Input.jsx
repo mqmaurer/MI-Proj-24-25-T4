@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 /**
  * A text input component for form fields.
  *
@@ -23,6 +25,14 @@ const TextInput = ({ label, id, value, onChange, type = "text" }) => {
       />
     </div>
   );
+};
+
+TextInput.propTypes = {
+  label: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  type: PropTypes.string,
 };
 
 export default TextInput;

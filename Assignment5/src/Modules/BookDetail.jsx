@@ -17,34 +17,34 @@ import Database from '../firebase_local/Database';
  * @returns {JSX.Element} A React component displaying book details.
  */
 const BookDetail = () => {
-    /**
-   * Fetches the selected book from the page's location state.
-   * @type {{ book: Book }}
-   */
+  /**
+ * Fetches the selected book from the page's location state.
+ * @type {{ book: Book }}
+ */
   const location = useLocation();
   const { book } = location.state || {};
   /**
    * Fetches loading state from the Database module.
    * @type {{ isLoading: boolean }}
    */
-  const { isLoading  } = Database();
+  const { isLoading } = Database();
 
   /** Displays a loading spinner during the process of data retrieval */
   if (isLoading) {
     return (
       <div className="container mt-4 text-center" style={{ marginTop: '2000px' }}>
-        <div className="spinner-grow text-primary" role="status" style={{ width: '3rem', height: '3rem' }}>
+        <output className="spinner-grow text-primary" style={{ width: '3rem', height: '3rem' }}>
           <span className="sr-only">Loading ...</span>
-        </div>
+        </output>
         <p>Loading...</p>
-      </div>
+      </div >
     );
   }
 
   if (!book) {
     return (
       <div className="container mt-4">
-         <motion.div
+        <motion.div
           className="alert alert-warning"
           initial={{ opacity: 0 }} // Startzustand: Unsichtbar
           animate={{ opacity: 1 }} // Endzustand: Voll sichtbar
@@ -59,16 +59,16 @@ const BookDetail = () => {
   return (
     <div className="container mt-4">
       <div className="card mx-auto" style={{ maxWidth: '25rem' }}>
-        <FontAwesomeIcon 
-          icon={faBookReader} 
-          className="text-primary mt-4 mx-auto" 
-          style={{ fontSize: '70px' }} 
+        <FontAwesomeIcon
+          icon={faBookReader}
+          className="text-primary mt-4 mx-auto"
+          style={{ fontSize: '70px' }}
         />
         <div className="card-body">
           <div className="text-center">Author: {book.author}</div>
           <div className="text-center">Title: {book.title}</div>
           <div className="text-center">ISBN: {book.isbn}</div>
-          
+
           <hr />
           <div>
             {book.description}
