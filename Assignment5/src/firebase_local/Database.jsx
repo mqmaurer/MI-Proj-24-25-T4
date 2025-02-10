@@ -39,6 +39,9 @@ function Database() {
           ...doc.data()
         }));
         setData(displayItem);
+        if (displayItem.length == 0) {
+          console.warn("No books found in the database!");
+        }   
       });
     } catch (error) {
       console.error("Error fetching data:", error);
