@@ -24,7 +24,6 @@ const SearchAndSort = ({
   useEffect(() => {
     // Diese Funktion wird ausgeführt, wenn triggerSubmit geändert wird
     if (triggerSubmit) {
-      // console.log("triggerSubmit" + aktbooks);
       // Filter- und Sortierlogik
       const filteredBooks = books.filter((book) => {
         if (!searchText) return books; // Keine Suche, alle Bücher anzeigen

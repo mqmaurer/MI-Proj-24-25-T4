@@ -61,7 +61,6 @@ function Database() {
       }
 
       await addDoc(collectionRef, newBook);
-      console.log("Book added successfully!");
       updateData(); // Nach dem Hinzufügen direkt aktualisieren
       return { success: true, message: "Book added successfully!" }; // Erfolg zurückgeben
     } catch (error) {
@@ -80,7 +79,6 @@ function Database() {
 
     try {
       await deleteDoc(bookRef);
-      console.log("Book deleted successfully!");
       updateData(); // Nach dem Löschen direkt aktualisieren
     } catch (error) {
       console.error("Error deleting book:", error);
@@ -98,7 +96,6 @@ function Database() {
 
     try {
       await updateDoc(bookRef, { rating });
-      console.log(`Buch mit ID ${bookId} wurde erfolgreich bewertet!`);
     } catch (error) {
       console.error("Fehler beim Aktualisieren der Bewertung:", error);
     }

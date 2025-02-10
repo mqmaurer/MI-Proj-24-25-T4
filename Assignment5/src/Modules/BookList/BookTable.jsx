@@ -45,14 +45,12 @@ const BookTable = ({ books, onDelete, onUpdate, onRatingChange }) => {
   const onRemoveClick = (bookId) => {
     // Zeile nach rechts verschieben (Animation)
     setDeletedBooks((prev) => [...prev, bookId]);
-    console.log("Book in Databank!" + books);
     setTimeout(async () => {
       try {
         await deleteBook(bookId); onUpdate(true);
       } catch (error) {
       };
 
-      console.log("Book deleted!" + books);
       onDelete((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
     }, 500);
 

@@ -15,16 +15,15 @@ import Database from "../../firebase_local/Database.jsx";
 const AddBook = () => {
   const database = Database();
 
+  // Function to get book details from OpenLibrary API by ISBN
   async function getBookByISBN(isbn) {
-    
+
     const isbnAPI = isbn;
-   const api = `https://openlibrary.org/api/books?bibkeys=ISBN:${isbnAPI}&format=json&jscmd=data`;
-   console.log(api);
+    const api = `https://openlibrary.org/api/books?bibkeys=ISBN:${isbnAPI}&format=json&jscmd=data`;
     const response = await fetch(api);
     const data = await response.json();
-    console.log(data);
-    // Prüfen, ob das Buch existiert
-    if (data[`ISBN:${isbnAPI}`]) {console.log("ISBN: " + isbnAPI);
+    // Check if book already exists
+    if (data[`ISBN:${isbnAPI}`]) {
       const book = data[`ISBN:${isbn}`];
       return {
         title: book.title || "Unbekannter Titel",
@@ -33,31 +32,28 @@ const AddBook = () => {
         description: book.excerpts?.[0]?.text || "Keine Beschreibung verfügbar"
       };
     } else {
-      console.log("Kein Buch gefunden!" );
       return null;
     }
   }
 
   function formatISBN10(isbn) {
-    // Entfernt alle nicht-ziffern oder 'X'
+    // Remove all non-numeric characters from the ISBN
     const cleanedISBN = isbn.replace(/[^0-9X]/gi, '');
-  
-    // Überprüfen, ob die ISBN-Nummer die richtige Länge hat (10 Zeichen)
+
+    // Check if the cleaned ISBN has a length of 10
     if (cleanedISBN.length !== 10) {
-      return null;  // Ungültige ISBN-10
+      return null;
     }
-  
-    // Formatieren der ISBN in das Format "XXX-XXX-XXXXX-X"
+
+    // Formate ISBN to form "XXX-XXX-XXXXX-X"
     const formattedISBN = cleanedISBN.replace(/^(\d{1})(\d{3})(\d{5})(\d{1})$/, '$1-$2-$3-$4');
-  
+
     return formattedISBN;
   }
-  
-  const einBuchbitte = (isbn) => { 
-    event.preventDefault();
-    console.log("ISBN: " + formISBN);
+
+  const oneBookPlease = (e) => {
+    e.preventDefault();
     getBookByISBN(formISBN).then(book => {
-      console.log(book);
       if (book === null) {
         toast.error("Buch nicht in OpenLibrary gefunden", {
           position: "top-right",
@@ -69,18 +65,18 @@ const AddBook = () => {
         });
         return;
       }
-  
-     // Buchdetails setzen
+
+      // Update form data with book details
       setFormData({
-        title: book.title, 
-        author: book.author, 
-        isbn: book.isbn, 
+        title: book.title,
+        author: book.author,
+        isbn: book.isbn,
         description: book.description
       });
-  
-    });  
+
+    });
   };
-  
+
   const [formISBN, setFormISBN] = useState(null);
 
   const [formData, setFormData] = useState({
@@ -104,6 +100,7 @@ const AddBook = () => {
   const handleISBNChange = (e) => {
     setFormISBN(e.target.value);
   };
+
   /**
    * Handles form submission to add a new book to the database.
    * If the form data is valid, the book is added to the database and a success toast notification is displayed.
@@ -150,14 +147,14 @@ const AddBook = () => {
 
   return (
     <div className="container mt-4">
-      
-      <form id="isbn-form" onSubmit={einBuchbitte}>
-        <TextInput label="search Book in OpenLibrary" id="searchISBN" value={formISBN} onChange={handleISBNChange} placeholder="isbn" />
+
+      <form id="isbn-form" onSubmit={oneBookPlease}>
+        <TextInput label="Search Book in OpenLibrary" id="searchISBN" value={formISBN} onChange={handleISBNChange} placeholder="isbn" />
         <button type="submit" className="btn btn-outline-primary btn-block add-button">
-          Add Book Details by ISBN 
+          Add Book Details by ISBN
         </button>
       </form>
-      
+
       <form id="book-form" onSubmit={handleAddBook}>
         <TextInput
           label="Author"
