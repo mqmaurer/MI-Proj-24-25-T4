@@ -27,7 +27,7 @@ The project consists of several parts, each focusing on specific concepts and to
 
 ### 📌 Assignment 5: Final Project with React  
 - Implementation of a complete web application with **React**  
-- Use of a **Firebase database**  
+- Use of **Firebase - Cloud Firestore Database** and **Firebase - Hosting**
 
 ---
 
@@ -184,21 +184,22 @@ You can access the published App with the following Link: https://ibooks-bcb55.w
 2. The folder *out* will be created in the Assignment directory. This folder contains the generated HTML documentation.
 3. Open **index.html** with **Live Server** and you can now navigate through the documentation to explore the component details.
 
-#### Configuration for firebase 
- 1. To use the application you need to have a Google-Account or create one, because it uses the Cloud Firestore Service.
- 2. If you have created your own Firestore Database, you need to add a .env-file with the Firebase Global Configurations.
-
+#### Configurate firebase 
+ 1. To use the application as developer you need to have a Google-Account or create one
+ 2. Go to [Google Firebase](https://console.firebase.google.com) and follow the steps to create a new project
+ 3. Go to Project settigns and click `Add App`. Select `npm` for the right configuration method
+ 4. Create a `.env` file into the *Assignment5* folder
+ 5. Put in the variables below and your matching firebaseConfig data
     ```env
-    VITE_FIREBASE_API_KEY=your-api-key
-    VITE_FIREBASE_AUTH_DOMAIN=your-auth-domain
-    VITE_FIREBASE_PROJECT_ID=your-project-id
-    VITE_FIREBASE_STORAGE_BUCKET=your-storage-bucket
-    VITE_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
-    VITE_FIREBASE_APP_ID=your-app-id
-    VITE_FIREBASE_MEASUREMENT_ID=your-measurement-id
+    VITE_FIREBASE_API_KEY = "your-api-key"
+    VITE_FIREBASE_AUTH_DOMAIN = "your-auth-domain"
+    VITE_FIREBASE_PROJECT_ID = "your-project-id"
+    VITE_FIREBASE_STORAGE_BUCKET = "your-storage-bucket"
+    VITE_FIREBASE_MESSAGING_SENDER_ID = "your-sender-id"
+    VITE_FIREBASE_APP_ID = "your-app-id"
+    VITE_FIREBASE_MEASUREMENT_ID = "your-measurement-id"
    
-
- 3. You need to change the **collectionName** in the **Database.jsx** to the name of your own collection
+ 6. Change the **collectionName** in the **Database.jsx** to the name of your own collection
      ```
     📂 Assignment5
      ┣ 📂 src
@@ -210,10 +211,10 @@ You can access the published App with the following Link: https://ibooks-bcb55.w
         ┣ ⚛️ App.jsx
         ┣ ⚛️ main.jsx
         ...
-  
-  ![image](https://github.com/user-attachments/assets/b299327b-03d3-4586-b5c2-a40ab123b65d)
+   
+   ![image](https://github.com/user-attachments/assets/b299327b-03d3-4586-b5c2-a40ab123b65d)
 
-#### Deployment
+#### Deployment with Firebase Hosting
 Please look up information on Deployment in the **README.md** file in the *Assignment5* folder
 
 
