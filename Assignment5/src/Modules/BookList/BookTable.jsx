@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
-import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
 import Database from '../../firebase_local/Database';
+
 /**
  * @typedef {Object} Book
  * @property {string} id - The ID for the book
@@ -24,7 +24,6 @@ import Database from '../../firebase_local/Database';
  * @returns {JSX.Element} Rendered table of books with interactive features
  *
  */
-
 const BookTable = ({ books, onDelete, onUpdate, onRatingChange }) => {
   const navigate = useNavigate();
   const { deleteBook, isLoading } = Database();
@@ -43,7 +42,7 @@ const BookTable = ({ books, onDelete, onUpdate, onRatingChange }) => {
    * @param {string} bookId - ID of the book to be deleted
    */
   const onRemoveClick = (bookId) => {
-    // Zeile nach rechts verschieben (Animation)
+    // Animation for moving a deleted row to the right
     setDeletedBooks((prev) => [...prev, bookId]);
     setTimeout(async () => {
       try {
@@ -53,8 +52,8 @@ const BookTable = ({ books, onDelete, onUpdate, onRatingChange }) => {
 
       onDelete((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
     }, 500);
-
   };
+
   /**
    * Renders the rating of a book
    * @param {number} rating - Current rating value (1-5)
@@ -138,21 +137,6 @@ const BookTable = ({ books, onDelete, onUpdate, onRatingChange }) => {
       </table>
     </div>
   );
-};
-
-BookTable.propTypes = {
-  books: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      author: PropTypes.string.isRequired,
-      isbn: PropTypes.string.isRequired,
-      rating: PropTypes.number,
-    })
-  ).isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired,
-  onRatingChange: PropTypes.func.isRequired,
 };
 
 export default BookTable;

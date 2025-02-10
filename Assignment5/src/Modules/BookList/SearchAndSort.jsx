@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import PropTypes from 'prop-types';
 
 /**
  * Search component allows the user to filter out the books according to the book's title or author
@@ -12,28 +11,28 @@ import PropTypes from 'prop-types';
  * @returns {JSX.Element} Rendered SearchAndSort component with filter and sorting options
  */
 const SearchAndSort = ({
-  books, // Liste der Bücher
-  onFilteredBooksChange, // Callback, um die gefilterten Bücher zurückzugeben
+  books,
+  onFilteredBooksChange,
 }) => {
 
   const [searchText, setSearchText] = useState("");
   const [searchOption, setSearchOption] = useState("title");
   const [sortOption, setSortOption] = useState("NO_SORTING");
-  const [triggerSubmit, setTriggerSubmit] = useState(false); // State für den Submit-Trigger
+  const [triggerSubmit, setTriggerSubmit] = useState(false); // submit trigger
 
   useEffect(() => {
-    // Diese Funktion wird ausgeführt, wenn triggerSubmit geändert wird
+    // Execute function if triggerSubmit is true
     if (triggerSubmit) {
-      // Filter- und Sortierlogik
+      // Sorting and filtering
       const filteredBooks = books.filter((book) => {
-        if (!searchText) return books; // Keine Suche, alle Bücher anzeigen
+        if (!searchText) return books; // No filtertext -> return all books
         return book[searchOption]?.toString().toLowerCase().includes(searchText.toLowerCase());
       });
 
       const sortedBooks = filteredBooks.sort((a, b) => {
         if (sortOption === "NO_SORTING") return 0;
 
-        const field = sortOption.split("_")[0].toLowerCase(); // z. B. "title" oder "author"
+        const field = sortOption.split("_")[0].toLowerCase();
         const order = sortOption.endsWith("ASCENDING") ? 1 : -1;
 
         if (field === "rating") {
@@ -46,16 +45,18 @@ const SearchAndSort = ({
         return 0;
       });
 
-      onFilteredBooksChange(sortedBooks); // Gefilterte und sortierte Bücher zurückgeben
-      setTriggerSubmit(false); // Setze den Trigger zurück, um unnötige Berechnungen zu vermeiden
+      onFilteredBooksChange(sortedBooks);
+      setTriggerSubmit(false);
     }
-  }, [triggerSubmit, books, searchText, searchOption, sortOption, onFilteredBooksChange]); // Überwachung der relevanten Zustände
+  }, [triggerSubmit, books, searchText, searchOption, sortOption, onFilteredBooksChange]);
+
   /**
    * Handles form submission and triggers the filtering and sorting of books
    */
   const handleSubmit = () => {
-    setTriggerSubmit(true); // Setzt den Trigger, um die Filterung und Sortierung auszulösen
+    setTriggerSubmit(true);
   };
+
   /**
    * Resets the search and sort options to their default values
    */
@@ -63,8 +64,8 @@ const SearchAndSort = ({
     setSearchText("");
     setSearchOption("title");
     setSortOption("NO_SORTING");
-    setTriggerSubmit(false); // Zurücksetzen des Submit-Triggers
-    onFilteredBooksChange(books); // Ursprüngliche Bücher zurückgeben
+    setTriggerSubmit(false);
+    onFilteredBooksChange(books);
   };
 
   return (
@@ -118,11 +119,6 @@ const SearchAndSort = ({
       </div>
     </div>
   );
-};
-
-SearchAndSort.propTypes = {
-  books: PropTypes.array.isRequired,
-  onFilteredBooksChange: PropTypes.func.isRequired,
 };
 
 export default SearchAndSort;

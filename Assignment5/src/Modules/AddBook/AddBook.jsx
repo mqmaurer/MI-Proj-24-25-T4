@@ -26,10 +26,10 @@ const AddBook = () => {
     if (data[`ISBN:${isbnAPI}`]) {
       const book = data[`ISBN:${isbn}`];
       return {
-        title: book.title || "Unbekannter Titel",
-        author: book.authors?.[0]?.name || "Unbekannter Autor",
+        title: book.title || "Title unknown",
+        author: book.authors?.[0]?.name || "Author unknown",
         isbn: formatISBN10(isbn),
-        description: book.excerpts?.[0]?.text || "Keine Beschreibung verfügbar"
+        description: book.excerpts?.[0]?.text || "No description available",
       };
     } else {
       return null;
@@ -55,7 +55,7 @@ const AddBook = () => {
     e.preventDefault();
     getBookByISBN(formISBN).then(book => {
       if (book === null) {
-        toast.error("Buch nicht in OpenLibrary gefunden", {
+        toast.error("Book not found at OpenLibrary", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: true,
@@ -85,6 +85,7 @@ const AddBook = () => {
     isbn: "",
     description: "",
   });
+
   /**
    * Handles input field changes and updates the form data state.
    * @param {React.ChangeEvent} e - The event object for the input change

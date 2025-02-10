@@ -7,8 +7,6 @@ import { initializeApp } from "firebase/app";
  * Firebase configuration settings retrieved from environment variables.
  * @type {Object}
  */
-
-// Firebase Configuration
 const firebaseConfig = {
   apiKey: process.env.VITE_FIREBASE_API_KEY,
   authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -23,7 +21,6 @@ const firebaseConfig = {
  * Initializes and exports the Firebase application instance.
  * @type {FirebaseApp}
  */
-// Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
 export default firebaseApp;

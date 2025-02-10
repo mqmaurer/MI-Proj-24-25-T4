@@ -46,9 +46,9 @@ const BookDetail = () => {
       <div className="container mt-4">
         <motion.div
           className="alert alert-warning"
-          initial={{ opacity: 0 }} // Startzustand: Unsichtbar
-          animate={{ opacity: 1 }} // Endzustand: Voll sichtbar
-          transition={{ duration: 1.5 }} // Dauer der Animation
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.5 }}
         >
           No Book selected!!!
         </motion.div>

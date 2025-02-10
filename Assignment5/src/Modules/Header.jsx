@@ -8,7 +8,7 @@ const Header = () => {
             <h1 className="display-3">
                 <i className="fas fa-bookmark text-primary" id="jumbotron-icon"></i> iBooks
             </h1>
-            <p className="lead">Die beste Buchverwaltungssoftware der Welt!</p>
+            <p className="lead">The best book list software!!!</p>
         </div>
     );
 }

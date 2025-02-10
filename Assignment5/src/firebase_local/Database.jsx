@@ -31,7 +31,7 @@ function Database() {
    */
   const updateData = async () => {
     setIsLoading(true);
-    //setTimeout(() => { //testen der Ladezeit
+
     try {
       onSnapshot(collectionRef, (querySnapshot) => {
         const displayItem = querySnapshot.docs.map(doc => ({
@@ -44,28 +44,27 @@ function Database() {
     finally {
       setIsLoading(false);
     };
-    //}, 500);
   };
+
   /**
    * Function to add a book to Firestore collection.
    * @param {Object} newBook The new book object to add.
    * @returns {Object} Object indicating success or failure of the Add operation.
    */
-  // Funktion zum Hinzufügen eines Buches
   const addBook = async (newBook) => {
     try {
-      // Überprüfen, ob die ISBN bereits existiert
+      // Check if book with same ISBN already exists
       const existingBook = data.find(book => book.isbn === newBook.isbn);
       if (existingBook) {
         throw new Error("There already exists a book with this ISBN!");
       }
 
       await addDoc(collectionRef, newBook);
-      updateData(); // Nach dem Hinzufügen direkt aktualisieren
-      return { success: true, message: "Book added successfully!" }; // Erfolg zurückgeben
+      updateData();
+      return { success: true, message: "Book added successfully!" };
     } catch (error) {
       console.error("Error adding book:", error.message);
-      return { success: false, message: error.message }; // Fehler zurückgeben
+      return { success: false, message: error.message };
     }
   };
 
@@ -73,13 +72,12 @@ function Database() {
    * Function to delete a book from Firestore collection.
    * @param {string} bookId The ID of the book to delete.
    */
-  // Funktion zum Löschen eines Buches
   const deleteBook = async (bookId) => {
     const bookRef = doc(database, `${collectionName}/${bookId}`);
 
     try {
       await deleteDoc(bookRef);
-      updateData(); // Nach dem Löschen direkt aktualisieren
+      updateData();
     } catch (error) {
       console.error("Error deleting book:", error);
     }
@@ -97,7 +95,7 @@ function Database() {
     try {
       await updateDoc(bookRef, { rating });
     } catch (error) {
-      console.error("Fehler beim Aktualisieren der Bewertung:", error);
+      console.error("Error while updating rating", error);
     }
   };
 
