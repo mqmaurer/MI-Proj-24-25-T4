@@ -48,6 +48,7 @@ const BookTable = ({ books, onDelete, onUpdate, onRatingChange }) => {
       try {
         await deleteBook(bookId); onUpdate(true);
       } catch (error) {
+        console.error("Error deleting book:", error);
       };
 
       onDelete((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
