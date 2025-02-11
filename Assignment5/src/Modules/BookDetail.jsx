@@ -33,9 +33,9 @@ const BookDetail = () => {
   if (isLoading) {
     return (
       <div className="container mt-4 text-center" style={{ marginTop: '2000px' }}>
-        <output className="spinner-grow text-primary" style={{ width: '3rem', height: '3rem' }}>
+        <div className="spinner-grow text-primary" role="status" style={{ width: '3rem', height: '3rem' }}>
           <span className="sr-only">Loading ...</span>
-        </output>
+        </div>
         <p>Loading...</p>
       </div >
     );
