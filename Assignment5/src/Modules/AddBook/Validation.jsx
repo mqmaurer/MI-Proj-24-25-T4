@@ -31,7 +31,7 @@ const validateInput = (formData) => {
     return false;
   }
 
-  if (!/^(?=[-\dX ]{13}$)(?:\d+[- ]){3}\d*[X\d]$/.test(formData.isbn)) {
+  if (!/^(?=[-0-9X ]{13}$)(?:[0-9]+[- ]){3}[0-9]*[X0-9]$/.test(formData.isbn)) {
     toast.error("ISBN must have 10 digits", {
       position: "top-right",
       autoClose: 3000,
