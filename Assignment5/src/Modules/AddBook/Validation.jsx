@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+
 /**
  * Validates the form data for adding a book.
  * Checks if all required fields are filled and if the ISBN format is valid.
@@ -30,7 +31,7 @@ const validateInput = (formData) => {
     return false;
   }
 
-  if (!/^(?=[-0-9X ]{13}$)(?:[0-9]+[- ]){3}[0-9]*[X0-9]$/.test(formData.isbn)) {
+  if (!/^(?=[-\dX ]{13}$)(?:\d+[- ]){3}\d*[X\d]$/.test(formData.isbn)) {
     toast.error("ISBN must have 10 digits", {
       position: "top-right",
       autoClose: 3000,

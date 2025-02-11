@@ -6,12 +6,6 @@ export default defineConfig(({ mode }) => {
   // Load environment variables from .env files
   const env = loadEnv(mode, process.cwd(), "");
 
-  // Set up environment variables with prefixes, so that vite can process them properly
-  const envWithProcessPrefix = Object.keys(env).reduce((prev, next) => {
-    prev[`process.env.${next}`] = JSON.stringify(env[next]);
-    return prev;
-  }, {});
-
   return {
     plugins: [react()],
     define: {
@@ -19,13 +13,12 @@ export default defineConfig(({ mode }) => {
     },
 
     test: {
-      // Vitest Konfiguration hinzufügen
+      // Vitest test configuration
       globals: true,
-      environment: "jsdom", // Damit React-Komponenten in einer Browser-ähnlichen Umgebung getestet werden
+      environment: "jsdom",
       coverage: {
-        reporter: ["text", "lcov"], // Textausgabe + lcov für HTML-Reports
+        reporter: ["text", "lcov"],
       },
     },
   };
 });
-
