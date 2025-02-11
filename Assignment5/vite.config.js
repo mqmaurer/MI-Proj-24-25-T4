@@ -13,13 +13,12 @@ export default defineConfig(({ mode }) => {
     },
 
     test: {
-      // Vitest Konfiguration hinzufügen
+      // Vitest test configuration
       globals: true,
-      environment: "jsdom", // Damit React-Komponenten in einer Browser-ähnlichen Umgebung getestet werden
+      environment: "jsdom",
       coverage: {
-        reporter: ["text", "lcov"], // Textausgabe + lcov für HTML-Reports
+        reporter: ["text", "lcov"],
       },
     },
   };
 });
-
