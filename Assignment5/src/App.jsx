@@ -27,7 +27,7 @@ function App() {
         <Route path="/books" element={<BookList />} />
         <Route path="/addBooks" element={<AddBook />} />
         <Route path="/details" element={<BookDetail />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} /> {/* 404 page */}
       </Routes>
     </Router>
   )
