@@ -69,7 +69,7 @@ To install and run the project locally, you will need the following software:
 ### Installation Steps  
 1. Clone the repository and open the project folder:
    ```bash
-   git clone https://github.com/ElenaLaubinger/MI-Proj-24-25-T4.git
+   git clone https://github.com/mqmaurer/MI-Proj-24-25-T4.git
    
 2. Navigate to the respective assignment folder:
    ```bash
@@ -169,10 +169,6 @@ To install and run the project locally, you will need the following software:
 ### Assignment 5 
 <details> 
  <summary> Show more </summary>
-
-#### Public App
-
-You can access the published App with the following Link: https://ibooks-bcb55.web.app
 
 #### Get the developer documentation
 
